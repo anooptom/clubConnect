@@ -30,6 +30,7 @@ const LoginForm = () => {
 
   return (
     <form onSubmit={handleSubmit}>
+      <h1>Login </h1>
       <div>
         <label htmlFor="name">Name</label>
         <input
@@ -50,7 +51,7 @@ const LoginForm = () => {
           onChange={handleChange}
         />
       </div>
-      <button type="submit">Sign Up</button>
+      <button type="submit">Login</button>
     </form>
   );
 };

@@ -30,6 +30,7 @@ const SignUpForm = () => {
 
   return (
     <form onSubmit={handleSubmit}>
+      <h1>Sign Up</h1>
       <div>
         <label htmlFor="name">Name</label>
         <input

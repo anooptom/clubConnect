@@ -1,12 +1,18 @@
 import React from 'react';
 import SignUpForm from './SignUpForm';
 import LoginForm  from './LoginForm';
+import Home from './Home';
+import { Route, Routes} from 'react-router';
 
-const App = () => {
+
+function App () {
   return (
-    <div>
-      <h1>Login</h1>
-      <LoginForm />
+    <div className='App'>
+      <Routes>
+        <Route path='/' element={<Home />} />
+        <Route path='login' element={<LoginForm/>} />
+        <Route path='signup' element={<SignUpForm/>} />
+      </Routes>
     </div>
   );
 };
