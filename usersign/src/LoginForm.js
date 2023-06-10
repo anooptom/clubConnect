@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const SignUpForm = () => {
+const LoginForm = () => {
   const [formData, setFormData] = useState({
     name: '',
     password: ''
@@ -16,10 +16,10 @@ const SignUpForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formData); // Display form data in the console
+    console.log(formData); 
 
-    // Send form data to the server using Axios
-    axios.post(' http://localhost:3001/signup', formData)
+    
+    axios.post(' http://localhost:3001/login', formData)
       .then(response => {
         console.log(response.data);
       })
@@ -55,4 +55,4 @@ const SignUpForm = () => {
   );
 };
 
-export default SignUpForm;
+export default LoginForm;

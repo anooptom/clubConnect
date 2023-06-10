@@ -10,7 +10,7 @@ const client = new MongoClient(url);
 app.use(bodyParser.json());
 app.use(cors());
 
-app.post('/api/signup', async (req, res) => {
+app.post('/signup', async (req, res) => {
   try {
     await client.connect();
     const collection = client.db("dataBase").collection("students");
@@ -21,6 +21,30 @@ app.post('/api/signup', async (req, res) => {
     } else {
       await collection.insertOne({ name: req.body.name, pass: req.body.password });
       res.json({ message: 'Sign up successful!' });
+    }
+  } catch (error) {
+    console.error('Error connecting to MongoDB:', error);
+    res.status(500).json({ message: 'Error connecting to MongoDB' });
+  } finally {
+    await client.close();
+  }
+});
+
+app.post('/login', async (req, res) => {
+  try {
+    await client.connect();
+    const collection = client.db("dataBase").collection("students");
+    
+    const existingUser = await collection.findOne({ name: req.body.name });
+    if (existingUser) {
+      if(req.body.password === existingUser.pass){
+        res.json({ message: 'Welcome '+req.body.name });
+      }
+      else{
+        res.json({message:"Wrong Password"})
+      }
+    } else {
+      res.json({ message: 'User doesnt exist!' });
     }
   } catch (error) {
     console.error('Error connecting to MongoDB:', error);
