@@ -1,8 +1,10 @@
-const UserDashboard = () => {
+import { useLocation } from "react-router";
 
+const UserDashboard = () => {
+    const Location = useLocation();
     return (
       <div>
-        <p>Welcome to your Dashboard</p>
+        <p>Welcome {Location.state.Name}</p>
       </div>
     );
   };

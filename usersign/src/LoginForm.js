@@ -25,7 +25,7 @@ const LoginForm = () => {
     axios.post(' http://localhost:3001/login', formData)
       .then(response => {
         if(response.data.message === '1'){
-          navigate('/UserDashboard');
+          navigate('/UserDashboard',{state:{Name: formData.name}});
         }
         else if(response.data.message === '0'){
           console.log("Wrong Password");
