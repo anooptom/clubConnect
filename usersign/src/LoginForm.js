@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router';
+
 
 const LoginForm = () => {
+ const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: '',
     password: ''
@@ -21,7 +24,15 @@ const LoginForm = () => {
     
     axios.post(' http://localhost:3001/login', formData)
       .then(response => {
-        console.log(response.data);
+        if(response.data.message === '1'){
+          navigate('/UserDashboard');
+        }
+        else if(response.data.message === '0'){
+          console.log("Wrong Password");
+        }
+        else{
+          console.log("User doesnt exist");
+        }
       })
       .catch(error => {
         console.error(error);

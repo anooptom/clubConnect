@@ -38,13 +38,13 @@ app.post('/login', async (req, res) => {
     const existingUser = await collection.findOne({ name: req.body.name });
     if (existingUser) {
       if(req.body.password === existingUser.pass){
-        res.json({ message: 'Welcome '+req.body.name });
+        res.json({ message: '1' });
       }
       else{
-        res.json({message:"Wrong Password"})
+        res.json({message:'0'})
       }
     } else {
-      res.json({ message: 'User doesnt exist!' });
+      res.json({ message: '-1' });
     }
   } catch (error) {
     console.error('Error connecting to MongoDB:', error);
