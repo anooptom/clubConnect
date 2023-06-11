@@ -49,7 +49,7 @@ const LoginForm = () => {
           name="password"
           value={formData.password}
           onChange={handleChange}
-        />
+        required/>
       </div>
       <button type="submit">Login</button>
     </form>

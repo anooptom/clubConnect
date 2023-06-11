@@ -49,7 +49,7 @@ const SignUpForm = () => {
           name="password"
           value={formData.password}
           onChange={handleChange}
-        />
+        required/>
       </div>
       <button type="submit">Sign Up</button>
     </form>
