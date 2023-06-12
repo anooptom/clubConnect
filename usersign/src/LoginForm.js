@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router';
+import "./LoginForm.css"
+import myImage from "./logo.jpg"
 
 
 const LoginForm = () => {
@@ -40,19 +42,25 @@ const LoginForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h1>Login </h1>
-      <div>
-        <label htmlFor="name">Name</label>
-        <input
-          type="text"
-          id="name"
-          name="name"
-          value={formData.name}
-          onChange={handleChange}
-        />
+
+    <div className="main">
+      
+      <div className="img">
+      <img src={myImage} alt="ere" />
       </div>
-      <div>
+
+
+    <div className="form">
+        
+        <h1 className="login">LOG IN</h1>
+
+        <form onSubmit={handleSubmit}>
+        <div className="input-container">
+            <label htmlFor="name">Username </label>
+            <input type="text" id="name" name="name" value={formData.name} onChange={handleChange}/>
+        </div>
+
+        <div className="input-container">
         <label htmlFor="password">Password</label>
         <input
           type="password"
@@ -61,9 +69,16 @@ const LoginForm = () => {
           value={formData.password}
           onChange={handleChange}
         required/>
-      </div>
-      <button type="submit">Login</button>
-    </form>
+        </div>
+
+        <div className="button-container">
+        <button type="submit">Login</button>
+        </div>
+        </form>
+
+    </div>
+  </div>
+
   );
 };
 
