@@ -45,12 +45,12 @@ const LoginForm = () => {
 
     <div className="main">
       
-      <div className="img">
-      <img src={myImage} alt="ere" />
+      <div className="imghome">
+      <img src={myImage} alt="logo" />
       </div>
 
 
-    <div className="form">
+    <div className="formlogin">
         
         <h1 className="login">LOG IN</h1>
 

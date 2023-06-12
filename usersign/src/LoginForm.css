@@ -32,7 +32,7 @@ input[type="submit"]:hover {
   justify-content: center;
 }
 
-.form {
+.formlogin {
   width: 35%;
   height: 60vh;
   background-color:#F3F4F6 ;
@@ -51,7 +51,7 @@ input[type="submit"]:hover {
   margin: 10px;
 }
 
-.img{
+.imghome{
   background-color:#ebf0f7;
   background-size: contain;
   margin-left: 75px;
