@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import "./LoginForm.css"
+import myImage from "./logo.jpg"
+import { useNavigate } from 'react-router';
 
 const SignUpForm = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: '',
     password: ''
@@ -21,7 +25,14 @@ const SignUpForm = () => {
     // Send form data to the server using Axios
     axios.post(' http://localhost:3001/signup', formData)
       .then(response => {
-        console.log(response.data);
+        if(response.data.message === '1'){
+          alert("User Created");
+          navigate('/UserDashboard',{state:{Name: formData.name}});
+        }
+        else{
+          alert("Existing User!,Login To Continue");
+          navigate('/login');
+        }
       })
       .catch(error => {
         console.error(error);
@@ -29,30 +40,41 @@ const SignUpForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h1>Sign Up</h1>
-      <div>
-        <label htmlFor="name">Name</label>
-        <input
-          type="text"
-          id="name"
-          name="name"
-          value={formData.name}
-          onChange={handleChange}
-        />
+    <div className="main">
+      
+    <div className="imghome">
+    <img src={myImage} alt="logo" />
+    </div>
+
+
+  <div className="formlogin">
+      
+      <h1>SIGN UP</h1>
+
+      <form onSubmit={handleSubmit}>
+      <div className="input-container">
+          <label htmlFor="name">Username </label>
+          <input type="text" id="name" name="name" value={formData.name} onChange={handleChange}/>
       </div>
-      <div>
-        <label htmlFor="password">Password</label>
-        <input
-          type="password"
-          id="password"
-          name="password"
-          value={formData.password}
-          onChange={handleChange}
-        required/>
+
+      <div className="input-container">
+      <label htmlFor="password">Password</label>
+      <input
+        type="password"
+        id="password"
+        name="password"
+        value={formData.password}
+        onChange={handleChange}
+      required/>
       </div>
-      <button type="submit">Sign Up</button>
-    </form>
+
+      <div className="button-container">
+      <input type="submit" value='SIGN UP'/>
+      </div>
+      </form>
+
+  </div>
+</div>
   );
 };
 

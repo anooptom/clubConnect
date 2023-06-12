@@ -17,10 +17,10 @@ app.post('/signup', async (req, res) => {
     
     const existingUser = await collection.findOne({ name: req.body.name });
     if (existingUser) {
-      res.json({ message: 'User already exists' });
+      res.json({ message: '0' });
     } else {
       await collection.insertOne({ name: req.body.name, pass: req.body.password });
-      res.json({ message: 'Sign up successful!' });
+      res.json({ message: '1' });
     }
   } catch (error) {
     console.error('Error connecting to MongoDB:', error);

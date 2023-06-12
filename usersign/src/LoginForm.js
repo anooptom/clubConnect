@@ -30,10 +30,10 @@ const LoginForm = () => {
           navigate('/UserDashboard',{state:{Name: formData.name}});
         }
         else if(response.data.message === '0'){
-          console.log("Wrong Password");
+          alert("Wrong Password");
         }
         else{
-          console.log("User doesnt exist");
+          alert("User doesn't exist");
         }
       })
       .catch(error => {
@@ -52,7 +52,7 @@ const LoginForm = () => {
 
     <div className="formlogin">
         
-        <h1 className="login">LOG IN</h1>
+        <h1>LOG IN</h1>
 
         <form onSubmit={handleSubmit}>
         <div className="input-container">
@@ -72,7 +72,7 @@ const LoginForm = () => {
         </div>
 
         <div className="button-container">
-        <input type="submit" value='Submit'/>
+        <input type="submit" value='LOG IN'/>
         </div>
         </form>
 
