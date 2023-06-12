@@ -30,10 +30,58 @@ app.post('/signup', async (req, res) => {
   }
 });
 
-app.post('/login', async (req, res) => {
+app.post('/admin', async (req, res) => {
+  try {
+    await client.connect();
+    const collection = client.db("dataBase").collection("admin");
+    
+    const existingUser = await collection.findOne({ name: req.body.name });
+    if (existingUser) {
+      if(req.body.password === existingUser.pass){
+        res.json({ message: '1' });
+      }
+      else{
+        res.json({message:'0'})
+      }
+    } else {
+      res.json({ message: '-1' });
+    }
+  } catch (error) {
+    console.error('Error connecting to MongoDB:', error);
+    res.status(500).json({ message: 'Error connecting to MongoDB' });
+  } finally {
+    await client.close();
+  }
+});
+
+app.post('/user', async (req, res) => {
   try {
     await client.connect();
     const collection = client.db("dataBase").collection("students");
+    
+    const existingUser = await collection.findOne({ name: req.body.name });
+    if (existingUser) {
+      if(req.body.password === existingUser.pass){
+        res.json({ message: '1' });
+      }
+      else{
+        res.json({message:'0'})
+      }
+    } else {
+      res.json({ message: '-1' });
+    }
+  } catch (error) {
+    console.error('Error connecting to MongoDB:', error);
+    res.status(500).json({ message: 'Error connecting to MongoDB' });
+  } finally {
+    await client.close();
+  }
+});
+
+app.post('/faculty', async (req, res) => {
+  try {
+    await client.connect();
+    const collection = client.db("dataBase").collection("faculty");
     
     const existingUser = await collection.findOne({ name: req.body.name });
     if (existingUser) {

@@ -26,12 +26,11 @@ const SignUpForm = () => {
     axios.post(' http://localhost:3001/signup', formData)
       .then(response => {
         if(response.data.message === '1'){
-          alert("User Created");
           navigate('/UserDashboard',{state:{Name: formData.name}});
         }
         else{
           alert("Existing User!,Login To Continue");
-          navigate('/login');
+          navigate('/user');
         }
       })
       .catch(error => {
@@ -49,7 +48,7 @@ const SignUpForm = () => {
 
   <div className="formlogin">
       
-      <h1>SIGN UP</h1>
+      <h1>REGISTER</h1>
 
       <form onSubmit={handleSubmit}>
       <div className="input-container">

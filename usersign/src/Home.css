@@ -1,0 +1,35 @@
+.Home{
+    overflow-x: hidden;
+    height: 100vh;
+}
+.SVG{
+    transform: translateY(-7vh);
+    margin: 0%;
+}
+.logocontain img{
+    border-radius: 5%;
+    margin:  10vh 5vh 0 15vh;
+    height: 40vh;
+    transform: translateY(-10vh);  
+}
+.logocontain{
+    display: flex;
+}
+hr{
+    margin: 0 15vh;
+    height: 40vh;
+}
+
+.btn{
+    gap: 3px;
+    width: 19vh;
+    height: 5vh;
+    background-color:#19456e ;
+    color: aliceblue;
+    margin-right:1vh;
+}
+
+.link{
+    text-decoration: none;
+    color: white;
+}

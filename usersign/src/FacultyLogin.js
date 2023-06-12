@@ -3,11 +3,9 @@ import axios from 'axios';
 import { useNavigate } from 'react-router';
 import "./LoginForm.css"
 import myImage from "./logo.jpg"
-import {Link} from 'react-router-dom';
 
-
-const LoginForm = () => {
- const navigate = useNavigate();
+const FacultyLogin =()=>{
+    const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: '',
     password: ''
@@ -24,11 +22,10 @@ const LoginForm = () => {
     e.preventDefault();
     console.log(formData); 
 
-    
-    axios.post(' http://localhost:3001/user', formData)
+    axios.post(' http://localhost:3001/faculty', formData)
       .then(response => {
         if(response.data.message === '1'){
-          navigate('/UserDashboard',{state:{Name: formData.name}});
+          navigate('/FacultyDashboard',{state:{Name: formData.name}});
         }
         else if(response.data.message === '0'){
           alert("Wrong Password");
@@ -53,7 +50,7 @@ const LoginForm = () => {
 
     <div className="formlogin">
         
-        <h1>STUDENT LOG IN</h1>
+        <h1>FACULTY LOG IN</h1>
 
         <form onSubmit={handleSubmit}>
         <div className="input-container">
@@ -73,8 +70,7 @@ const LoginForm = () => {
         </div>
 
         <div className="button-container">
-        <p className="psignup">Not a user ? <Link to='/signup' className='linkk'>Sign Up</Link> </p>
-        <input type="submit" className="plogin" value="LOG IN"/>
+        <input type="submit" value='LOG IN'/>
         </div>
         </form>
 
@@ -84,4 +80,5 @@ const LoginForm = () => {
   );
 };
 
-export default LoginForm;
+export default FacultyLogin;
+
