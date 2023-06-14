@@ -1,7 +1,10 @@
+import './AdminDashboard.css'
 import { FileOutlined, PieChartOutlined, UserOutlined,LogoutOutlined } from '@ant-design/icons';
-import { Breadcrumb, Layout, Menu, theme } from 'antd';
+import { Layout, Menu, theme } from 'antd';
 import { useState } from 'react';
-const { Header, Content, Footer, Sider } = Layout;
+const {Content, Sider } = Layout;
+
+
 function getItem(label, key, icon, children) {
   return {
     key,
@@ -10,6 +13,7 @@ function getItem(label, key, icon, children) {
     label,
   };
 }
+
 const items = [
   getItem('Home', '1', <PieChartOutlined />),
   getItem('Faculty', 'sub1', <UserOutlined />, [
@@ -27,6 +31,7 @@ const items = [
   ]),
   getItem('Log Out', '9', <LogoutOutlined />),
 ];
+
 const AdminDashboard = () => {
     const [collapsed, setCollapsed] = useState(false);
     const [selectedKey, setSelectedKey] = useState('1');
@@ -55,11 +60,6 @@ const AdminDashboard = () => {
       });
     };
   
-    const getContent = () => {
-      const selectedItem = items.find(item => item.key === selectedKey);
-      return selectedItem ? selectedItem.content : null;
-    };
-  
     return (
       <Layout style={{ minHeight: '100vh' }}>
         <Sider collapsible collapsed={collapsed} onCollapse={setCollapsed}>
@@ -68,19 +68,20 @@ const AdminDashboard = () => {
             {getMenuItems(items)}
           </Menu>
         </Sider>
-        <Layout>
-          <Header style={{ padding: 0, background: colorBgContainer }} />
-          <Content style={{ margin: '0 16px' }}>
-            <Breadcrumb style={{ margin: '16px 0' }}>
-              <Breadcrumb.Item>Admin</Breadcrumb.Item>
-              <Breadcrumb.Item>{items.find(item => item.key === selectedKey)?.label}</Breadcrumb.Item>
-            </Breadcrumb>
-            <div style={{ padding: 24, minHeight: 360, background: colorBgContainer }}>
-              {getContent()}
-            </div>
+        
+          <Content>
+            {selectedKey === '1' && (
+                <div>
+                <h1 className='dash'>ADMIN DASHBOARD</h1>
+                </div>
+            )}
+            {selectedKey === '6' && (
+                <div>
+                <h1>clicked po create</h1>
+                </div>
+            )}
           </Content>
-          <Footer style={{ textAlign: 'center' }}>AAA ©2023</Footer>
-        </Layout>
+        
       </Layout>
     );
   };
