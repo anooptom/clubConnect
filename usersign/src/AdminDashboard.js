@@ -34,7 +34,25 @@ const AdminDashboard = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleDelete = (e) => {
+    e.preventDefault();
+
+    axios.post(' http://localhost:3001/clubDelete', clubData)
+      .then(response => {
+        if(response.data.message === '1'){
+          alert("Club Deleted")
+        }
+        else if(response.data.message === '0'){
+          alert("Club Doesn't Exist");
+        }
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  };
+
+
+  const handleCreate = (e) => {
     e.preventDefault();
 
     axios.post(' http://localhost:3001/clubCreate', clubData)
@@ -183,7 +201,7 @@ const AdminDashboard = () => {
             <center>
               <h2>CLUB CREATION</h2>
             </center>
-            <form className="club-form" onSubmit={handleSubmit}>
+            <form className="club-form" onSubmit={handleCreate}>
               <label className="label-club" >Club Name: </label>
               <input className="input-club" type="text" id="nme" name="nme" value={clubData.nme} onChange={handleChange}/>
               
@@ -200,12 +218,10 @@ const AdminDashboard = () => {
             <center>
               <h2>CLUB DELETION</h2>
             </center>
-            <form className="club-form">
-              <label className="label-club">Name of the club: </label>
-              <input className="input-club" type="text" />
-              <label className="label-club">Faculty Head: </label>
-              <input type="text" />
-              <button className="club-create-button">DELETE</button>
+            <form className="club-form" onSubmit={handleDelete}>
+              <label className="label-club">Club Name: </label>
+              <input className="input-club" type="text" id="nme" name="nme" value={clubData.nme} onChange={handleChange}/>
+              <button className="club-create-button" type='submit'>DELETE</button>
             </form>
           </div>
         )}

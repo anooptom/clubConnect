@@ -113,6 +113,30 @@ app.post('/clubCreate', async (req, res) => {
   }
 });
 
+app.post('/clubDelete', async (req, res) => {
+  try {
+    await client.connect();
+    const collection = client.db("dataBase").collection("club");
+    
+    const existingclub = await collection.findOne({ name: req.body.nme });
+
+    if (existingclub) {
+        await collection.deleteOne({name: req.body.nme});
+        res.json({message :'1'})
+      }
+    
+    else{
+        res.json({message:'0'})
+      }
+
+  } catch (error) {
+    console.error('Error connecting to MongoDB:', error);
+    res.status(500).json({ message: 'Error connecting to MongoDB' });
+  } finally {
+    await client.close();
+  }
+});
+
 app.post('/user', async (req, res) => {
   try {
     await client.connect();
