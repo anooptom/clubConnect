@@ -1,3 +1,164 @@
 .dash{
     text-align: center;
 }
+
+.content-main1{
+    border-radius: 16px;
+    background: linear-gradient(145deg, #cacaca, #f0f0f0);
+    box-shadow:  17px 10px 10px #b2a1a1,
+                 -17px -17px 34px #ffffff;
+    background-color: black;
+    height: 32vh;
+    width: 50vh;
+    margin: 3vw 0 6vw 0;
+    font-size: 3.5vh;
+    padding: 8vh;
+}
+.ant-layout-sider-children{
+    position: fixed;
+    max-width: 200px;
+    width:200px;
+}
+.cards{
+    display:flex;
+}
+.content-main2{
+    display: block;
+    margin: 0 20vh 0 18vh;
+}
+
+.content-main{
+    display: block;
+    margin: 0 18vh 0 20vh;
+}
+
+.content-input{
+    border: 20px;
+}
+
+.label-content{
+    margin: 3.5vh 0;
+    padding: 2vh;
+
+}
+
+.content-club{
+    font-size: 2.5vh;
+}
+
+
+.form-main1 {
+    width: 50%;
+    margin: 0 auto;
+    background: linear-gradient(145deg, #cacaca, #f0f0f0);
+    box-shadow:  17px 17px 34px #a1a1a1,
+                 -17px -17px 34px #ffffff;
+    background-color: black;
+    border-radius: 16px;
+
+  }
+  
+  label,
+  input {
+    
+    display: inline-block;
+  }
+  
+  label {
+    width: 30%;
+    text-align: right;
+  }
+  
+  label+input {
+    width: 30%;
+    margin: 0 30% 0 4%;
+  }
+  
+  
+  input+input {
+    float: right;
+  }
+
+  .fbutton{
+    background-color: #a1a1a1;
+  }
+
+
+  .faculty-delete{
+    height:60vh;
+    width:50vh;
+    background: linear-gradient(145deg, #cacaca, #f0f0f0);
+    box-shadow:  17px 17px 34px #a1a1a1;
+    margin-top: 10vh;            
+    padding:.5vh;
+    margin-left: 10vh;
+    border: 2vw;
+    border-radius: 1vw;
+  }
+  
+  #button-delete{
+        height:6vh;
+    width: 8vh;
+    border: 1px solid black;
+    border-radius: 0vw;
+    background:0;
+    box-shadow: 0px;
+  }
+
+  
+.club-create-button{
+  margin-left: 60vw;
+}
+
+.main-users-faculty,.main-users-students{
+  display :flex;
+  width:70vw;
+  height:80vh;
+  margin-left:8vw ;
+  margin-top: 10vh;
+  background: linear-gradient(145deg, #cacaca, #f0f0f0);
+    box-shadow:  17px 17px 34px #a1a1a1;
+}
+
+.name-users-faculty,.name-users-students{
+  width:35vw;
+  height:80vh;
+  padding: 2vw;
+  margin: 2vh;
+  border-radius: 1vw;
+}
+
+.mail-users-faculty,.mail-users-students{
+  width:35vw;
+  height:80vh;
+  padding: 2vw;
+  margin: 2vh;
+}
+
+.main-club{
+  height:100vh;
+
+}
+.main-club1{
+  display :flex;
+  width:70vw;
+  height:80vh;
+  margin-left:4vw ;
+  margin-top: 4vh;
+  background: linear-gradient(145deg, #cacaca, #f0f0f0);
+  box-shadow:  17px 17px 34px #a1a1a1;
+}
+
+.search-name{
+  width:35vw;
+  height:80vh;
+  padding: 2vw;
+  margin: 2vh;
+}
+
+.search-mail{
+  width:35vw;
+  height:80vh;
+  padding: 2vw;
+  margin: 2vh;
+}

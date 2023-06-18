@@ -20,7 +20,6 @@ const AdminLogin =()=>{
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formData); 
 
     axios.post(' http://localhost:3001/admin', formData)
       .then(response => {
