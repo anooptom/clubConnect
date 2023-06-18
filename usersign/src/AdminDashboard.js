@@ -2,6 +2,7 @@ import './AdminDashboard.css';
 import { FileOutlined, HomeOutlined, UserOutlined, LogoutOutlined, TeamOutlined, GlobalOutlined } from '@ant-design/icons';
 import { Layout, Menu } from 'antd';
 import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 const { Content, Sider } = Layout;
 var noe, nof,noc,nos;
@@ -14,10 +15,44 @@ function getItem(label, key, icon, children) {
   };
 }
 
+
+
 const AdminDashboard = () => {
   const [collapsed, setCollapsed] = useState(false);
   const [selectedKey, setSelectedKey] = useState('1');
   const [data, setData] = useState() 
+
+  const [clubData, setclubData] = useState({
+    nme: '',
+    head: ''
+  });
+
+  const handleChange = (e) => {
+    setclubData({
+      ...clubData,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    axios.post(' http://localhost:3001/clubCreate', clubData)
+      .then(response => {
+        if(response.data.message === '1'){
+          alert("Success")
+        }
+        else if(response.data.message === '0'){
+          alert("Club Already Exist");
+        }
+        else{
+          alert("Faculty Not Found");
+        }
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  };
 
   useEffect(() =>{
     const fetchData = async () =>{
@@ -148,12 +183,14 @@ const AdminDashboard = () => {
             <center>
               <h2>CLUB CREATION</h2>
             </center>
-            <form className="club-form">
-              <label className="label-club">Name of the club: </label>
-              <input className="input-club" type="text" />
+            <form className="club-form" onSubmit={handleSubmit}>
+              <label className="label-club" >Club Name: </label>
+              <input className="input-club" type="text" id="nme" name="nme" value={clubData.nme} onChange={handleChange}/>
+              
               <label className="label-club">Faculty Head: </label>
-              <input type="text" />
-              <button className="club-create-button">CREATE</button>
+              <input type="text" id="head" name="head" value={clubData.head} onChange={handleChange}/>
+              
+              <button className="club-create-button" type='submit'>CREATE</button>
             </form>
           </div>
         )}

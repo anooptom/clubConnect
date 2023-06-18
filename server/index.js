@@ -84,6 +84,35 @@ app.post('/admin', async (req, res) => {
   }
 });
 
+app.post('/clubCreate', async (req, res) => {
+  try {
+    await client.connect();
+    const collection = client.db("dataBase").collection("club");
+    const collection1 = client.db("dataBase").collection("faculty");
+    
+    const existingclub = await collection.findOne({ name: req.body.nme });
+    const faculty = await collection1.findOne({name : req.body.head})
+
+    if (existingclub) {
+        res.json({ message: '0' });
+      }
+    
+    else if(!faculty){
+        res.json({message:'2'})
+      }
+    else{  
+      await collection.insertOne({ name: req.body.nme, head: req.body.head });
+      res.json({ message: '1' });
+    }
+
+  } catch (error) {
+    console.error('Error connecting to MongoDB:', error);
+    res.status(500).json({ message: 'Error connecting to MongoDB' });
+  } finally {
+    await client.close();
+  }
+});
+
 app.post('/user', async (req, res) => {
   try {
     await client.connect();
