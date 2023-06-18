@@ -3,6 +3,7 @@ import { FileOutlined, HomeOutlined, UserOutlined, LogoutOutlined, TeamOutlined,
 import { Layout, Menu } from 'antd';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router';
 
 const { Content, Sider } = Layout;
 var noe, nof,noc,nos;
@@ -18,6 +19,7 @@ function getItem(label, key, icon, children) {
 
 
 const AdminDashboard = () => {
+  const navigate = useNavigate();
   const [collapsed, setCollapsed] = useState(false);
   const [selectedKey, setSelectedKey] = useState('1');
   const [data, setData] = useState() 
@@ -330,26 +332,7 @@ const AdminDashboard = () => {
         )}
 
         {selectedKey === '9' && (
-          <div className="name-users-students">
-            <h1>Search</h1>
-            <input type="search" />
-
-            <div className="main-club1">
-              <div className="search-name">
-                <center>
-                  <h1>Name:</h1>
-                </center>
-                <p value="p-name"></p>
-              </div>
-
-              <div className="search-mail">
-                <center>
-                  <h1>Email:</h1>
-                </center>
-                <p value="p-mail"></p>
-              </div>
-            </div>
-          </div>
+          navigate('/admin')
         )}
       </Content>
     </Layout>
