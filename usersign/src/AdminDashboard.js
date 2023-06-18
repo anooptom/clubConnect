@@ -1,10 +1,10 @@
 import './AdminDashboard.css';
 import { FileOutlined, HomeOutlined, UserOutlined, LogoutOutlined, TeamOutlined, GlobalOutlined } from '@ant-design/icons';
 import { Layout, Menu } from 'antd';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const { Content, Sider } = Layout;
-
+var noe, nof,noc,nos;
 function getItem(label, key, icon, children) {
   return {
     key,
@@ -17,7 +17,26 @@ function getItem(label, key, icon, children) {
 const AdminDashboard = () => {
   const [collapsed, setCollapsed] = useState(false);
   const [selectedKey, setSelectedKey] = useState('1');
+  const [data, setData] = useState() 
 
+  useEffect(() =>{
+    const fetchData = async () =>{
+      await fetch('http://localhost:3001/data',{method:'get', mode: 'cors'})
+      .then(response=>(response.json()))
+      .then(json=>{        
+        setData(json);
+      })
+    };
+    fetchData();  
+  },[]);
+  
+  if(data !== undefined){
+    noe = data.noe;
+    nof = data.nof;
+    nos = data.nos;
+    noc = data.noc;
+  }
+  
 
   const items = [
     getItem('Home', '1', <HomeOutlined />),
@@ -66,21 +85,22 @@ const AdminDashboard = () => {
               <div className="content-main">
                 <div className="content-main1">
                   <p>Clubs</p>
-                  
+                  {noc}
                 </div>
                 <div className="content-main1">
                   <p>Faculties</p>
-                  
+                  {nof}
                 </div>
               </div>
               <div className="content-main2">
                 <div className="content-main1">
                   <p>Students</p>
+                  {nos}
                   
                 </div>
                 <div className="content-main1">
                   <p>Upcoming Events</p>
-                  
+                  {noe}
                 </div>
               </div>
             </div>
