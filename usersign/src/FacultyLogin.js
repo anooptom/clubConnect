@@ -7,8 +7,8 @@ import myImage from "./logo.jpg"
 const FacultyLogin =()=>{
     const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    name: '',
-    password: ''
+    Email: '',
+    Pass: ''
   });
 
   const handleChange = (e) => {
@@ -54,17 +54,17 @@ const FacultyLogin =()=>{
 
         <form onSubmit={handleSubmit}>
         <div className="input-container">
-            <label htmlFor="name">Username </label>
-            <input type="text" id="name" name="name" value={formData.name} onChange={handleChange}/>
+            <label >Email </label>
+            <input type="text" id="Email" name="Email" value={formData.Email} onChange={handleChange}/>
         </div>
 
         <div className="input-container">
         <label htmlFor="password">Password</label>
         <input
           type="password"
-          id="password"
-          name="password"
-          value={formData.password}
+          id="Pass"
+          name="Pass"
+          value={formData.Pass}
           onChange={handleChange}
         required/>
         </div>

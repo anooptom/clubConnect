@@ -27,6 +27,32 @@ const AdminDashboard = () => {
     head: ''
   });
 
+  const [FacultyData, setFacultyData] = useState({
+    Fname: '',
+    Email: '',
+    Pass: '',
+    club: ''
+  });
+
+  const [FacultyDData, setFacultyDData] = useState({
+    Email: ''
+  });
+
+  const handleFChange = (e) => {
+    setFacultyData({
+      ...FacultyData,
+      [e.target.name]: e.target.value
+    });
+    
+  };
+
+  const handleFDChange = (e) => {
+    setFacultyDData({
+      ...FacultyDData,
+      [e.target.name]: e.target.value
+    });
+  };
+
   const handleChange = (e) => {
     setclubData({
       ...clubData,
@@ -51,6 +77,37 @@ const AdminDashboard = () => {
       });
   };
 
+  const handleFSubmit = (e) => {
+    e.preventDefault();
+    axios.post(' http://localhost:3001/facultyCreate', FacultyData)
+      .then(response => {
+        if(response.data.message === '0'){
+          alert("Faculty Already Exists")
+        }
+        else if(response.data.message === '1'){
+          alert("Faculty Created");
+        }
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  };
+
+  const handleFDSubmit = (e) => {
+    e.preventDefault();
+    axios.post(' http://localhost:3001/facultyDelete', FacultyDData)
+      .then(response => {
+        if(response.data.message === '0'){
+          alert("Faculty Doesn't Exist")
+        }
+        else if(response.data.message === '1'){
+          alert("Faculty Deleted");
+        }
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  };
 
   const handleCreate = (e) => {
     e.preventDefault();
@@ -165,35 +222,41 @@ const AdminDashboard = () => {
             <center>
               <h2>FACULTY CREATION</h2>
             </center>
-            <form className="form-main1">
+            <form className="form-main1" onSubmit={handleFSubmit}>
               <label className="form-label">Name: </label>
-              <input type="text" />
+              <input type="text" className="input-club"  id="Fname" name="Fname" value={FacultyData.Fname}
+               onChange={handleFChange}/>
+              
               <label className="form-label">Email: </label>
-              <input type="text" />
-              <label className="form-label">Initial password: </label>
-              <input type="text" />
-              <label>Club</label>
-              <select>
-                <option>1</option>
-              </select>
-              <button className="f-button">CREATE</button>
+              <input type="text" className="input-club"  id="Email" name="Email" value={FacultyData.Email}
+               onChange={handleFChange} />
+              
+              <label className="form-label">Initial Password: </label>
+              <input type="password" className="input-club"  id="Pass" name="Pass" value={FacultyData.Pass}
+               onChange={handleFChange}/>
+              
+              <label className="form-label">Club</label>
+              <input type="text" className="input-club"  id="club" name="club" value={FacultyData.club}
+               onChange={handleFChange}/>
+              <button className="f-button" type='submit'>CREATE</button>
             </form>
           </div>
         )}
 
         {selectedKey === '3' && (
-          <div className="faculty-delete">
-            <h2>FACULTY DELETION</h2>
-            <div>
-              <p>SEARCH</p>
-              <input type="email" />
-              <p>NAME</p>
-              <input type="text" />
-              <button className="faculty-delete" id="button-delete">
-                DELETE
-              </button>
-            </div>
-          </div>
+           <div>
+           <center>
+             <h2>FACULTY DELETION</h2>
+           </center>
+           <form className="form-main1" onSubmit={handleFDSubmit}>
+             
+             <label>Email: </label>
+             <input type="text" className="input-club"  id="Email" name="Email" value={FacultyDData.Email}
+              onChange={handleFDChange} />             
+
+             <button  type='submit'>DELETE</button>
+           </form>
+         </div>
         )}
 
         {selectedKey === '4' && (
