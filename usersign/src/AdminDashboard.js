@@ -23,6 +23,7 @@ const AdminDashboard = () => {
   const [collapsed, setCollapsed] = useState(false);
   const [selectedKey, setSelectedKey] = useState('1');
   const [data, setData] = useState() ;
+  const [fac,setFac] =useState([]);
 
   const [clubData, setclubData] = useState({
     nme: '',
@@ -147,16 +148,18 @@ const AdminDashboard = () => {
     await fetch('http://localhost:3001/facultydisplay',{method:'get',mode:'cors'})
     .then(res=>(res.json()))
     .then(json=>{
-      console.log(json);
+        setFac(json);
     })
   };
-  if(data !== undefined){
+  
+  if(data){
     noe = data.noe;
     nof = data.nof;
     nos = data.nos;
     noc = data.noc;
   }
   
+
 
   const items = [
     getItem('Home', '1', <HomeOutlined />),
@@ -311,18 +314,26 @@ const AdminDashboard = () => {
         )}
 
         {selectedKey === '7' && (
+          <div>
           <div className="main-users-faculty">
             <div className="name-users-faculty">
               <center>
-                <h1>Name:</h1>
+                <h1>Name: </h1>
+                {fac.map((data)=>{
+                 return( <p>{data.name}</p>);
+                })}
               </center>
             </div>
 
             <div className="mail-users-faculty">
               <center>
                 <h1>Email:</h1>
+                {fac.map((data)=>{
+                 return( <p>{data.Email}</p>);
+                })}
               </center>
             </div>
+          </div>
           </div>
         )}
 

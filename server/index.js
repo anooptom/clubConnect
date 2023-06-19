@@ -16,8 +16,7 @@ app.get('/facultydisplay', async (req, res) => {
     await client.connect();
     const collectionf= client.db("dataBase").collection("faculty");
     
-    const facultyv = await collectionf.findOne({});
-    console.log(facultyv);
+    const facultyv = await collectionf.find({}).toArray();
     res.json(facultyv)
 
   } catch (error) {
