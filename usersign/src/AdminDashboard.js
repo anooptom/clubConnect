@@ -24,6 +24,8 @@ const AdminDashboard = () => {
   const [selectedKey, setSelectedKey] = useState('1');
   const [data, setData] = useState() ;
   const [fac,setFac] =useState([]);
+  const [usr,setUsr] =useState([]);
+  const [clb,setClb] =useState([]);
 
   const [clubData, setclubData] = useState({
     nme: '',
@@ -151,6 +153,22 @@ const AdminDashboard = () => {
         setFac(json);
     })
   };
+
+  const fetchclub = async()=>{
+    await fetch('http://localhost:3001/clubdisplay',{method:'get',mode:'cors'})
+    .then(res=>(res.json()))
+    .then(json=>{
+        setClb(json);
+    })
+  };
+
+  const fetchuser = async()=>{
+    await fetch('http://localhost:3001/userdisplay',{method:'get',mode:'cors'})
+    .then(res=>(res.json()))
+    .then(json=>{
+        setUsr(json);
+    })
+  };
   
   if(data){
     noe = data.noe;
@@ -163,9 +181,8 @@ const AdminDashboard = () => {
 
   const items = [
     getItem('Home', '1', <HomeOutlined />),
-    getItem('PO Create', '6', <FileOutlined />),
     getItem('Faculty', 'sub1', <UserOutlined />, [getItem('Create', '2'), getItem('Delete', '3')]),
-    getItem('Club', 'sub2', <GlobalOutlined />, [getItem('Create', '4'), getItem('Delete', '5')]),
+    getItem('Club', 'sub2', <GlobalOutlined />, [getItem('View','10'),getItem('Create', '4'), getItem('Delete', '5')]),
     getItem('Users', 'sub3', <TeamOutlined />, [getItem('Faculty', '7'), getItem('Students', '8')]),
     getItem('Log Out', '9', <LogoutOutlined />),
   ];
@@ -173,6 +190,14 @@ const AdminDashboard = () => {
   const handleMenuClick = ({ key }) => {
     if(key==="7"){
       fetchfaculty();
+    }
+
+    if(key ==='10'){
+      fetchclub();
+    }
+
+    if(key ==='8'){
+      fetchuser();
     }
     setSelectedKey(key);
   };
@@ -305,20 +330,12 @@ const AdminDashboard = () => {
           </div>
         )}
 
-        {selectedKey === '6' && (
-          <div className="po-create">
-            <h2>PO CREATE: </h2>
-            <input type="text" />
-            <button className="po-button">Create</button>
-          </div>
-        )}
-
         {selectedKey === '7' && (
           <div>
           <div className="main-users-faculty">
             <div className="name-users-faculty">
               <center>
-                <h1>Name: </h1>
+                <h1>Name </h1>
                 {fac.map((data)=>{
                  return( <p>{data.name}</p>);
                 })}
@@ -327,9 +344,19 @@ const AdminDashboard = () => {
 
             <div className="mail-users-faculty">
               <center>
-                <h1>Email:</h1>
+                <h1>Email</h1>
                 {fac.map((data)=>{
                  return( <p>{data.Email}</p>);
+                })}
+              </center>
+            </div>
+
+            
+            <div className="mail-users-faculty">
+              <center>
+                <h1>Club</h1>
+                {fac.map((data)=>{
+                 return( <p>{data.club}</p>);
                 })}
               </center>
             </div>
@@ -341,15 +368,53 @@ const AdminDashboard = () => {
           <div className="main-users-students">
             <div className="name-users-students">
               <center>
-                <h1>Name:</h1>
+                <h1>Name</h1>
+                {usr.map((data)=>{
+                 return( <p>{data.name}</p>);
+                })}
               </center>
             </div>
 
             <div className="mail-users-students">
               <center>
-                <h1>Email:</h1>
+                <h1>UserId</h1>
+                {usr.map((data)=>{
+                 return( <p>{data.name}</p>);
+                })}
               </center>
             </div>
+
+            <div className="mail-users-students">
+              <center>
+                <h1>Club</h1>
+                {usr.map((data)=>{
+                 return( <p>{data.name}</p>);
+                })}
+              </center>
+            </div>
+          </div>
+        )}
+        
+        {selectedKey === '10' && (
+          <div className="main-users-students">
+            <div className="name-users-students">
+              <center>
+                <h1>Name</h1>
+                {clb.map((data)=>{
+                 return( <p>{data.name}</p>);
+                })}
+              </center>
+            </div>
+
+            <div className="mail-users-students">
+              <center>
+                <h1>FacultyHead</h1>
+                {clb.map((data)=>{
+                 return( <p>{data.head}</p>);
+                })}
+              </center>
+            </div>
+
           </div>
         )}
 

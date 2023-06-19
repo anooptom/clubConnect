@@ -27,6 +27,38 @@ app.get('/facultydisplay', async (req, res) => {
   }
 });
 
+app.get('/userdisplay', async (req, res) => {
+  try {
+    await client.connect();
+    const collections= client.db("dataBase").collection("students");
+    
+    const userv = await collections.find({}).toArray();
+    res.json(userv);
+
+  } catch (error) {
+    console.error('Error connecting to MongoDB:', error);
+    res.status(500).json({ message: 'Error connecting to MongoDB' });
+  } finally {
+    await client.close();
+  }
+});
+
+app.get('/clubdisplay', async (req, res) => {
+  try {
+    await client.connect();
+    const collectionc= client.db("dataBase").collection("club");
+    
+    const clb = await collectionc.find({}).toArray();
+    res.json(clb);
+
+  } catch (error) {
+    console.error('Error connecting to MongoDB:', error);
+    res.status(500).json({ message: 'Error connecting to MongoDB' });
+  } finally {
+    await client.close();
+  }
+});
+
 app.get('/data',async(req,res) =>{
   try{
     await client.connect();
