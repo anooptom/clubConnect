@@ -22,7 +22,7 @@ const AdminDashboard = () => {
   const navigate = useNavigate();
   const [collapsed, setCollapsed] = useState(false);
   const [selectedKey, setSelectedKey] = useState('1');
-  const [data, setData] = useState() 
+  const [data, setData] = useState() ;
 
   const [clubData, setclubData] = useState({
     nme: '',
@@ -139,7 +139,19 @@ const AdminDashboard = () => {
         setData(json);
       })
     };
+  
     fetchData();  
+
+    const fetchfaculty = async()=>{
+      await fetch('http://localhost:3001/facultydisplay',{method:'get',mode:'cors'})
+      .then(res=>(res.json()))
+      .then(json=>{
+        console.log(json);
+      })
+    };
+
+    fetchfaculty();
+
   },[]);
   
   if(data !== undefined){

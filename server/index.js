@@ -10,6 +10,24 @@ const client = new MongoClient(url);
 app.use(bodyParser.json());
 app.use(cors());
 
+//faculty display
+app.get('/facultydisplay', async (req, res) => {
+  try {
+    await client.connect();
+    const collectionf= client.db("dataBase").collection("faculty");
+    
+    const facultyv = await collectionf.findOne({});
+    console.log(facultyv);
+    res.json(facultyv)
+
+  } catch (error) {
+    console.error('Error connecting to MongoDB:', error);
+    res.status(500).json({ message: 'Error connecting to MongoDB' });
+  } finally {
+    await client.close();
+  }
+});
+
 app.get('/data',async(req,res) =>{
   try{
     await client.connect();
@@ -34,9 +52,7 @@ app.get('/data',async(req,res) =>{
   catch (error) {
     console.error('Error connecting to MongoDB:', error);
     res.status(500).json({ message: 'Error connecting to MongoDB' });
-  } finally {
-    await client.close();
-  }
+  } 
 
 });
 
@@ -55,9 +71,7 @@ app.post('/signup', async (req, res) => {
   } catch (error) {
     console.error('Error connecting to MongoDB:', error);
     res.status(500).json({ message: 'Error connecting to MongoDB' });
-  } finally {
-    await client.close();
-  }
+  } 
 });
 
 app.post('/admin', async (req, res) => {
