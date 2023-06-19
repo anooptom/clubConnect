@@ -141,19 +141,15 @@ const AdminDashboard = () => {
     };
   
     fetchData();  
-
-    const fetchfaculty = async()=>{
-      await fetch('http://localhost:3001/facultydisplay',{method:'get',mode:'cors'})
-      .then(res=>(res.json()))
-      .then(json=>{
-        console.log(json);
-      })
-    };
-
-    fetchfaculty();
-
   },[]);
   
+  const fetchfaculty = async()=>{
+    await fetch('http://localhost:3001/facultydisplay',{method:'get',mode:'cors'})
+    .then(res=>(res.json()))
+    .then(json=>{
+      console.log(json);
+    })
+  };
   if(data !== undefined){
     noe = data.noe;
     nof = data.nof;
@@ -172,6 +168,9 @@ const AdminDashboard = () => {
   ];
 
   const handleMenuClick = ({ key }) => {
+    if(key==="7"){
+      fetchfaculty();
+    }
     setSelectedKey(key);
   };
 
