@@ -2,7 +2,6 @@
     text-align: center;
 }
 
-<<<<<<< HEAD
 .content-main1{
     border-radius: 16px;
     background: linear-gradient(145deg, #cacaca, #f0f0f0);
@@ -31,23 +30,6 @@
 .content-main{
     display: block;
     margin: 0 18vh 0 20vh;
-=======
-.content-main1,.content-main2,.content-main3,.content-main4{
-    border-radius: 16px;
-    background: linear-gradient(145deg, #cacaca, #f0f0f0);
-    box-shadow:  17px 17px 34px #a1a1a1,
-                 -17px -17px 34px #ffffff;
-    background-color: black;
-    height: 32vh;
-    width: 40vh;
-    margin: 3vw;
-    font-size: 3.5vh;
-    padding: 8vh;
-}
-
-.content-main{
-    display: flex;
->>>>>>> c987dcb2ff8982c1286dfc7624e69a27feb047ea
 }
 
 .content-input{
@@ -179,8 +161,4 @@
   height:80vh;
   padding: 2vw;
   margin: 2vh;
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> c987dcb2ff8982c1286dfc7624e69a27feb047ea
