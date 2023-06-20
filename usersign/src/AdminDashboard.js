@@ -1,5 +1,5 @@
 import './AdminDashboard.css';
-import { FileOutlined, HomeOutlined, UserOutlined, LogoutOutlined, TeamOutlined, GlobalOutlined } from '@ant-design/icons';
+import {HomeOutlined, UserOutlined, LogoutOutlined, TeamOutlined, GlobalOutlined } from '@ant-design/icons';
 import { Layout, Menu } from 'antd';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
@@ -379,7 +379,7 @@ const AdminDashboard = () => {
               <center>
                 <h1>UserId</h1>
                 {usr.map((data)=>{
-                 return( <p>{data.name}</p>);
+                 return( <p>{data.uid}</p>);
                 })}
               </center>
             </div>
@@ -388,7 +388,7 @@ const AdminDashboard = () => {
               <center>
                 <h1>Club</h1>
                 {usr.map((data)=>{
-                 return( <p>{data.name}</p>);
+                 return( <p>{data.club}</p>);
                 })}
               </center>
             </div>
