@@ -1,12 +1,12 @@
-.dash{
+.dash {
   text-align: center;
 }
 
-.content-main1{
+.content-main1 {
   border-radius: 16px;
   background: linear-gradient(145deg, #cacaca, #f0f0f0);
-  box-shadow:  17px 10px 10px #b2a1a1,
-               -17px -17px 34px #ffffff;
+  box-shadow: 17px 10px 10px #b2a1a1,
+    -17px -17px 34px #ffffff;
   background-color: black;
   height: 32vh;
   width: 50vh;
@@ -14,35 +14,38 @@
   font-size: 3.5vh;
   padding: 8vh;
 }
-.ant-layout-sider-children{
+
+.ant-layout-sider-children {
   position: fixed;
   max-width: 200px;
-  width:200px;
+  width: 200px;
 }
-.cards{
-  display:flex;
+
+.cards {
+  display: flex;
 }
-.content-main2{
+
+.content-main2 {
   display: block;
   margin: 0 20vh 0 18vh;
 }
 
-.content-main{
+.content-main {
   display: block;
   margin: 0 18vh 0 20vh;
 }
 
-.content-input{
+.content-input {
   border: 20px;
 }
 
-.label-content{
+.label-content {
   margin: 3.5vh 0;
   padding: 2vh;
 
 }
 
-.content-club{
+.content-club {
   font-size: 2.5vh;
 }
 
@@ -51,8 +54,8 @@
   width: 50%;
   margin: 0 auto;
   background: linear-gradient(145deg, #cacaca, #f0f0f0);
-  box-shadow:  17px 17px 34px #a1a1a1,
-               -17px -17px 34px #ffffff;
+  box-shadow: 17px 17px 34px #a1a1a1,
+    -17px -17px 34px #ffffff;
   background-color: black;
   border-radius: 16px;
 
@@ -60,7 +63,7 @@
 
 label,
 input {
-  
+
   display: inline-block;
 }
 
@@ -79,86 +82,219 @@ input+input {
   float: right;
 }
 
-.fbutton{
+.fbutton {
   background-color: #a1a1a1;
 }
 
 
-.faculty-delete{
-  height:60vh;
-  width:50vh;
+.faculty-delete {
+  height: 60vh;
+  width: 50vh;
   background: linear-gradient(145deg, #cacaca, #f0f0f0);
-  box-shadow:  17px 17px 34px #a1a1a1;
-  margin-top: 10vh;            
-  padding:.5vh;
+  box-shadow: 17px 17px 34px #a1a1a1;
+  margin-top: 10vh;
+  padding: .5vh;
   margin-left: 10vh;
   border: 2vw;
   border-radius: 1vw;
 }
 
-#button-delete{
-      height:6vh;
+#button-delete {
+  height: 6vh;
   width: 8vh;
   border: 1px solid black;
   border-radius: 0vw;
-  background:0;
+  background: 0;
   box-shadow: 0px;
 }
 
 
-.club-create-button{
-margin-left: 60vw;
+.club-create-button {
+  margin-left: 60vw;
 }
 
-.main-users-faculty,.main-users-students{
-display :flex;
-width:70vw;
-height:80vh;
-margin-left:8vw ;
-margin-top: 10vh;
-background: linear-gradient(145deg, #cacaca, #f0f0f0);
-  box-shadow:  17px 17px 34px #a1a1a1;
+.main-users-faculty,
+.main-users-students {
+  display: flex;
+  width: 70vw;
+  height: 80vh;
+  margin-left: 8vw;
+  margin-top: 10vh;
+  background: linear-gradient(145deg, #cacaca, #f0f0f0);
+  box-shadow: 17px 17px 34px #a1a1a1;
 }
 
-.name-users-faculty,.name-users-students{
-width:35vw;
-height:80vh;
-padding: 2vw;
-margin: 2vh;
-border-radius: 1vw;
+.name-users-faculty,
+.name-users-students {
+  width: 35vw;
+  height: 80vh;
+  padding: 2vw;
+  margin: 2vh;
+  border-radius: 1vw;
 }
 
-.mail-users-faculty,.mail-users-students{
-width:35vw;
-height:80vh;
-padding: 2vw;
-margin: 2vh;
+.mail-users-faculty,
+.mail-users-students {
+  width: 35vw;
+  height: 80vh;
+  padding: 2vw;
+  margin: 2vh;
 }
 
-.main-club{
-height:100vh;
+.main-club {
+  height: 100vh;
 
 }
-.main-club1{
-display :flex;
-width:70vw;
-height:80vh;
-margin-left:4vw ;
-margin-top: 4vh;
-background: linear-gradient(145deg, #cacaca, #f0f0f0);
-box-shadow:  17px 17px 34px #a1a1a1;
+
+.main-club1 {
+  display: flex;
+  width: 70vw;
+  height: 80vh;
+  margin-left: 4vw;
+  margin-top: 4vh;
+  background: linear-gradient(145deg, #cacaca, #f0f0f0);
+  box-shadow: 17px 17px 34px #a1a1a1;
 }
 
-.search-name{
-width:35vw;
-height:80vh;
-padding: 2vw;
-margin: 2vh;
+.search-name {
+  width: 35vw;
+  height: 80vh;
+  padding: 2vw;
+  margin: 2vh;
 }
 
-.search-mail{
-width:35vw;
-height:80vh;
-padding: 2vw;
-margin: 2vh;
+.search-mail {
+  width: 35vw;
+  height: 80vh;
+  padding: 2vw;
+  margin: 2vh;
+}
+
+/*faculty create*/
+.form-main1 {
+  width: 50vw;
+  background: linear-gradient(145deg, #cacaca, #f0f0f0);
+  box-shadow: 17px 17px 34px #a1a1a1;
+  border-radius: 1vw;
+  height: 50vh;
+  margin-left: 16vw;
+  padding: 2rem;
+}
+
+.f-create {
+  font-size: 6vh;
+  font-family: 'Times New Roman', Times, serif;
+  width: 50%;
+}
+
+.form-label {
+  width: 15vw;
+  font-size: 3vh;
+  font-family: 'Times New Roman', Times, serif;
+  padding: 3vh;
+}
+
+.f-button {
+  margin-left: 35vw;
+  font-family: 'Times New Roman', Times, serif;
+  border-radius: 0.5vw;
+  border: 0.25px solid rgb(133, 129, 129);
+  padding: 0.5vh 2vh;
+  font-size: 16px;
+  background-color: transparent;
+}
+
+
+.f-button:hover {
+  background-color: #767474;
+  color: white;
+}
+
+
+/*faculty delete */
+.f-del-p {
+  font-size: 6vh;
+  font-family: 'Times New Roman', Times, serif;
+  width: 50%;
+}
+
+
+.f-del-main {
+  width: 60vw;
+  background: linear-gradient(145deg, #cacaca, #f0f0f0);
+  box-shadow: 17px 17px 34px #a1a1a1;
+  border-radius: 1vw;
+  height: 50vh;
+  margin-left: 16vw;
+  padding: 10vh;
+  padding-top: 18vh;
+
+}
+
+.f-del-label {
+  width: 15vw;
+  font-size: 3vh;
+  font-family: 'Times New Roman', Times, serif;
+  padding: 3vh;
+}
+
+.f-del-but {
+  margin-left: 40vw;
+  font-family: 'Times New Roman', Times, serif;
+  border-radius: 0.5vw;
+  border: 0.25px solid rgb(133, 129, 129);
+  padding: 0.5vh 2vh;
+  font-size: 16px;
+  background-color: transparent;
+}
+
+.f-del-but:hover {
+  background-color: #767474;
+  color: white;
+}
+
+
+/*club create n delete*/
+.h-clubcreate {
+  font-size: 6vh;
+  font-family: 'Times New Roman', Times, serif;
+  width: 50%;
+}
+
+.club-create {
+  margin-top: 0px;
+  width: 100%;
+  height: 100%
+}
+
+.club-form {
+  height: 40vh;
+  width: 60%;
+  background: linear-gradient(145deg, #cacaca, #f0f0f0);
+  box-shadow: 17px 17px 34px #a1a1a1;
+  margin-left: 38vh;
+  border-radius: 1vw;
+  padding: 6vh;
+}
+
+.label-club {
+  width: 15vw;
+  font-size: 3vh;
+  font-family: 'Times New Roman', Times, serif;
+  padding: 3vh;
+}
+
+.club-create-button {
+  margin-left: 35vw;
+  font-family: 'Times New Roman', Times, serif;
+  border-radius: 0.5vw;
+  border: 0.25px solid rgb(133, 129, 129);
+  padding: 0.5vh 2vh;
+  font-size: 16px;
+  background-color: transparent;
+}
+
+.club-create-button:hover {
+  background-color: #767474;
+  color: white;
 }

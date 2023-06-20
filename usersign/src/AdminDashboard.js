@@ -159,6 +159,7 @@ const AdminDashboard = () => {
     .then(res=>(res.json()))
     .then(json=>{
         setClb(json);
+
     })
   };
 
@@ -260,24 +261,22 @@ const AdminDashboard = () => {
 
         {selectedKey === '2' && (
           <div>
-            <center>
-              <h2>FACULTY CREATION</h2>
-            </center>
+            <center><p className='f-create'>FACULTY CREATION</p></center>
             <form className="form-main1" onSubmit={handleFSubmit}>
               <label className="form-label">Name: </label>
-              <input type="text" className="input-club"  id="Fname" name="Fname" value={FacultyData.Fname}
+              <input type="text"  id="Fname" name="Fname" value={FacultyData.Fname}
                onChange={handleFChange}/>
               
               <label className="form-label">Email: </label>
-              <input type="text" className="input-club"  id="Email" name="Email" value={FacultyData.Email}
+              <input type="text"  id="Email" name="Email" value={FacultyData.Email}
                onChange={handleFChange} />
               
               <label className="form-label">Initial Password: </label>
-              <input type="password" className="input-club"  id="Pass" name="Pass" value={FacultyData.Pass}
+              <input type="password"   id="Pass" name="Pass" value={FacultyData.Pass}
                onChange={handleFChange}/>
               
               <label className="form-label">Club</label>
-              <input type="text" className="input-club"  id="club" name="club" value={FacultyData.club}
+              <input type="text"   id="club" name="club" value={FacultyData.club}
                onChange={handleFChange}/>
               <button className="f-button" type='submit'>CREATE</button>
             </form>
@@ -286,31 +285,29 @@ const AdminDashboard = () => {
 
         {selectedKey === '3' && (
            <div>
-           <center>
-             <h2>FACULTY DELETION</h2>
-           </center>
-           <form className="form-main1" onSubmit={handleFDSubmit}>
+            
+            <center><p className='f-create'>FACULTY DELETION</p></center> 
+
+           <form className='f-del-main' onSubmit={handleFDSubmit}>
              
-             <label>Email: </label>
-             <input type="text" className="input-club"  id="Email" name="Email" value={FacultyDData.Email}
+             <label className='f-del-label'>Email: </label>
+             <input type="text"  id="Email" name="Email" value={FacultyDData.Email}
               onChange={handleFDChange} />             
 
-             <button  type='submit'>DELETE</button>
+             <button  className='f-del-but' type='submit'>DELETE</button>
            </form>
          </div>
         )}
 
         {selectedKey === '4' && (
           <div className="club-create">
-            <center>
-              <h2>CLUB CREATION</h2>
-            </center>
+            <center><p className='h-clubcreate'>CLUB CREATION</p></center>
             <form className="club-form" onSubmit={handleCreate}>
               <label className="label-club" >Club Name: </label>
               <input className="input-club" type="text" id="nme" name="nme" value={clubData.nme} onChange={handleChange}/>
               
               <label className="label-club">Faculty Head: </label>
-              <input type="text" id="head" name="head" value={clubData.head} onChange={handleChange}/>
+              <input className='input-club' type="text" id="head" name="head" value={clubData.head} onChange={handleChange}/>
               
               <button className="club-create-button" type='submit'>CREATE</button>
             </form>
@@ -319,9 +316,8 @@ const AdminDashboard = () => {
 
         {selectedKey === '5' && (
           <div className="club-create">
-            <center>
-              <h2>CLUB DELETION</h2>
-            </center>
+            <center><p className='h-clubcreate'>CLUB DELETION</p></center>
+
             <form className="club-form" onSubmit={handleDelete}>
               <label className="label-club">Club Name: </label>
               <input className="input-club" type="text" id="nme" name="nme" value={clubData.nme} onChange={handleChange}/>
