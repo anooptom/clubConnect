@@ -3,7 +3,7 @@ import {HomeOutlined, UserOutlined, LogoutOutlined, TeamOutlined, GlobalOutlined
 import { Layout, Menu } from 'antd';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useNavigate,useLocation } from 'react-router';
+import { useNavigate } from 'react-router';
 
 const { Content, Sider } = Layout;
 var noe, nof,noc,nos;
@@ -28,15 +28,13 @@ const AdminDashboard = () => {
     const [usr,setUsr] =useState([]);
     const [clb,setClb] =useState([]);
 
-    const location = useLocation();
-
   useEffect(() => {
     var isLoggedIn = localStorage.getItem('isLoggedIn');
     if (isLoggedIn !== 'true') {
       alert("Login To Continue")
       navigate('/admin');
     }
-  }, [location, navigate]);
+  }, []);
 
     const [clubData, setclubData] = useState({
       nme: '',

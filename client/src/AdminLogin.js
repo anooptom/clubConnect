@@ -39,11 +39,6 @@ const AdminLogin =()=>{
       });
   };
 
-  const isLoggedIn = localStorage.getItem('isLoggedIn');
-  if (isLoggedIn === 'true') {
-    navigate('/AdminDashboard');
-  }
-
   return (
 
     <div className="main">
