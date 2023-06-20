@@ -24,6 +24,7 @@ const AdminLogin =()=>{
     axios.post(' http://localhost:3001/admin', formData)
       .then(response => {
         if(response.data.message === '1'){
+          localStorage.setItem('isLoggedIn', 'true');
           navigate('/AdminDashboard');
         }
         else if(response.data.message === '0'){
@@ -37,6 +38,11 @@ const AdminLogin =()=>{
         console.error(error);
       });
   };
+
+  const isLoggedIn = localStorage.getItem('isLoggedIn');
+  if (isLoggedIn === 'true') {
+    navigate('/AdminDashboard');
+  }
 
   return (
 
