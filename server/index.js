@@ -92,11 +92,11 @@ app.post('/signup', async (req, res) => {
     await client.connect();
     const collection = client.db("dataBase").collection("students");
     
-    const existingUser = await collection.findOne({ name: req.body.name });
+    const existingUser = await collection.findOne({ uid : req.body.uid });
     if (existingUser) {
       res.json({ message: '0' });
     } else {
-      await collection.insertOne({ name: req.body.name, pass: req.body.password });
+      await collection.insertOne({ name: req.body.name, pass: req.body.password , uid : req.body.uid , club : req.body.club });
       res.json({ message: '1' });
     }
   } catch (error) {

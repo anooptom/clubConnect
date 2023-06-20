@@ -1,0 +1,44 @@
+.signup{
+    font-family: 'Times New Roman', Times, serif;
+  }
+  
+  .select-su{
+    margin-left: 2vw;
+    width:15.8vw;
+    height:2rem;
+  }
+  
+  .su-label{
+    padding:1.5vh;
+    font-size: 1.45rem;
+  }
+  
+  .button-signup{
+    margin-left: 40vw;
+    font-family: 'Times New Roman', Times, serif;
+    border-radius: 0.5vw;
+    border: 0.25px solid  rgb(133, 129, 129);
+    padding: 0.5vh 2vh;
+    font-size: 16px;
+  }
+  .button-signup:hover {
+    background-color: #767474;
+    color: white;
+  }
+  
+  .su-form input{
+    width:15vw;
+  }
+  
+  .main-signup h2{
+   margin-left: 20vw ;
+   font-size: 2rem;
+   
+  }
+  .main-signup {
+    border:1px solid black;
+    width:49.5vw;
+    height:50vh;
+    margin-left: 24rem;
+    margin-top:10rem ;
+  }
