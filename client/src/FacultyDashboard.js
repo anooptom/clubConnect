@@ -2,6 +2,7 @@ import { FileOutlined, HomeOutlined, UserOutlined, LogoutOutlined, TeamOutlined,
 import { Layout, Menu } from 'antd';
 import {  useState } from 'react';
 import { useNavigate } from 'react-router';
+import { useLocation } from "react-router";
 
 const { Sider } = Layout;
 
@@ -16,6 +17,7 @@ function getItem(label, key, icon, children) {
 
 const FacultyDashboard = () => {
   const navigate = useNavigate();
+  const Location = useLocation();
     const [collapsed, setCollapsed] = useState(false);
     const [selectedKey, setSelectedKey] = useState('1');
 
@@ -57,6 +59,10 @@ const FacultyDashboard = () => {
               {getMenuItems(items)}
             </Menu>
           </Sider>
+          
+          {selectedKey ==='1' && (
+            <h1>Welcome {Location.state.Name}</h1>
+          )}
 
           {selectedKey === '9' && (
           navigate('/faculty')

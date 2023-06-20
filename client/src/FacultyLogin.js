@@ -20,12 +20,11 @@ const FacultyLogin =()=>{
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formData); 
 
     axios.post(' http://localhost:3001/faculty', formData)
       .then(response => {
         if(response.data.message === '1'){
-          navigate('/FacultyDashboard',{state:{Name: formData.name}});
+          navigate('/FacultyDashboard',{state:{Name: response.data.name}});
         }
         else if(response.data.message === '0'){
           alert("Wrong Password");

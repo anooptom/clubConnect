@@ -34,7 +34,7 @@ const AdminDashboard = () => {
       alert("Login To Continue")
       navigate('/admin');
     }
-  }, []);
+  }, [navigate]);
 
     const [clubData, setclubData] = useState({
       nme: '',

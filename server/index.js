@@ -262,13 +262,13 @@ app.post('/faculty', async (req, res) => {
     const existingUser = await collection.findOne({ Email : req.body.Email });
     if (existingUser) {
       if(req.body.Pass === existingUser.Pass){
-        res.json({ message: '1' });
+        res.json({ message: '1' ,name : existingUser.name});
       }
       else{
         res.json({message:'0'})
       }
     } else {
-      res.json({ message: '-1' });
+      res.json({ message: '-1'  });
     }
   } catch (error) {
     console.error('Error connecting to MongoDB:', error);
