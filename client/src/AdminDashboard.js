@@ -275,9 +275,6 @@ const AdminDashboard = () => {
               <input type="password"   id="Pass" name="Pass" value={FacultyData.Pass}
                onChange={handleFChange}/>
               
-              <label className="form-label">Club</label>
-              <input type="text"   id="club" name="club" value={FacultyData.club}
-               onChange={handleFChange}/>
               <button className="f-button" type='submit'>CREATE</button>
             </form>
           </div>

@@ -136,7 +136,7 @@ app.post('/clubCreate', async (req, res) => {
     const collection1 = client.db("dataBase").collection("faculty");
     
     const existingclub = await collection.findOne({ name: req.body.nme });
-    const faculty = await collection1.findOne({name : req.body.head})
+    const faculty = await collection1.findOne({Email : req.body.head})
 
     if (existingclub) {
         res.json({ message: '0' });
@@ -147,6 +147,7 @@ app.post('/clubCreate', async (req, res) => {
       }
     else{  
       await collection.insertOne({ name: req.body.nme, head: req.body.head });
+      await collection1.updateOne({Email : req.body.head},{$set:{club : req.body.nme}});
       res.json({ message: '1' });
     }
 
@@ -211,7 +212,7 @@ app.post('/user', async (req, res) => {
     await client.connect();
     const collection = client.db("dataBase").collection("students");
     
-    const existingUser = await collection.findOne({ name: req.body.name });
+    const existingUser = await collection.findOne({ uid: req.body.uid });
     if (existingUser) {
       if(req.body.password === existingUser.pass){
         res.json({ message: '1' });
@@ -241,7 +242,7 @@ app.post('/facultyCreate', async (req, res) => {
         res.json({ message: '0' });
       }
       else{
-        await collection.insertOne({ name: req.body.Fname, Email : req.body.Email , Pass: req.body.Pass ,club :req.body.club });
+        await collection.insertOne({ name: req.body.Fname, Email : req.body.Email , Pass: req.body.Pass ,club : 'null' });
         res.json({ message: '1' });
       }
     

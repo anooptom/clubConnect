@@ -9,7 +9,7 @@ import {Link} from 'react-router-dom';
 const LoginForm = () => {
  const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    name: '',
+    uid: '',
     password: ''
   });
 
@@ -28,7 +28,7 @@ const LoginForm = () => {
     axios.post(' http://localhost:3001/user', formData)
       .then(response => {
         if(response.data.message === '1'){
-          navigate('/UserDashboard',{state:{Name: formData.name}});
+          navigate('/UserDashboard',{state:{Name: formData.uid}});
         }
         else if(response.data.message === '0'){
           alert("Wrong Password");
@@ -58,7 +58,7 @@ const LoginForm = () => {
         <form onSubmit={handleSubmit}>
         <div className="input-container">
             <label htmlFor="name">Username </label>
-            <input type="text" id="name" name="name" value={formData.name} onChange={handleChange}/>
+            <input type="text" id="uid" name="uid" value={formData.uid} onChange={handleChange}/>
         </div>
 
         <div className="input-container">
