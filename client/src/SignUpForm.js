@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import axios from "axios";
 import "./SignUp.css";
 import { useNavigate } from "react-router";
 
 const SignUpForm = () => {
   const navigate = useNavigate();
+  const [clb,setclub] =useState([]);
   const [formData, setFormData] = useState({
     name: "",
     uid:'',
@@ -19,11 +20,21 @@ const SignUpForm = () => {
     });
   };
 
+  useEffect(() =>{
+    const fetchClub = async () =>{
+      await fetch('http://localhost:3001/fetchclub',{method:'get', mode: 'cors'})
+      .then(response=>(response.json()))
+      .then(json=>{        
+        setclub(json);
+      })
+    };
+  
+    fetchClub();  
+  },[]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formData);  // Display form data in the console
-
-    // Send form data to the server using Axios
+  
     axios
       .post(" http://localhost:3001/signup", formData)
       .then((response) => {
@@ -52,7 +63,11 @@ const SignUpForm = () => {
           <label className="su-label">Password: </label>
           <input type="password"  id="password" name="password" value={formData.password} onChange={handleChange} required/>
           <label className="su-label">Club: </label>
-          <input type="text"  id="club" name="club" value={formData.club} onChange={handleChange} required/>
+         <select id='club' name='club' value={formData.club} onChange={handleChange}>
+          {clb.map((data)=>{
+                  return( <option >{data.name}</option>);
+          })}
+          </select>
           <br></br>
           <button className="button-signup" type="submit">
             Register

@@ -27,6 +27,22 @@ app.get('/facultydisplay', async (req, res) => {
   }
 });
 
+app.get('/fetchclub', async (req, res) => {
+  try {
+    await client.connect();
+    const collectionf= client.db("dataBase").collection("club");
+    
+    const clubs = await collectionf.find({}).toArray();
+    res.json(clubs)
+
+  } catch (error) {
+    console.error('Error connecting to MongoDB:', error);
+    res.status(500).json({ message: 'Error connecting to MongoDB' });
+  } finally {
+    await client.close();
+  }
+});
+
 app.get('/userdisplay', async (req, res) => {
   try {
     await client.connect();

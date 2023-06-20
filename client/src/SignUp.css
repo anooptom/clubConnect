@@ -2,6 +2,12 @@
     font-family: 'Times New Roman', Times, serif;
   }
   
+  #club{
+    width :16vw;
+    height: 5vh;
+    margin-left: 2vw;
+  }
+
   .select-su{
     margin-left: 2vw;
     width:15.8vw;
