@@ -28,6 +28,7 @@ const FacultyDashboard = () => {
         alert("Login To Continue")
         navigate('/faculty');
       }
+      fetchstudents();
     }, [navigate]);
 
     const fetchstudents = async()=>{
@@ -97,7 +98,11 @@ const FacultyDashboard = () => {
           </Sider>
           
           {selectedKey ==='1' && Location.state && Location.state.Name &&(
-            <h1>Welcome {Location.state.Name}</h1>
+            <div>
+              <h1>Welcome {Location.state.Name}</h1><br />
+
+              <h2>Students:  {std.length} </h2>
+            </div>
           )}
 
           {selectedKey ==='2' &&(
