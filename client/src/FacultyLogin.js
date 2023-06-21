@@ -10,7 +10,6 @@ const FacultyLogin =()=>{
     Email: '',
     Pass: ''
   });
-
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -24,6 +23,7 @@ const FacultyLogin =()=>{
     axios.post(' http://localhost:3001/faculty', formData)
       .then(response => {
         if(response.data.message === '1'){
+          localStorage.setItem('isLoggedIn', 'true');
           navigate('/FacultyDashboard',{state:{Name: response.data.name}});
         }
         else if(response.data.message === '0'){

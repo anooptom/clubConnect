@@ -1,6 +1,6 @@
-import { FileOutlined, HomeOutlined, UserOutlined, LogoutOutlined, TeamOutlined, GlobalOutlined } from '@ant-design/icons';
+import {  HomeOutlined, UserOutlined, LogoutOutlined } from '@ant-design/icons';
 import { Layout, Menu } from 'antd';
-import {  useState } from 'react';
+import {  useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { useLocation } from "react-router";
 
@@ -18,19 +18,55 @@ function getItem(label, key, icon, children) {
 const FacultyDashboard = () => {
   const navigate = useNavigate();
   const Location = useLocation();
-    const [collapsed, setCollapsed] = useState(false);
-    const [selectedKey, setSelectedKey] = useState('1');
+  const [collapsed, setCollapsed] = useState(false);
+  const [selectedKey, setSelectedKey] = useState('1');
+  const[std,setStd]=useState([])
 
+    useEffect(() => {
+      var isLoggedIn = localStorage.getItem('isLoggedIn');
+      if (isLoggedIn !== 'true') {
+        alert("Login To Continue")
+        navigate('/faculty');
+      }
+    }, [navigate]);
+
+    const fetchstudents = async()=>{
+      await fetch(`http://localhost:3001/fetchstd?name=${encodeURIComponent(Location.state.Name)}`, {
+    method: 'GET',
+    mode: 'cors',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+  .then(res=>(res.json()))
+      .then(json=>{
+          setStd(json);
+
+      })
+    };
+
+    const handleLogout = () => {
+      localStorage.setItem('isLoggedIn', 'false');
+      navigate('/faculty');
+    };
+    
     const items = [
         getItem('Home', '1', <HomeOutlined />),
-        getItem('PO Create', '6', <FileOutlined />),
-        getItem('Faculty', 'sub1', <UserOutlined />, [getItem('Create', '2'), getItem('Delete', '3')]),
-        getItem('Club', 'sub2', <GlobalOutlined />, [getItem('Create', '4'), getItem('Delete', '5')]),
-        getItem('Users', 'sub3', <TeamOutlined />, [getItem('Faculty', '7'), getItem('Students', '8')]),
-        getItem('Log Out', '9', <LogoutOutlined />),
+        getItem('Students', '2', <UserOutlined/>),
+        getItem('Events', 'sub1', <UserOutlined />, [getItem('View', '3'), getItem('Create', '4'), getItem('Delete', '5')]),
+        getItem('Log Out', '6', <LogoutOutlined />),
       ];
 
       const handleMenuClick = ({ key }) => {
+
+        if(key ==='6'){
+          handleLogout();
+        }
+
+        if(key ==='2'){
+          fetchstudents()
+        }
+
         setSelectedKey(key);
       };
 
@@ -60,13 +96,27 @@ const FacultyDashboard = () => {
             </Menu>
           </Sider>
           
-          {selectedKey ==='1' && (
+          {selectedKey ==='1' && Location.state && Location.state.Name &&(
             <h1>Welcome {Location.state.Name}</h1>
           )}
 
-          {selectedKey === '9' && (
-          navigate('/faculty')
-            )}
+          {selectedKey ==='2' &&(
+            <div className='std'>
+              <div>
+                <h1>Name</h1>
+                {std.map((data)=>{
+                  return( <p>{data.name}</p>);
+                  })}
+              </div>
+
+              <div>
+                <h1>Uid</h1>
+                {std.map((data)=>{
+                  return( <p>{data.uid}</p>);
+                  })}
+              </div>
+            </div>
+          )}
 
           </Layout>
 
