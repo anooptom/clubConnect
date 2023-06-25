@@ -193,6 +193,27 @@ app.post('/clubCreate', async (req, res) => {
   }
 });
 
+app.post('/eventcreate', async (req, res) => {
+  try {
+    await client.connect();
+    const collection1 = client.db("dataBase").collection("events");
+    
+    const existingevents = await collection1.findOne({ name: req.body.data.name,club : req.body.club});
+    if(existingevents){
+      res.json({ message: '0' });
+    }
+    else{
+      await collection1.insertOne({ name: req.body.data.name,des: req.body.data.des , date :req.body.data.date , club :req.body.club });
+      res.json({ message: '1' });
+    }
+
+
+  } catch (error) {
+    console.error('Error connecting to MongoDB:', error);
+    res.status(500).json({ message: 'Error connecting to MongoDB' });
+  }
+});
+
 app.post('/clubDelete', async (req, res) => {
   try {
     await client.connect();

@@ -3,6 +3,7 @@ import { Layout, Menu } from 'antd';
 import {  useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { useLocation } from "react-router";
+import axios from 'axios';
 
 const { Sider } = Layout;
 
@@ -78,8 +79,7 @@ const FacultyDashboard = () => {
       const [eventData, seteventData] = useState({
         name: "",
         des: "",
-        date: new Date(),
-        club: ""
+        date: new Date()
       });
 
       const handleChange = (e) => {
@@ -91,7 +91,20 @@ const FacultyDashboard = () => {
 
       const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(eventData)
+        
+        axios.post(' http://localhost:3001/eventcreate', {data:eventData,club:std.c})
+        .then(response => {
+          if(response.data.message == "1"){
+            alert("Event Created");
+          }
+          else{
+            alert ("Already Exist");
+          }
+        
+        })
+        .catch(error => {
+          console.error(error);
+        });
       };
 
       const getMenuItems = items => {
