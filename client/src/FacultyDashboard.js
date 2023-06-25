@@ -47,9 +47,6 @@ const FacultyDashboard = () => {
         setcevents(json.ce);
       };
 
-      
-  
-  
     const fetchstudents = async()=>{
       await fetch(`http://localhost:3001/fetchstd?name=${encodeURIComponent(Location.state.Name)}`, {
     method: 'GET',
@@ -76,7 +73,7 @@ const FacultyDashboard = () => {
     const items = [
         getItem('Home', '1', <HomeOutlined />),
         getItem('Students', '2', <UserOutlined/>),
-        getItem('Events', 'sub1', <UserOutlined />, [getItem('View', '3'), getItem('Create', '4'), getItem('Delete', '5')]),
+        getItem('Events', 'sub1', <UserOutlined />, [getItem('View', '3'), getItem('Create', '4')]),
         getItem('Log Out', '6', <LogoutOutlined />),
       ];
 
@@ -127,8 +124,9 @@ const FacultyDashboard = () => {
         });
       };
 
-      const handlecomp = (clicked,e) => {        
-        axios.post(' http://localhost:3001/markcomp', {data:clicked.name,club:std.c})
+      const handlecomp = (clicked,attr) => { 
+             
+        axios.post(' http://localhost:3001/markcomp', {data:clicked.name,club:std.c,op : attr})
         .then(response=>(
           window.location.reload()
           ));
@@ -167,6 +165,8 @@ const FacultyDashboard = () => {
               <h1>Welcome {Location.state.Name}</h1>
               <h2>Students:  { len } </h2>
               <h2>club: {std.c}  </h2>
+              <h2>Upcomming Events: {events.length}  </h2>
+              <h2>Completed Events: {cevents.length}  </h2>
             </div>
           )}
 
@@ -207,12 +207,22 @@ const FacultyDashboard = () => {
                 {events.map((data)=>{
                   return(
                     <div>
-                    <button onClick={() => handlecomp(data)}>Completed</button>
+                    <button onClick={() => handlecomp(data,"comp")}>Completed</button>
                     <br />
                     </div>
                   );
                   })}
+
+                <h2>Delete</h2>
                 
+                {events.map((data)=>{
+                  return(
+                    <div>
+                    <button onClick={() => handlecomp(data,"del")}>Delete</button>
+                    <br />
+                    </div>
+                  );
+                  })}
                 
               </div>
 

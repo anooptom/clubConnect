@@ -215,8 +215,10 @@ app.post('/markcomp', async (req, res) => {
   try {
     await client.connect();
     const collection1 = client.db("dataBase").collection("events");
-  
-    await collection1.updateOne({name:req.body.data , club : req.body.club},{$set:{completed : "yes"}});
+    if(req.body.op =="comp")
+      await collection1.updateOne({name:req.body.data , club : req.body.club},{$set:{completed : "yes"}});
+    else
+    await collection1.deleteOne({name: req.body.data, club : req.body.club});
     res.json({ message: '1' });
 
   } catch (error) {
