@@ -27,6 +27,24 @@ app.get('/facultydisplay', async (req, res) => {
   }
 });
 
+app.get('/getevents', async (req, res) => {
+  try {
+    await client.connect();
+    const collectione= client.db("dataBase").collection("events");
+    
+    const events = await collectione.find({club: req.query.club ,completed: "no"}).toArray();
+    const cevents = await collectione.find({club: req.query.club ,completed: "yes"}).toArray();
+    
+    res.json({e:events , ce: cevents})
+
+  } catch (error) {
+    console.error('Error connecting to MongoDB:', error);
+    res.status(500).json({ message: 'Error connecting to MongoDB' });
+  } finally {
+    await client.close();
+  }
+});
+
 app.get('/fetchstd', async (req, res) => {
   try {
     await client.connect();
@@ -193,6 +211,22 @@ app.post('/clubCreate', async (req, res) => {
   }
 });
 
+app.post('/markcomp', async (req, res) => {
+  try {
+    await client.connect();
+    const collection1 = client.db("dataBase").collection("events");
+  
+    await collection1.updateOne({name:req.body.data , club : req.body.club},{$set:{completed : "yes"}});
+    res.json({ message: '1' });
+
+  } catch (error) {
+    console.error('Error connecting to MongoDB:', error);
+    res.status(500).json({ message: 'Error connecting to MongoDB' });
+  } finally {
+    await client.close();
+  }
+});
+
 app.post('/eventcreate', async (req, res) => {
   try {
     await client.connect();
@@ -203,7 +237,7 @@ app.post('/eventcreate', async (req, res) => {
       res.json({ message: '0' });
     }
     else{
-      await collection1.insertOne({ name: req.body.data.name,des: req.body.data.des , date :req.body.data.date , club :req.body.club });
+      await collection1.insertOne({ name: req.body.data.name,des: req.body.data.des , date :req.body.data.date , club :req.body.club,completed : "no" });
       res.json({ message: '1' });
     }
 

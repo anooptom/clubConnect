@@ -23,6 +23,8 @@ const FacultyDashboard = () => {
   const [selectedKey, setSelectedKey] = useState('1');
   const[std,setStd]=useState({})
   var len =0;
+  const[events,setevents] = useState([])
+  const[cevents,setcevents] = useState([])
 
     useEffect(() => {
       var isLoggedIn = localStorage.getItem('isLoggedIn');
@@ -33,6 +35,21 @@ const FacultyDashboard = () => {
       fetchstudents();
     }, [navigate]);
 
+
+    const fetchevents = async()=>{
+        const response = await axios.get('http://localhost:3001/getevents', {
+          params: {
+            club: std.c
+          }
+        });
+        const json = response.data;
+        setevents(json.e);
+        setcevents(json.ce);
+      };
+
+      
+  
+  
     const fetchstudents = async()=>{
       await fetch(`http://localhost:3001/fetchstd?name=${encodeURIComponent(Location.state.Name)}`, {
     method: 'GET',
@@ -72,6 +89,9 @@ const FacultyDashboard = () => {
         if(key ==='2'){
           fetchstudents()
         }
+        if(key ==="3"){
+          fetchevents();
+        }
 
         setSelectedKey(key);
       };
@@ -94,7 +114,7 @@ const FacultyDashboard = () => {
         
         axios.post(' http://localhost:3001/eventcreate', {data:eventData,club:std.c})
         .then(response => {
-          if(response.data.message == "1"){
+          if(response.data.message === "1"){
             alert("Event Created");
           }
           else{
@@ -105,6 +125,15 @@ const FacultyDashboard = () => {
         .catch(error => {
           console.error(error);
         });
+      };
+
+      const handlecomp = (clicked,e) => {        
+        axios.post(' http://localhost:3001/markcomp', {data:clicked.name,club:std.c})
+        .then(response=>(
+          window.location.reload()
+          ));
+
+        
       };
 
       const getMenuItems = items => {
@@ -163,12 +192,41 @@ const FacultyDashboard = () => {
             <div>
               <div>
                 <h1>Upcomming Events</h1>
+                <br />
+                <h2>Name</h2>
+                {events.map((data)=>{
+                  return( <p>{data.name}</p>);
+                  })}
+                <h2>Date</h2>
+                {events.map((data)=>{
+                  return( <p>{data.date}</p>);
+                  })}
+                
+                <h2>Mark As Complete</h2>
+                
+                {events.map((data)=>{
+                  return(
+                    <div>
+                    <button onClick={() => handlecomp(data)}>Completed</button>
+                    <br />
+                    </div>
+                  );
+                  })}
+                
                 
               </div>
 
               <div>
                 <h1>Completed Events</h1>
-                
+                <br />
+                <h2>Name</h2>
+                {cevents.map((data)=>{
+                  return( <p>{data.name}</p>);
+                  })}
+                <h2>Date</h2>
+                {cevents.map((data)=>{
+                  return( <p>{data.date}</p>);
+                  })}
               </div>
             </div>
           )}
