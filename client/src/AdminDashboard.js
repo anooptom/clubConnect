@@ -186,8 +186,6 @@ const AdminDashboard = () => {
       nos = data.nos;
       noc = data.noc;
     }
-    
-
 
     const items = [
       getItem('Home', '1', <HomeOutlined />),

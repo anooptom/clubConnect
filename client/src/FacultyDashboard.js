@@ -46,6 +46,7 @@ const FacultyDashboard = () => {
           
       })
     };
+
     if(std.info)
       len = std.info.length;
 
@@ -72,6 +73,25 @@ const FacultyDashboard = () => {
         }
 
         setSelectedKey(key);
+      };
+
+      const [eventData, seteventData] = useState({
+        name: "",
+        des: "",
+        date: new Date(),
+        club: ""
+      });
+
+      const handleChange = (e) => {
+        seteventData({
+          ...eventData,
+          [e.target.name]: e.target.value
+        });
+      };
+
+      const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log(eventData)
       };
 
       const getMenuItems = items => {
@@ -109,7 +129,7 @@ const FacultyDashboard = () => {
           )}
 
           {selectedKey ==='2' &&(
-            <div className='std'>
+            <div>
               <div>
                 <h1>Name</h1>
                 {std.info.map((data)=>{
@@ -123,6 +143,43 @@ const FacultyDashboard = () => {
                   return( <p>{data.uid}</p>);
                   })}
               </div>
+            </div>
+          )}
+
+            {selectedKey ==='3' &&(
+            <div>
+              <div>
+                <h1>Upcomming Events</h1>
+                
+              </div>
+
+              <div>
+                <h1>Completed Events</h1>
+                
+              </div>
+            </div>
+          )}
+
+          {selectedKey ==='4' &&(
+            <div>
+              <h1>Create Event</h1>
+
+              <form onSubmit={handleSubmit}>
+                <label>Name</label>
+                <input type="text" id="name" name="name" value={eventData.name}
+                onChange={handleChange}/>
+
+
+                <label>Description</label>
+                <input type="textArea" id="des" name="des" value={eventData.des}
+                onChange={handleChange}/>
+
+                <label >Date</label>
+                <input type="date" id="date" name="date" value={eventData.date}
+                onChange={handleChange}/>
+
+                <button type="submit">Create</button>
+              </form>
             </div>
           )}
 
