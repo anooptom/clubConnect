@@ -35,7 +35,11 @@ app.get('/fetchstd', async (req, res) => {
     
     const fac = await collectionf.findOne({name : req.query.name});
     const stds = await collections.find({club : fac.club}).toArray();
-    res.json(stds)
+    const datas = {
+      info:stds,
+      c : fac.club,
+    };
+    res.json(datas);
 
   } catch (error) {
     console.error('Error connecting to MongoDB:', error);

@@ -20,8 +20,8 @@ const FacultyDashboard = () => {
   const Location = useLocation();
   const [collapsed, setCollapsed] = useState(false);
   const [selectedKey, setSelectedKey] = useState('1');
-  const[std,setStd]=useState([])
-  var clubName = null;
+  const[std,setStd]=useState({})
+  var len =0;
 
     useEffect(() => {
       var isLoggedIn = localStorage.getItem('isLoggedIn');
@@ -43,13 +43,12 @@ const FacultyDashboard = () => {
   .then(res=>(res.json()))
       .then(json=>{
           setStd(json);
-  
+          
       })
     };
+    if(std.info)
+      len = std.info.length;
 
-    if(std.length != 0){
-      clubName = std[0].club
-    } 
     const handleLogout = () => {
       localStorage.setItem('isLoggedIn', 'false');
       navigate('/faculty');
@@ -104,8 +103,8 @@ const FacultyDashboard = () => {
           {selectedKey ==='1' && Location.state && Location.state.Name && (
             <div>
               <h1>Welcome {Location.state.Name}</h1>
-              <h2>Students:  {std.length} </h2>
-              <h2>club: {clubName}  </h2>
+              <h2>Students:  { len } </h2>
+              <h2>club: {std.c}  </h2>
             </div>
           )}
 
@@ -113,14 +112,14 @@ const FacultyDashboard = () => {
             <div className='std'>
               <div>
                 <h1>Name</h1>
-                {std.map((data)=>{
+                {std.info.map((data)=>{
                   return( <p>{data.name}</p>);
                   })}
               </div>
 
               <div>
                 <h1>Uid</h1>
-                {std.map((data)=>{
+                {std.info.map((data)=>{
                   return( <p>{data.uid}</p>);
                   })}
               </div>
