@@ -21,6 +21,7 @@ const FacultyDashboard = () => {
   const [collapsed, setCollapsed] = useState(false);
   const [selectedKey, setSelectedKey] = useState('1');
   const[std,setStd]=useState([])
+  var clubName = null;
 
     useEffect(() => {
       var isLoggedIn = localStorage.getItem('isLoggedIn');
@@ -42,10 +43,13 @@ const FacultyDashboard = () => {
   .then(res=>(res.json()))
       .then(json=>{
           setStd(json);
-
+  
       })
     };
 
+    if(std.length != 0){
+      clubName = std[0].club
+    } 
     const handleLogout = () => {
       localStorage.setItem('isLoggedIn', 'false');
       navigate('/faculty');
@@ -97,11 +101,11 @@ const FacultyDashboard = () => {
             </Menu>
           </Sider>
           
-          {selectedKey ==='1' && Location.state && Location.state.Name &&(
+          {selectedKey ==='1' && Location.state && Location.state.Name && (
             <div>
-              <h1>Welcome {Location.state.Name}</h1><br />
-
+              <h1>Welcome {Location.state.Name}</h1>
               <h2>Students:  {std.length} </h2>
+              <h2>club: {clubName}  </h2>
             </div>
           )}
 
