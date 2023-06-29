@@ -29,7 +29,7 @@ const UserDashboard = () => {
   const[cevents,setcevents] = useState([])
 
   useEffect(() => {
-    var isLoggedIn = localStorage.getItem('isLoggedIn');
+    var isLoggedIn = localStorage.getItem('isULoggedIn');
     if (isLoggedIn !== 'true') {
       alert("Login To Continue")
       navigate('/user');
@@ -56,7 +56,7 @@ const UserDashboard = () => {
     
 
   const handleLogout = () => {
-    localStorage.setItem('isLoggedIn', 'false');
+    localStorage.setItem('isULoggedIn', 'false');
     navigate('/user');
   };
 

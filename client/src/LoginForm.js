@@ -28,7 +28,7 @@ const LoginForm = () => {
     axios.post(' http://localhost:3001/user', formData)
       .then(response => {
         if(response.data.message === '1'){
-          localStorage.setItem('isLoggedIn', 'true');
+          localStorage.setItem('isULoggedIn', 'true');
           navigate('/UserDashboard',{state:{uid: formData.uid}});
         }
         else if(response.data.message === '0'){

@@ -29,7 +29,7 @@ const AdminDashboard = () => {
     const [clb,setClb] =useState([]);
 
   useEffect(() => {
-    var isLoggedIn = localStorage.getItem('isLoggedIn');
+    var isLoggedIn = localStorage.getItem('isALoggedIn');
     if (isLoggedIn !== 'true') {
       alert("Login To Continue")
       navigate('/admin');
@@ -232,7 +232,7 @@ const AdminDashboard = () => {
     };
 
     const handleLogout = () => {
-      localStorage.setItem('isLoggedIn', 'false');
+      localStorage.setItem('isALoggedIn', 'false');
       navigate('/admin');
     };
 
