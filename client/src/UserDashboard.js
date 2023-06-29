@@ -51,7 +51,7 @@ const UserDashboard = () => {
     })
   };
 
-  if(data[0] != undefined){
+  if(data[0] !== undefined){
     n=data[0].name
     c=data[0].club
   }
@@ -91,7 +91,18 @@ const UserDashboard = () => {
   };
 
   const handleReg=(click)=>{
-    alert("resgisterd");
+    axios.post(' http://localhost:3001/reg', {data:click,club:c,nme:n,uid:Location.state.uid})
+        .then(response=>{
+          if(response.data.message === "1"){
+            alert("Registerd");
+          }
+
+          else{
+            alert("Already Registerd");
+          }
+
+        });
+
   }
 
   const getMenuItems = items => {

@@ -111,6 +111,7 @@ app.get('/clubdisplay', async (req, res) => {
   }
 });
 
+
 app.get('/fetchd', async (req, res) => {
   try {
     await client.connect();
@@ -240,6 +241,33 @@ app.post('/markcomp', async (req, res) => {
     res.status(500).json({ message: 'Error connecting to MongoDB' });
   } finally {
     await client.close();
+  }
+});
+
+app.post('/reg', async (req, res) => {
+  try {
+    await client.connect();
+    const collection1 = client.db("dataBase").collection("events");
+    const stud = {sname:req.body.nme ,suid: req.body.uid}
+    
+    const e = await collection1.findOne({ name: req.body.data.name,club : req.body.club})
+
+    if(e && e.students && e.students.some(student => student.sname === req.body.nme && student.suid === req.body.uid)){
+      res.json({message : "0"})
+    }
+
+    else{
+      await collection1.updateOne(
+        { name: req.body.data.name,club : req.body.club},
+        {$addToSet : {students : stud}}
+      )
+      res.json({message : "1"})
+
+    }
+
+  } catch (error) {
+    console.error('Error connecting to MongoDB:', error);
+    res.status(500).json({ message: 'Error connecting to MongoDB' });
   }
 });
 
