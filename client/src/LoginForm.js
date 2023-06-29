@@ -28,7 +28,8 @@ const LoginForm = () => {
     axios.post(' http://localhost:3001/user', formData)
       .then(response => {
         if(response.data.message === '1'){
-          navigate('/UserDashboard',{state:{Name: formData.uid}});
+          localStorage.setItem('isLoggedIn', 'true');
+          navigate('/UserDashboard',{state:{uid: formData.uid}});
         }
         else if(response.data.message === '0'){
           alert("Wrong Password");

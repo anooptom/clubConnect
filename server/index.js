@@ -111,6 +111,20 @@ app.get('/clubdisplay', async (req, res) => {
   }
 });
 
+app.get('/fetchd', async (req, res) => {
+  try {
+    await client.connect();
+    const collections= client.db("dataBase").collection("students");
+    
+    const std = await collections.find({uid : req.query.uid}).toArray();
+    res.json(std);
+
+  } catch (error) {
+    console.error('Error connecting to MongoDB:', error);
+    res.status(500).json({ message: 'Error connecting to MongoDB' });
+  } 
+});
+
 app.get('/data',async(req,res) =>{
   try{
     await client.connect();
