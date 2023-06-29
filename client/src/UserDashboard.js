@@ -25,6 +25,7 @@ const UserDashboard = () => {
   const[data,setData]=useState({})
   var n,c;
   const[events,setevents] = useState([])
+  const[revents,setrevents] = useState([])
 
   useEffect(() => {
     var isLoggedIn = localStorage.getItem('isLoggedIn');
@@ -72,6 +73,18 @@ const UserDashboard = () => {
     setevents(json.e);
   };
 
+  const fetchrevents = async()=>{
+    const response = await axios.get('http://localhost:3001/getrevents', {
+      params: {
+        club: c,
+        nme:n,
+        uid:Location.state.uid
+      }
+    });
+    const json = response.data;
+    setrevents(json);
+  };
+
   const items = [
     getItem('Home', '1', <HomeOutlined />),
     getItem('Events', 'sub1', <UserOutlined />, [getItem('UpComming', '3'), getItem('Registerd', '4'), getItem('Completed', '5')]),
@@ -85,6 +98,9 @@ const UserDashboard = () => {
       }
     if(key  ==="3"){
         fetchevents();
+    }
+    if(key ==="4"){
+      fetchrevents();
     }
 
     setSelectedKey(key);
@@ -141,7 +157,7 @@ const UserDashboard = () => {
             </div>
           )}
 
-{selectedKey ==='3' &&(
+          {selectedKey ==='3' &&(
             <div>
               <div>
                 <h1>Events</h1>
@@ -169,6 +185,30 @@ const UserDashboard = () => {
                     </div>
                   );
                   })}
+              </div>
+            </div>
+          )}
+
+        {selectedKey ==='4' &&(
+            <div>
+              <div>
+                <h1>Registerd Events</h1>
+                <br />
+                    <h2>Name</h2>
+                    {revents.map((data)=>{
+                    return( <p>{data.name}</p>);
+                    })}
+
+                    <h2>Description</h2>
+                    {revents.map((data)=>{
+                    return( <p>{data.des}</p>);
+                    })}
+                    
+                    <h2>Date</h2>
+                    {revents.map((data)=>{
+                    return( <p>{data.date}</p>);
+                    })}  
+   
               </div>
             </div>
           )}
