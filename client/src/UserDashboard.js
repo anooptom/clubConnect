@@ -26,6 +26,7 @@ const UserDashboard = () => {
   var n,c;
   const[events,setevents] = useState([])
   const[revents,setrevents] = useState([])
+  const[cevents,setcevents] = useState([])
 
   useEffect(() => {
     var isLoggedIn = localStorage.getItem('isLoggedIn');
@@ -35,7 +36,6 @@ const UserDashboard = () => {
     }
 
     fetchdata();
-
   }, [navigate]);
 
   const fetchdata = async()=>{
@@ -52,10 +52,7 @@ const UserDashboard = () => {
     })
   };
 
-  if(data[0] !== undefined){
-    n=data[0].name
-    c=data[0].club
-  }
+ 
     
 
   const handleLogout = () => {
@@ -85,6 +82,18 @@ const UserDashboard = () => {
     setrevents(json);
   };
 
+  const fetchcevents = async()=>{
+    const response = await axios.get('http://localhost:3001/getcevents', {
+      params: {
+        club: c,
+        nme:n,
+        uid:Location.state.uid
+      }
+    });
+    const json = response.data;
+    setcevents(json);
+  };
+
   const items = [
     getItem('Home', '1', <HomeOutlined />),
     getItem('Events', 'sub1', <UserOutlined />, [getItem('UpComming', '3'), getItem('Registerd', '4'), getItem('Completed', '5')]),
@@ -103,8 +112,19 @@ const UserDashboard = () => {
       fetchrevents();
     }
 
+    if(key ==="5"){
+      fetchcevents();
+    }
+
     setSelectedKey(key);
   };
+
+  if(data[0] !== undefined){
+    n=data[0].name
+    c=data[0].club
+  }
+
+
 
   const handleReg=(click)=>{
     axios.post(' http://localhost:3001/reg', {data:click,club:c,nme:n,uid:Location.state.uid})
@@ -153,6 +173,9 @@ const UserDashboard = () => {
             <div>
               <h1>Welcome {n}</h1>
               <h1>Club : {c}</h1>
+              <h1>Upcomming Events :{events.length}</h1>
+              <h1>Registerd Events :{revents.length}</h1>
+              <h1>Completed Events :{cevents.length}</h1>
               
             </div>
           )}
@@ -212,6 +235,30 @@ const UserDashboard = () => {
               </div>
             </div>
           )}
+           {selectedKey ==='5' &&(
+            <div>
+              <div>
+                <h1>Completed Events</h1>
+                <br />
+                    <h2>Name</h2>
+                    {cevents.map((data)=>{
+                    return( <p>{data.name}</p>);
+                    })}
+
+                    <h2>Description</h2>
+                    {cevents.map((data)=>{
+                    return( <p>{data.des}</p>);
+                    })}
+                    
+                    <h2>Date</h2>
+                    {cevents.map((data)=>{
+                    return( <p>{data.date}</p>);
+                    })}  
+   
+              </div>
+            </div>
+          )}
+
         </Layout>
    )
   };

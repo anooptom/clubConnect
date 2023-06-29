@@ -49,6 +49,28 @@ app.get('/getrevents', async (req, res) => {
     const stud = { sname: req.query.nme, suid: req.query.uid };
     const events = await collectione.find({
       club: req.query.club,
+      completed:"no",
+      "students.sname" : stud.sname,
+      "students.suid" : stud.suid
+    }).toArray();
+
+    res.json(events)
+    
+
+  } catch (error) {
+    console.error('Error connecting to MongoDB:', error);
+    res.status(500).json({ message: 'Error connecting to MongoDB' });
+  }
+});
+
+app.get('/getcevents', async (req, res) => {
+  try {
+    await client.connect();
+    const collectione= client.db("dataBase").collection("events");
+    const stud = { sname: req.query.nme, suid: req.query.uid };
+    const events = await collectione.find({
+      club: req.query.club,
+      completed:"yes",
       "students.sname" : stud.sname,
       "students.suid" : stud.suid
     }).toArray();
