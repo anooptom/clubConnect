@@ -3,6 +3,8 @@ const cors = require('cors');
 const app = express();
 const bodyParser = require('body-parser');
 const { MongoClient } = require('mongodb');
+const enc = require('./encrypt');
+
 
 const url = "mongodb+srv://admi:Password@activity.5hkevpu.mongodb.net/?retryWrites=true&w=majority";
 const client = new MongoClient(url);
@@ -202,7 +204,8 @@ app.post('/signup', async (req, res) => {
     if (existingUser) {
       res.json({ message: '0' });
     } else {
-      await collection.insertOne({ name: req.body.name, pass: req.body.password , uid : req.body.uid , club : req.body.club });
+      const passw =await enc.encr(req.body.password);
+      await collection.insertOne({ name: req.body.name, pass: passw , uid : req.body.uid , club : req.body.club });
       res.json({ message: '1' });
     }
   } catch (error) {
@@ -217,8 +220,10 @@ app.post('/admin', async (req, res) => {
     const collection = client.db("dataBase").collection("admin");
     
     const existingUser = await collection.findOne({ name: req.body.name });
+    const passw =await enc.encr(req.body.password)
+    
     if (existingUser) {
-      if(req.body.password === existingUser.pass){
+      if(passw === existingUser.pass){
         res.json({ message: '1' });
       }
       else{
@@ -385,8 +390,10 @@ app.post('/user', async (req, res) => {
     const collection = client.db("dataBase").collection("students");
     
     const existingUser = await collection.findOne({ uid: req.body.uid });
+    const passw =await enc.encr(req.body.password);
+
     if (existingUser) {
-      if(req.body.password === existingUser.pass){
+      if(existingUser.pass === passw){
         res.json({ message: '1' });
       }
       else{
@@ -414,7 +421,8 @@ app.post('/facultyCreate', async (req, res) => {
         res.json({ message: '0' });
       }
       else{
-        await collection.insertOne({ name: req.body.Fname, Email : req.body.Email , Pass: req.body.Pass ,club : 'null' });
+        const passw = await enc.encr(req.body.Pass);
+        await collection.insertOne({ name: req.body.Fname, Email : req.body.Email , Pass: passw ,club : 'null' });
         res.json({ message: '1' });
       }
     
@@ -432,8 +440,9 @@ app.post('/faculty', async (req, res) => {
     const collection = client.db("dataBase").collection("faculty");
     
     const existingUser = await collection.findOne({ Email : req.body.Email });
+    const passw = await enc.encr(req.body.Pass)
     if (existingUser) {
-      if(req.body.Pass === existingUser.Pass){
+      if(passw === existingUser.Pass){
         res.json({ message: '1' ,name : existingUser.name});
       }
       else{
