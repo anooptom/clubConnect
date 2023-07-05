@@ -106,6 +106,22 @@ app.get('/fetchstd', async (req, res) => {
   } 
 });
 
+app.get('/fetchnotif', async (req, res) => {
+  try {
+    await client.connect();
+    const collectionf= client.db("dataBase").collection("faculty");
+    const collections= client.db("dataBase").collection("students");
+    
+    const fac = await collectionf.findOne({name : req.query.name});
+    const stds = await collections.find({club : fac.club,vaild:"no"}).toArray();
+    res.json(stds);
+
+  } catch (error) {
+    console.error('Error connecting to MongoDB:', error);
+    res.status(500).json({ message: 'Error connecting to MongoDB' });
+  } 
+});
+
 app.get('/fetchclub', async (req, res) => {
   try {
     await client.connect();
@@ -205,7 +221,7 @@ app.post('/signup', async (req, res) => {
       res.json({ message: '0' });
     } else {
       const passw =await enc.encr(req.body.password);
-      await collection.insertOne({ name: req.body.name, pass: passw , uid : req.body.uid , club : req.body.club });
+      await collection.insertOne({ name: req.body.name, pass: passw , uid : req.body.uid , club : req.body.club ,vaild: "no"});
       res.json({ message: '1' });
     }
   } catch (error) {
@@ -278,6 +294,24 @@ app.post('/markcomp', async (req, res) => {
       await collection1.updateOne({name:req.body.data , club : req.body.club},{$set:{completed : "yes"}});
     else
     await collection1.deleteOne({name: req.body.data, club : req.body.club});
+    res.json({ message: '1' });
+
+  } catch (error) {
+    console.error('Error connecting to MongoDB:', error);
+    res.status(500).json({ message: 'Error connecting to MongoDB' });
+  } finally {
+    await client.close();
+  }
+});
+
+app.post('/marknotif', async (req, res) => {
+  try {
+    await client.connect();
+    const collection1 = client.db("dataBase").collection("students");
+    if(req.body.op =="app")
+      await collection1.updateOne({uid:req.body.data },{$set:{vaild : "yes"}});
+    else
+    await collection1.deleteOne({uid: req.body.data});
     res.json({ message: '1' });
 
   } catch (error) {

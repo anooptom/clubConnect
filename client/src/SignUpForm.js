@@ -39,8 +39,7 @@ const SignUpForm = () => {
       .post(" http://localhost:3001/signup", formData)
       .then((response) => {
         if (response.data.message === "1") {
-          localStorage.setItem('isLoggedIn', 'true');
-          navigate("/UserDashboard", { state: { Name: formData.name } });
+          navigate("/Notvalidated")
         } else {
           alert("Existing User!,Login To Continue");
           navigate("/user");

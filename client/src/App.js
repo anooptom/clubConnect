@@ -8,6 +8,7 @@ import FacultyLogin from './FacultyLogin';
 import FacultyDashboard from './FacultyDashboard'
 import AdminDashboard from './AdminDashboard'
 import AdminLogin from './AdminLogin'
+import Notvalidated from './Notvalidated';
 
 
 function App () {
@@ -22,6 +23,7 @@ function App () {
         <Route path='/AdminDashboard' element={<AdminDashboard/>} />
         <Route path='/UserDashboard' element={<UserDashboard/>} />
         <Route path='/FacultyDashboard' element={<FacultyDashboard/>} />
+        <Route path='/NotValidated' element={<Notvalidated/>} />
       </Routes>
     </div>
   );

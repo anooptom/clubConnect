@@ -25,6 +25,7 @@ const FacultyDashboard = () => {
   var len =0;
   const[events,setevents] = useState([])
   const[cevents,setcevents] = useState([])
+  const [notif, setnotif] = useState([]);
 
     useEffect(() => {
       var isLoggedIn = localStorage.getItem('isFLoggedIn');
@@ -62,6 +63,20 @@ const FacultyDashboard = () => {
       })
     };
 
+    const fetchnotif = async()=>{
+      await fetch(`http://localhost:3001/fetchnotif?name=${encodeURIComponent(Location.state.Name)}`, {
+    method: 'GET',
+    mode: 'cors',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+  .then(res=>(res.json()))
+      .then(json=>{
+          setnotif(json);
+          
+      })
+    };
     if(std.info)
       len = std.info.length;
 
@@ -109,6 +124,7 @@ const FacultyDashboard = () => {
 
     const items = [
         getItem('Home', '1', <HomeOutlined />),
+        getItem('Notifications', '10', <UserOutlined/>),
         getItem('Students', '2', <UserOutlined/>),
         getItem('Events', 'sub1', <UserOutlined />, [getItem('View', '3'), getItem('Create', '4')]),
         getItem('Change Password', '11', <LogoutOutlined />),
@@ -127,7 +143,9 @@ const FacultyDashboard = () => {
         if(key ==="3"){
           fetchevents();
         }
-
+        if(key ==='10'){
+          fetchnotif();
+        }
         setSelectedKey(key);
       };
 
@@ -165,6 +183,16 @@ const FacultyDashboard = () => {
       const handlecomp = (clicked,attr) => { 
              
         axios.post(' http://localhost:3001/markcomp', {data:clicked.name,club:std.c,op : attr})
+        .then(response=>(
+          window.location.reload()
+          ));
+
+        
+      };
+
+      const handlenotif = (clicked,attr) => { 
+             
+        axios.post(' http://localhost:3001/marknotif', {data:clicked.uid,op : attr})
         .then(response=>(
           window.location.reload()
           ));
@@ -293,6 +321,51 @@ const FacultyDashboard = () => {
               </form>
             </div>
           )}
+
+{selectedKey === '10' && (
+  <div>
+    {notif.length === 0 ? (
+      <h1>No New Notifications</h1>
+    ) : (
+      <div>
+        <div>
+          <h1>Name</h1>
+          {notif.map((data) => (
+            <p key={data.uid}>{data.name}</p>
+          ))}
+        </div>
+
+        <div>
+          <h1>Uid</h1>
+          {notif.map((data) => (
+            <p key={data.uid}>{data.uid}</p>
+          ))}
+        </div>
+
+        <div>
+          <h2>Approve</h2>
+          {notif.map((data) => (
+            <div key={data.uid}>
+              <button onClick={() => handlenotif(data, "app")}>Approve</button>
+              <br />
+            </div>
+          ))}
+        </div>
+
+        <div>
+          <h2>Reject</h2>
+          {notif.map((data) => (
+            <div key={data.uid}>
+              <button onClick={() => handlenotif(data, "rej")}>Reject</button>
+              <br />
+            </div>
+          ))}
+        </div>
+      </div>
+    )}
+  </div>
+)}
+
 
           {selectedKey ==='4' &&(
             <div>

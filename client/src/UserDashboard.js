@@ -23,7 +23,7 @@ const UserDashboard = () => {
   const [collapsed, setCollapsed] = useState(false);
   const [selectedKey, setSelectedKey] = useState('1');
   const[data,setData]=useState({})
-  var n,c;
+  var n,c,val;
   const[events,setevents] = useState([])
   const[revents,setrevents] = useState([])
   const[cevents,setcevents] = useState([])
@@ -88,7 +88,6 @@ const UserDashboard = () => {
       });
     }
   };
-    
 
   const handleLogout = () => {
     localStorage.setItem('isULoggedIn', 'false');
@@ -156,9 +155,15 @@ const UserDashboard = () => {
     setSelectedKey(key);
   };
 
+
+
   if(data[0] !== undefined){
+    
     n=data[0].name
     c=data[0].club
+    if(data[0].vaild ==='no'){
+        navigate("/Notvalidated");
+    }
   }
 
 
