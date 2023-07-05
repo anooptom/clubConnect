@@ -41,6 +41,11 @@ const AdminDashboard = () => {
       head: ''
     });
 
+    const [pas, setpas] = useState({
+      rpass: '',
+      cpass: ''
+    });
+
     const [FacultyData, setFacultyData] = useState({
       Fname: '',
       Email: '',
@@ -74,6 +79,13 @@ const AdminDashboard = () => {
       });
     };
 
+    const handlePChange = (e) => {
+      setpas({
+        ...pas,
+        [e.target.name]: e.target.value
+      });
+    };
+
     const handleDelete = (e) => {
       e.preventDefault();
 
@@ -81,9 +93,11 @@ const AdminDashboard = () => {
         .then(response => {
           if(response.data.message === '1'){
             alert("Club Deleted")
+            setclubData({nme:''})
           }
           else if(response.data.message === '0'){
             alert("Club Doesn't Exist");
+            setclubData({nme:''})
           }
         })
         .catch(error => {
@@ -97,9 +111,11 @@ const AdminDashboard = () => {
         .then(response => {
           if(response.data.message === '0'){
             alert("Faculty Already Exists")
+            setFacultyData({Fname:'',Email:'',Pass:''});
           }
           else if(response.data.message === '1'){
             alert("Faculty Created");
+            setFacultyData({Fname:'',Email:'',Pass:''});
           }
         })
         .catch(error => {
@@ -113,9 +129,11 @@ const AdminDashboard = () => {
         .then(response => {
           if(response.data.message === '0'){
             alert("Faculty Doesn't Exist")
+            setFacultyDData({Email:''})
           }
           else if(response.data.message === '1'){
             alert("Faculty Deleted");
+            setFacultyDData({Email:''})
           }
         })
         .catch(error => {
@@ -130,17 +148,45 @@ const AdminDashboard = () => {
         .then(response => {
           if(response.data.message === '1'){
             alert("Success")
+            setclubData({nme:'',head:''})
           }
           else if(response.data.message === '0'){
             alert("Club Already Exist");
+            setclubData({nme:'',head:''})
           }
           else{
             alert("Faculty Not Found");
+            setclubData({head:''})
           }
         })
         .catch(error => {
           console.error(error);
         });
+    };
+
+    const handlePSubmit = (e) => {
+      e.preventDefault();
+
+      if(pas.cpass !== pas.rpass){
+        setpas({ rpass: '', cpass: '' });
+        alert("Password Mismatch");
+      }
+      else{
+      axios.post(' http://localhost:3001/changepass', {pass:pas,user : "admin"})
+        .then(response => {
+         if(response.data.message ==="1"){
+          setpas({ rpass: '', cpass: '' });
+          alert("Password Changed");
+         }
+         else{
+          alert("Error Changing Password");
+          setpas({ rpass: '', cpass: '' });
+         }
+        })
+        .catch(error => {
+          console.error(error);
+        });
+      }
     };
 
     useEffect(() =>{
@@ -192,6 +238,7 @@ const AdminDashboard = () => {
       getItem('Faculty', 'sub1', <UserOutlined />, [getItem('Create', '2'), getItem('Delete', '3')]),
       getItem('Club', 'sub2', <GlobalOutlined />, [getItem('View','10'),getItem('Create', '4'), getItem('Delete', '5')]),
       getItem('Users', 'sub3', <TeamOutlined />, [getItem('Faculty', '7'), getItem('Students', '8')]),
+      getItem('Change Password', '11', <LogoutOutlined />),
       getItem('Log Out', '9', <LogoutOutlined />),
     ];
 
@@ -424,6 +471,21 @@ const AdminDashboard = () => {
                 </center>
               </div>
 
+            </div>
+          )}
+
+        {selectedKey === '11' && (
+            <div className="club-create">
+              <center><p className='h-clubcreate'>CHANGE PASSWORD</p></center>
+
+              <form className="club-form" onSubmit={handlePSubmit}>
+                <label className="label-club">New Password </label>
+                <input className="input-club" type="password" id="cpass" name="cpass" value={pas.cpass} onChange={handlePChange}/>
+                <label className="label-club">Retype </label>
+                <input className="input-club" type="text" id="rpass" name="rpass" value={pas.rpass} onChange={handlePChange}/>
+                
+                <button className="club-create-button" type='submit'>CHANGE</button>
+              </form>
             </div>
           )}
         </Content>

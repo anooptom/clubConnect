@@ -459,6 +459,27 @@ app.post('/faculty', async (req, res) => {
   }
 });
 
+app.post('/changepass', async (req, res) => {
+  try {
+    await client.connect();
+    const collection1 = client.db("dataBase").collection("admin");
+    const passw = await enc.encr(req.body.pass.rpass)
+    if(await collection1.updateOne({name : req.body.user},{$set:{pass : passw}})){
+      res.json({message:"1"})
+    }
+
+    else{
+      res.json({message:"0"})
+    }
+
+  } catch (error) {
+    console.error('Error connecting to MongoDB:', error);
+    res.status(500).json({ message: 'Error connecting to MongoDB' });
+  } finally {
+    await client.close();
+  }
+});
+
 const port = 3001;
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
