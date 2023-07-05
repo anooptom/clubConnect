@@ -70,10 +70,48 @@ const FacultyDashboard = () => {
       navigate('/faculty');
     };
     
+    const [pas, setpas] = useState({
+      rpass: '',
+      cpass: ''
+    });
+
+    const handlePChange = (e) => {
+      setpas({
+        ...pas,
+        [e.target.name]: e.target.value
+      });
+    };
+
+    const handlePSubmit = (e) => {
+      e.preventDefault();
+
+      if(pas.cpass !== pas.rpass){
+        setpas({ rpass: '', cpass: '' });
+        alert("Password Mismatch");
+      }
+      else{
+      axios.post(' http://localhost:3001/changepas', {pass:pas,user : Location.state.Name})
+        .then(response => {
+         if(response.data.message ==="1"){
+          setpas({ rpass: '', cpass: '' });
+          alert("Password Changed");
+         }
+         else{
+          alert("Error Changing Password");
+          setpas({ rpass: '', cpass: '' });
+         }
+        })
+        .catch(error => {
+          console.error(error);
+        });
+      }
+    };
+
     const items = [
         getItem('Home', '1', <HomeOutlined />),
         getItem('Students', '2', <UserOutlined/>),
         getItem('Events', 'sub1', <UserOutlined />, [getItem('View', '3'), getItem('Create', '4')]),
+        getItem('Change Password', '11', <LogoutOutlined />),
         getItem('Log Out', '6', <LogoutOutlined />),
       ];
 
@@ -238,6 +276,21 @@ const FacultyDashboard = () => {
                   return( <p>{data.date}</p>);
                   })}
               </div>
+            </div>
+          )}
+
+          {selectedKey === '11' && (
+            <div >
+              <center><p >CHANGE PASSWORD</p></center>
+
+              <form  onSubmit={handlePSubmit}>
+                <label >New Password </label>
+                <input  type="password" id="cpass" name="cpass" value={pas.cpass} onChange={handlePChange}/>
+                <label >Retype </label>
+                <input  type="text" id="rpass" name="rpass" value={pas.rpass} onChange={handlePChange}/>
+                
+                <button className="club-create-button" type='submit'>CHANGE</button>
+              </form>
             </div>
           )}
 

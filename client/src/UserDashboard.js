@@ -52,7 +52,42 @@ const UserDashboard = () => {
     })
   };
 
- 
+  const [pas, setpas] = useState({
+    rpass: '',
+    cpass: ''
+  });
+
+  const handlePChange = (e) => {
+    setpas({
+      ...pas,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const handlePSubmit = (e) => {
+    e.preventDefault();
+
+    if(pas.cpass !== pas.rpass){
+      setpas({ rpass: '', cpass: '' });
+      alert("Password Mismatch");
+    }
+    else{
+    axios.post(' http://localhost:3001/changep', {pass:pas,user : Location.state.uid})
+      .then(response => {
+       if(response.data.message ==="1"){
+        setpas({ rpass: '', cpass: '' });
+        alert("Password Changed");
+       }
+       else{
+        alert("Error Changing Password");
+        setpas({ rpass: '', cpass: '' });
+       }
+      })
+      .catch(error => {
+        console.error(error);
+      });
+    }
+  };
     
 
   const handleLogout = () => {
@@ -96,8 +131,10 @@ const UserDashboard = () => {
 
   const items = [
     getItem('Home', '1', <HomeOutlined />),
-    getItem('Events', 'sub1', <UserOutlined />, [getItem('UpComming', '3'), getItem('Registerd', '4'), getItem('Completed', '5')]),
+    getItem('Events', 'sub1', <UserOutlined />, [getItem('UpComing', '3'), getItem('Registerd', '4'), getItem('Completed', '5')]),
+    getItem('Change Password', '11', <LogoutOutlined />),
     getItem('Log Out', '6', <LogoutOutlined />),
+    
   ];
 
   const handleMenuClick = ({ key }) => {
@@ -256,6 +293,20 @@ const UserDashboard = () => {
                     })}  
    
               </div>
+            </div>
+          )}
+           {selectedKey === '11' && (
+            <div >
+              <center><p >CHANGE PASSWORD</p></center>
+
+              <form  onSubmit={handlePSubmit}>
+                <label >New Password </label>
+                <input  type="password" id="cpass" name="cpass" value={pas.cpass} onChange={handlePChange}/>
+                <label >Retype </label>
+                <input  type="text" id="rpass" name="rpass" value={pas.rpass} onChange={handlePChange}/>
+                
+                <button className="club-create-button" type='submit'>CHANGE</button>
+              </form>
             </div>
           )}
 
