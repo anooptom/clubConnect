@@ -34,7 +34,11 @@ const SignUpForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-  
+    if(formData.club ==="Select" || formData.club===""){
+      alert("Select Club");
+    }
+
+    else{
     axios
       .post(" http://localhost:3001/signup", formData)
       .then((response) => {
@@ -48,6 +52,7 @@ const SignUpForm = () => {
       .catch((error) => {
         console.error(error);
       });
+    }
   };
 
   return (
@@ -57,13 +62,14 @@ const SignUpForm = () => {
 
         <form className="su-form" onSubmit={handleSubmit}>
           <label className="su-label" >Name : </label>
-          <input type="text" id="name" name="name" value={formData.name} onChange={handleChange} />
+          <input type="text" id="name" name="name" value={formData.name} onChange={handleChange} required/>
           <label className="su-label">UID : </label>
-          <input type="text" id="uid" name="uid" value={formData.uid} onChange={handleChange}></input>
+          <input type="text" id="uid" name="uid" value={formData.uid} onChange={handleChange} required></input>
           <label className="su-label">Password: </label>
           <input type="password"  id="password" name="password" value={formData.password} onChange={handleChange} required/>
           <label className="su-label">Club: </label>
-         <select id='club' name='club' value={formData.club} onChange={handleChange}>
+         <select id='club' name='club' value={formData.club} onChange={handleChange} required>
+          <option>Select</option>
           {clb.map((data)=>{
                   return( <option >{data.name}</option>);
           })}
