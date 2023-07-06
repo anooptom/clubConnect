@@ -1,8 +1,7 @@
 import { HomeOutlined, UserOutlined, LogoutOutlined, BellOutlined } from '@ant-design/icons';
 import { Layout, Menu } from 'antd';
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router';
-import { useLocation } from "react-router";
+import { useNavigate,useLocation } from 'react-router';
 import axios from 'axios';
 import './table.css'
 import './FacultyDashboard.css'
@@ -28,14 +27,21 @@ const FacultyDashboard = () => {
   const [events, setevents] = useState([])
   const [cevents, setcevents] = useState([])
   const [notif, setnotif] = useState([]);
+  const [loading, setLoading] = useState(true); 
 
   useEffect(() => {
     var isLoggedIn = localStorage.getItem('isFLoggedIn');
     if (isLoggedIn !== 'true') {
-      alert("Login To Continue")
-      navigate('/faculty');
+      navigate('/Notloggedin');
     }
-    fetchstudents();
+    fetchstudents()
+    .then(() => {
+      setLoading(false);
+    })
+    .catch(error => {
+      console.error(error);
+      setLoading(false); 
+    });
   }, [navigate]);
 
 
@@ -110,8 +116,7 @@ const FacultyDashboard = () => {
       axios.post(' http://localhost:3001/changepas', { pass: pas, user: Location.state.Name })
         .then(response => {
           if (response.data.message === "1") {
-            setpas({ rpass: '', cpass: '' });
-            alert("Password Changed");
+            window.location.reload();
           }
           else {
             alert("Error Changing Password");
@@ -170,7 +175,7 @@ const FacultyDashboard = () => {
     axios.post(' http://localhost:3001/eventcreate', { data: eventData, club: std.c })
       .then(response => {
         if (response.data.message === "1") {
-          alert("Event Created");
+          window.location.reload();
         }
         else {
           alert("Already Exist");
@@ -221,16 +226,22 @@ const FacultyDashboard = () => {
 
   return (
     <Layout style={{ minHeight: '100vh' }}>
-      <Sider collapsible collapsed={collapsed} onCollapse={setCollapsed}>
-        <div className="demo-logo-vertical" />
-        <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" onClick={handleMenuClick}>
-          {getMenuItems(items)}
-        </Menu>
-      </Sider>
+      {loading ? (
+        <div>
+         <center><h2>Loading...</h2></center> 
+          </div>
+      ) : (
+        <>
+          <Sider collapsed={collapsed} onCollapse={setCollapsed}>
+            <div className="demo-logo-vertical" />
+            <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" onClick={handleMenuClick}>
+              {getMenuItems(items)}
+            </Menu>
+          </Sider>
       <div className='content'>
         {selectedKey === '1' && Location.state && Location.state.Name && (
           <div>
-            <h1>Welcome {Location.state.Name}</h1>
+            <h1>Welcome {Location.state.Name} ,</h1>
             <div className='faculty-group'>
             <div className='faculty-card'>
               <div>
@@ -334,11 +345,11 @@ const FacultyDashboard = () => {
               <table>
                 <tr>
                   <td>New Password</td>
-                  <td><input type="password" id="cpass" name="cpass" value={pas.cpass} onChange={handlePChange} /></td>
+                  <td><input type="password" id="cpass" name="cpass" value={pas.cpass} onChange={handlePChange} required/></td>
                 </tr>
                 <tr>
                   <td>Retype Password</td>
-                  <td><input type="text" id="rpass" name="rpass" value={pas.rpass} onChange={handlePChange} /></td>
+                  <td><input type="text" id="rpass" name="rpass" value={pas.rpass} onChange={handlePChange} required/></td>
                 </tr>
                 <tr>
                   <td></td>
@@ -394,15 +405,15 @@ const FacultyDashboard = () => {
               <table>
                 <tr>
                   <td>Name</td>
-                  <td><input type="text" id="name" name="name" value={eventData.name} onChange={handleChange} /></td>
+                  <td><input type="text" id="name" name="name" value={eventData.name} onChange={handleChange} required/></td>
                 </tr>
                 <tr>
                   <td>Description</td>
-                  <textarea id="des" name="des" value={eventData.des} onChange={handleChange}></textarea>
+                  <textarea id="des" name="des" value={eventData.des} onChange={handleChange} required></textarea>
                 </tr>
                 <tr>
                   <td>Date</td>
-                  <input type="date" id="date" name="date" value={eventData.date} onChange={handleChange} />
+                  <input type="date" id="date" name="date" value={eventData.date} onChange={handleChange} required/>
                 </tr>
                 <tr>
                   <td></td>
@@ -411,11 +422,11 @@ const FacultyDashboard = () => {
               </table>
             </form>
           </div>
-        )}
-      </div>
-    </Layout>
-
-
-  );
+         )}
+         </div>
+       </>
+     )}
+   </Layout>
+ );
 };
 export default FacultyDashboard;

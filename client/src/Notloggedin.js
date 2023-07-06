@@ -1,19 +1,19 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router';
 
-const Notvalidated =() =>{
+const Notloggedin =() =>{
     const navigate = useNavigate();
     useEffect(() => { 
         const timeout = setTimeout(() => {
-         navigate('/user')
-        }, 2500); 
+         navigate('/faculty')
+        }, 2000); 
     
         return () => clearTimeout(timeout);
       },[]);
 
     return(
-        <h1><center> Please Wait For The  Faculty To Approve</center></h1>
+        <h1><center> Not Logged In! Login To Continue....</center></h1>
     )
 };
 
-export default Notvalidated;
+export default Notloggedin;
