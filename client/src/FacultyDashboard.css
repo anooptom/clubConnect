@@ -1,0 +1,127 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Poppins:wght@200&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Mukta&family=Poppins:wght@200&display=swap');
+.content{
+    background-color: #002140;
+    width:90vw; 
+    color: #f5faff;
+    font-family: 'Poppins';
+    padding: 0 5vw;
+}
+.content h1{
+    color: #f1f1e6;
+    font-family: 'Mukta';
+    font-size: 2.5rem;
+}
+.faculty-group{
+    display:flex;
+}
+.faculty-card{
+    background-color: #00415a;
+    width:25vw;
+    height: 30vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    padding: 0 5vw;
+    text-align: center;
+    margin: 5vh 5vw;
+}
+.faculty-card h2{
+    font-size: 2rem;
+    font-family: 'Montserrat';
+}
+.faculty-card p{
+    font-size: 2rem;
+}
+.no-notif{
+    height: 100vh;
+    display: flex;
+    width: 75vw;
+    align-items: center;
+    justify-content: center;
+}
+.no-notif p{
+    font-size: 2.5rem;
+}
+.changepass label{
+    font-size: 1.2rem;
+}
+.changepass input{
+    width: 25vw;
+    border-bottom: 1px solid #8b84a4 !important ;
+    color: #f1f1e6;
+}
+.changepass input:focus{
+    transition: 0.5s;
+    outline: none;
+    border-bottom: 1px solid #f1f1e6 !important;
+}
+.item{
+    margin-bottom: 1.5vh;
+}
+.changepass form{
+    margin: 0;
+}
+.change-password-button{
+    background-color: #002140;
+    color: #f1f1e6;
+    font-family: 'Poppins';
+    font-size: 0.9rem;
+    cursor: pointer;
+    border-radius: 5px;
+    border: 1px solid #002140;
+    width: 10vw;
+    align-self: flex-start;
+}
+.change-password-button:hover{
+    transition: 0.5s;
+    background-color: #000c17 !important;
+    color: #f1f1e6 !important;
+}
+.changepass table{
+    width: 50vw;
+}
+.changepass table td{
+    height: 10vh;
+    padding: 0 3vw;
+}
+.create-event input{
+    border-bottom: 1px solid #8b84a4;
+    width: 30vw;
+    font-family: 'Poppins';
+    color: #f1f1e6;
+    font-size: 1rem;
+}
+.create-event input:focus{
+    transition: 0.5s;
+    border-bottom: 1px solid #f1f1e6;
+    outline: none;
+}
+.create-event table{
+    font-size: 1.2rem;
+}
+.create-event td{
+    width: 20vw;
+}
+textarea{
+    background-color: #00415a;
+    border:1px solid #8b84a4;
+    margin: 2vh 0;
+    height: 25vh;
+    width: 30vw;
+    box-sizing: border-box;
+    color: #f1f1e6;
+    font-family: 'Poppins';
+    resize: none;
+}
+textarea:focus{
+    transition: 0.5s;
+    border: 1px solid #f1f1e6;
+    outline: none;
+}
+#date{
+    background-color: #00415a;
+    border: 1px solid #8b84a4;
+    margin: 2vh 0;
+}

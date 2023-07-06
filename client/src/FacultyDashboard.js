@@ -1,398 +1,421 @@
-import {  HomeOutlined, UserOutlined, LogoutOutlined } from '@ant-design/icons';
+import { HomeOutlined, UserOutlined, LogoutOutlined, BellOutlined } from '@ant-design/icons';
 import { Layout, Menu } from 'antd';
-import {  useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { useLocation } from "react-router";
 import axios from 'axios';
+import './table.css'
+import './FacultyDashboard.css'
 
 const { Sider } = Layout;
 
 function getItem(label, key, icon, children) {
-    return {
-      key,
-      icon,
-      children,
-      label,
-    };
-  }
+  return {
+    key,
+    icon,
+    children,
+    label,
+  };
+}
 
 const FacultyDashboard = () => {
   const navigate = useNavigate();
   const Location = useLocation();
   const [collapsed, setCollapsed] = useState(false);
   const [selectedKey, setSelectedKey] = useState('1');
-  const[std,setStd]=useState({})
-  var len =0;
-  const[events,setevents] = useState([])
-  const[cevents,setcevents] = useState([])
+  const [std, setStd] = useState({})
+  var len = 0;
+  const [events, setevents] = useState([])
+  const [cevents, setcevents] = useState([])
   const [notif, setnotif] = useState([]);
 
-    useEffect(() => {
-      var isLoggedIn = localStorage.getItem('isFLoggedIn');
-      if (isLoggedIn !== 'true') {
-        alert("Login To Continue")
-        navigate('/faculty');
-      }
-      fetchstudents();
-    }, [navigate]);
-
-
-    const fetchevents = async()=>{
-        const response = await axios.get('http://localhost:3001/getevents', {
-          params: {
-            club: std.c
-          }
-        });
-        const json = response.data;
-        setevents(json.e);
-        setcevents(json.ce);
-      };
-
-    const fetchstudents = async()=>{
-      await fetch(`http://localhost:3001/fetchstd?name=${encodeURIComponent(Location.state.Name)}`, {
-    method: 'GET',
-    mode: 'cors',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  })
-  .then(res=>(res.json()))
-      .then(json=>{
-          setStd(json);
-          
-      })
-    };
-
-    const fetchnotif = async()=>{
-      await fetch(`http://localhost:3001/fetchnotif?name=${encodeURIComponent(Location.state.Name)}`, {
-    method: 'GET',
-    mode: 'cors',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  })
-  .then(res=>(res.json()))
-      .then(json=>{
-          setnotif(json);
-          
-      })
-    };
-    if(std.info)
-      len = std.info.length;
-
-    const handleLogout = () => {
-      localStorage.setItem('isFLoggedIn', 'false');
+  useEffect(() => {
+    var isLoggedIn = localStorage.getItem('isFLoggedIn');
+    if (isLoggedIn !== 'true') {
+      alert("Login To Continue")
       navigate('/faculty');
-    };
-    
-    const [pas, setpas] = useState({
-      rpass: '',
-      cpass: ''
+    }
+    fetchstudents();
+  }, [navigate]);
+
+
+  const fetchevents = async () => {
+    const response = await axios.get('http://localhost:3001/getevents', {
+      params: {
+        club: std.c
+      }
     });
-
-    const handlePChange = (e) => {
-      setpas({
-        ...pas,
-        [e.target.name]: e.target.value
-      });
-    };
-
-    const handlePSubmit = (e) => {
-      e.preventDefault();
-
-      if(pas.cpass !== pas.rpass){
-        setpas({ rpass: '', cpass: '' });
-        alert("Password Mismatch");
-      }
-      else{
-      axios.post(' http://localhost:3001/changepas', {pass:pas,user : Location.state.Name})
-        .then(response => {
-         if(response.data.message ==="1"){
-          setpas({ rpass: '', cpass: '' });
-          alert("Password Changed");
-         }
-         else{
-          alert("Error Changing Password");
-          setpas({ rpass: '', cpass: '' });
-         }
-        })
-        .catch(error => {
-          console.error(error);
-        });
-      }
-    };
-
-    const items = [
-        getItem('Home', '1', <HomeOutlined />),
-        getItem('Notifications', '10', <UserOutlined/>),
-        getItem('Students', '2', <UserOutlined/>),
-        getItem('Events', 'sub1', <UserOutlined />, [getItem('View', '3'), getItem('Create', '4')]),
-        getItem('Change Password', '11', <LogoutOutlined />),
-        getItem('Log Out', '6', <LogoutOutlined />),
-      ];
-
-      const handleMenuClick = ({ key }) => {
-
-        if(key ==='6'){
-          handleLogout();
-        }
-
-        if(key ==='2'){
-          fetchstudents()
-        }
-        if(key ==="3"){
-          fetchevents();
-        }
-        if(key ==='10'){
-          fetchnotif();
-        }
-        setSelectedKey(key);
-      };
-
-      const [eventData, seteventData] = useState({
-        name: "",
-        des: "",
-        date: new Date()
-      });
-
-      const handleChange = (e) => {
-        seteventData({
-          ...eventData,
-          [e.target.name]: e.target.value
-        });
-      };
-
-      const handleSubmit = (e) => {
-        e.preventDefault();
-        
-        axios.post(' http://localhost:3001/eventcreate', {data:eventData,club:std.c})
-        .then(response => {
-          if(response.data.message === "1"){
-            alert("Event Created");
-          }
-          else{
-            alert ("Already Exist");
-          }
-        
-        })
-        .catch(error => {
-          console.error(error);
-        });
-      };
-
-      const handlecomp = (clicked,attr) => { 
-             
-        axios.post(' http://localhost:3001/markcomp', {data:clicked.name,club:std.c,op : attr})
-        .then(response=>(
-          window.location.reload()
-          ));
-
-        
-      };
-
-      const handlenotif = (clicked,attr) => { 
-             
-        axios.post(' http://localhost:3001/marknotif', {data:clicked.uid,op : attr})
-        .then(response=>(
-          window.location.reload()
-          ));
-
-        
-      };
-
-      const getMenuItems = items => {
-        return items.map(item => {
-          if (item.children) {
-            return (
-              <Menu.SubMenu key={item.key} icon={item.icon} title={item.label}>
-                {getMenuItems(item.children)}
-              </Menu.SubMenu>
-            );
-          }
-          return (
-            <Menu.Item key={item.key} icon={item.icon}>
-              {item.label}
-            </Menu.Item>
-          );
-        });
-      };
-
-      return (
-        <Layout style={{ minHeight: '100vh' }}>
-          <Sider collapsible collapsed={collapsed} onCollapse={setCollapsed}>
-            <div className="demo-logo-vertical" />
-            <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" onClick={handleMenuClick}>
-              {getMenuItems(items)}
-            </Menu>
-          </Sider>
-          
-          {selectedKey ==='1' && Location.state && Location.state.Name && (
-            <div>
-              <h1>Welcome {Location.state.Name}</h1>
-              <h2>Students:  { len } </h2>
-              <h2>club: {std.c}  </h2>
-              <h2>Upcomming Events: {events.length}  </h2>
-              <h2>Completed Events: {cevents.length}  </h2>
-            </div>
-          )}
-
-          {selectedKey ==='2' &&(
-            <div>
-              <div>
-                <h1>Name</h1>
-                {std.info.map((data)=>{
-                  return( <p>{data.name}</p>);
-                  })}
-              </div>
-
-              <div>
-                <h1>Uid</h1>
-                {std.info.map((data)=>{
-                  return( <p>{data.uid}</p>);
-                  })}
-              </div>
-            </div>
-          )}
-
-            {selectedKey ==='3' &&(
-            <div>
-              <div>
-                <h1>Upcomming Events</h1>
-                <br />
-                <h2>Name</h2>
-                {events.map((data)=>{
-                  return( <p>{data.name}</p>);
-                  })}
-                <h2>Date</h2>
-                {events.map((data)=>{
-                  return( <p>{data.date}</p>);
-                  })}
-                
-                <h2>Mark As Complete</h2>
-                
-                {events.map((data)=>{
-                  return(
-                    <div>
-                    <button onClick={() => handlecomp(data,"comp")}>Completed</button>
-                    <br />
-                    </div>
-                  );
-                  })}
-
-                <h2>Delete</h2>
-                
-                {events.map((data)=>{
-                  return(
-                    <div>
-                    <button onClick={() => handlecomp(data,"del")}>Delete</button>
-                    <br />
-                    </div>
-                  );
-                  })}
-                
-              </div>
-
-              <div>
-                <h1>Completed Events</h1>
-                <br />
-                <h2>Name</h2>
-                {cevents.map((data)=>{
-                  return( <p>{data.name}</p>);
-                  })}
-                <h2>Date</h2>
-                {cevents.map((data)=>{
-                  return( <p>{data.date}</p>);
-                  })}
-              </div>
-            </div>
-          )}
-
-          {selectedKey === '11' && (
-            <div >
-              <center><p >CHANGE PASSWORD</p></center>
-
-              <form  onSubmit={handlePSubmit}>
-                <label >New Password </label>
-                <input  type="password" id="cpass" name="cpass" value={pas.cpass} onChange={handlePChange}/>
-                <label >Retype </label>
-                <input  type="text" id="rpass" name="rpass" value={pas.rpass} onChange={handlePChange}/>
-                
-                <button className="club-create-button" type='submit'>CHANGE</button>
-              </form>
-            </div>
-          )}
-
-{selectedKey === '10' && (
-  <div>
-    {notif.length === 0 ? (
-      <h1>No New Notifications</h1>
-    ) : (
-      <div>
-        <div>
-          <h1>Name</h1>
-          {notif.map((data) => (
-            <p key={data.uid}>{data.name}</p>
-          ))}
-        </div>
-
-        <div>
-          <h1>Uid</h1>
-          {notif.map((data) => (
-            <p key={data.uid}>{data.uid}</p>
-          ))}
-        </div>
-
-        <div>
-          <h2>Approve</h2>
-          {notif.map((data) => (
-            <div key={data.uid}>
-              <button onClick={() => handlenotif(data, "app")}>Approve</button>
-              <br />
-            </div>
-          ))}
-        </div>
-
-        <div>
-          <h2>Reject</h2>
-          {notif.map((data) => (
-            <div key={data.uid}>
-              <button onClick={() => handlenotif(data, "rej")}>Reject</button>
-              <br />
-            </div>
-          ))}
-        </div>
-      </div>
-    )}
-  </div>
-)}
-
-
-          {selectedKey ==='4' &&(
-            <div>
-              <h1>Create Event</h1>
-
-              <form onSubmit={handleSubmit}>
-                <label>Name</label>
-                <input type="text" id="name" name="name" value={eventData.name}
-                onChange={handleChange}/>
-
-
-                <label>Description</label>
-                <input type="textArea" id="des" name="des" value={eventData.des}
-                onChange={handleChange}/>
-
-                <label >Date</label>
-                <input type="date" id="date" name="date" value={eventData.date}
-                onChange={handleChange}/>
-
-                <button type="submit">Create</button>
-              </form>
-            </div>
-          )}
-
-          </Layout>
-
-          
-  );
+    const json = response.data;
+    setevents(json.e);
+    setcevents(json.ce);
   };
-  export default FacultyDashboard;
+
+  const fetchstudents = async () => {
+    await fetch(`http://localhost:3001/fetchstd?name=${encodeURIComponent(Location.state.Name)}`, {
+      method: 'GET',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then(res => (res.json()))
+      .then(json => {
+        setStd(json);
+
+      })
+  };
+
+  const fetchnotif = async () => {
+    await fetch(`http://localhost:3001/fetchnotif?name=${encodeURIComponent(Location.state.Name)}`, {
+      method: 'GET',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then(res => (res.json()))
+      .then(json => {
+        setnotif(json);
+
+      })
+  };
+  if (std.info)
+    len = std.info.length;
+
+  const handleLogout = () => {
+    localStorage.setItem('isFLoggedIn', 'false');
+    navigate('/faculty');
+  };
+
+  const [pas, setpas] = useState({
+    rpass: '',
+    cpass: ''
+  });
+
+  const handlePChange = (e) => {
+    setpas({
+      ...pas,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const handlePSubmit = (e) => {
+    e.preventDefault();
+
+    if (pas.cpass !== pas.rpass) {
+      setpas({ rpass: '', cpass: '' });
+      alert("Password Mismatch");
+    }
+    else {
+      axios.post(' http://localhost:3001/changepas', { pass: pas, user: Location.state.Name })
+        .then(response => {
+          if (response.data.message === "1") {
+            setpas({ rpass: '', cpass: '' });
+            alert("Password Changed");
+          }
+          else {
+            alert("Error Changing Password");
+            setpas({ rpass: '', cpass: '' });
+          }
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    }
+  };
+
+  const items = [
+    getItem('Home', '1', <HomeOutlined />),
+    getItem('Notifications', '10', <UserOutlined />),
+    getItem('Students', '2', <UserOutlined />),
+    getItem('Events', 'sub1', <UserOutlined />, [getItem('View', '3'), getItem('Create', '4')]),
+    getItem('Change Password', '11', <LogoutOutlined />),
+    getItem('Log Out', '6', <LogoutOutlined />),
+  ];
+
+  const handleMenuClick = ({ key }) => {
+
+    if (key === '6') {
+      handleLogout();
+    }
+
+    if (key === '2') {
+      fetchstudents()
+    }
+    if (key === "3") {
+      fetchevents();
+    }
+    if (key === '10') {
+      fetchnotif();
+    }
+    setSelectedKey(key);
+  };
+
+  const [eventData, seteventData] = useState({
+    name: "",
+    des: "",
+    date: new Date()
+  });
+
+  const handleChange = (e) => {
+    seteventData({
+      ...eventData,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    axios.post(' http://localhost:3001/eventcreate', { data: eventData, club: std.c })
+      .then(response => {
+        if (response.data.message === "1") {
+          alert("Event Created");
+        }
+        else {
+          alert("Already Exist");
+        }
+
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  };
+
+  const handlecomp = (clicked, attr) => {
+
+    axios.post(' http://localhost:3001/markcomp', { data: clicked.name, club: std.c, op: attr })
+      .then(response => (
+        window.location.reload()
+      ));
+
+
+  };
+
+  const handlenotif = (clicked, attr) => {
+
+    axios.post(' http://localhost:3001/marknotif', { data: clicked.uid, op: attr })
+      .then(response => (
+        window.location.reload()
+      ));
+
+
+  };
+
+  const getMenuItems = items => {
+    return items.map(item => {
+      if (item.children) {
+        return (
+          <Menu.SubMenu key={item.key} icon={item.icon} title={item.label}>
+            {getMenuItems(item.children)}
+          </Menu.SubMenu>
+        );
+      }
+      return (
+        <Menu.Item key={item.key} icon={item.icon}>
+          {item.label}
+        </Menu.Item>
+      );
+    });
+  };
+
+  return (
+    <Layout style={{ minHeight: '100vh' }}>
+      <Sider collapsible collapsed={collapsed} onCollapse={setCollapsed}>
+        <div className="demo-logo-vertical" />
+        <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" onClick={handleMenuClick}>
+          {getMenuItems(items)}
+        </Menu>
+      </Sider>
+      <div className='content'>
+        {selectedKey === '1' && Location.state && Location.state.Name && (
+          <div>
+            <h1>Welcome {Location.state.Name}</h1>
+            <div className='faculty-group'>
+            <div className='faculty-card'>
+              <div>
+              <h2>Students</h2>
+              <p>{len}</p>
+              </div>
+            </div>
+            <div className='faculty-card'>
+              <div>
+              <h2>Club</h2>
+              <p>{std.c}</p>
+              </div>
+            </div>
+            </div>
+            <div className='faculty-group'>
+            <div className='faculty-card'>
+              <div>
+              <h2>Upcoming Events</h2>
+              <p>{events.length}</p>
+              </div>
+            </div>
+            <div className='faculty-card'>
+              <div>
+              <h2>Completed Events</h2>
+              <p>{cevents.length}</p>
+              </div>
+            </div>
+            </div>
+          </div>
+        )}
+
+        {selectedKey === '2' && (
+          <div>
+            <h1>Student Details</h1>
+            <table>
+              <tr className='heading'>
+                <td>Name</td>
+                <td>UID</td>
+              </tr>
+              {std.info.map((data) => {
+                return (
+                  <tr>
+                    <td>{data.name}</td>
+                    <td>{data.uid}</td>
+                  </tr>
+                );
+              })}
+            </table>
+          </div>
+        )}
+
+        {selectedKey === '3' && (
+          <div>
+            <div>
+              <h1>Upcoming Events</h1>
+              <table>
+                <tr className='heading'>
+                  <td>Name</td>
+                  <td>Date</td>
+                  <td>Action</td>
+                </tr>
+                {events.map((data) => {
+                  return (
+                    <tr>
+                      <td>{data.name}</td>
+                      <td>{data.date}</td>
+                      <td><button onClick={() => handlecomp(data, "comp")}>Completed</button>
+                        <button onClick={() => handlecomp(data, "del")}>Delete</button>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </table>
+
+            </div>
+
+            <div>
+              <h1>Completed Events</h1>
+              <table>
+                <tr className='heading'>
+                  <td>Name</td>
+                  <td>Date</td>
+                </tr>
+                {cevents.map((data) => {
+                  return (
+                    <tr>
+                      <td>{data.name}</td>
+                      <td>{data.date}</td>
+                    </tr>
+                  );
+                })}
+              </table>
+            </div>
+          </div>
+        )}
+
+        {selectedKey === '11' && (
+          <div className='changepass'>
+            <h1>Change Password</h1>
+            <form onSubmit={handlePSubmit}>
+              <table>
+                <tr>
+                  <td>New Password</td>
+                  <td><input type="password" id="cpass" name="cpass" value={pas.cpass} onChange={handlePChange} /></td>
+                </tr>
+                <tr>
+                  <td>Retype Password</td>
+                  <td><input type="text" id="rpass" name="rpass" value={pas.rpass} onChange={handlePChange} /></td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td><button className="change-password-button" type='submit'>Submit</button></td>
+                </tr>
+              </table>
+            </form>
+          </div>
+        )}
+
+        {selectedKey === '10' && (
+          <div>
+            {notif.length === 0 ? (
+              <div className='no-notif'>
+                <div style={{ textAlign: "center" }}>
+                  <BellOutlined style={{ fontSize: 7 + "rem" }} />
+                  <p>No New Notifications</p>
+                </div>
+
+              </div>
+            ) : (
+              <div>
+                <div>
+                  <h1>New Notifications</h1>
+                  <table>
+                    <tr className='heading'>
+                      <td>Name</td>
+                      <td>UID</td>
+                      <td>Action</td>
+                    </tr>
+                    {notif.map((data) => (
+                      <tr>
+                        <td key={data.uid}>{data.name}</td>
+                        <td key={data.uid}>{data.uid}</td>
+                        <td>
+                          <button onClick={() => handlenotif(data, "app")}>Approve</button>
+                          <button onClick={() => handlenotif(data, "rej")}>Reject</button>
+                        </td>
+                      </tr>
+                    ))}
+                  </table>
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+
+
+        {selectedKey === '4' && (
+          <div className='create-event'>
+            <h1>Create Event</h1>
+            <form onSubmit={handleSubmit}>
+              <table>
+                <tr>
+                  <td>Name</td>
+                  <td><input type="text" id="name" name="name" value={eventData.name} onChange={handleChange} /></td>
+                </tr>
+                <tr>
+                  <td>Description</td>
+                  <textarea id="des" name="des" value={eventData.des} onChange={handleChange}></textarea>
+                </tr>
+                <tr>
+                  <td>Date</td>
+                  <input type="date" id="date" name="date" value={eventData.date} onChange={handleChange} />
+                </tr>
+                <tr>
+                  <td></td>
+                  <td><button type="submit">Create</button></td>
+                </tr>
+              </table>
+            </form>
+          </div>
+        )}
+      </div>
+    </Layout>
+
+
+  );
+};
+export default FacultyDashboard;
