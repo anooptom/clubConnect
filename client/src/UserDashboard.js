@@ -26,16 +26,23 @@ const UserDashboard = () => {
   var n,c,val;
   const[events,setevents] = useState([])
   const[revents,setrevents] = useState([])
-  const[cevents,setcevents] = useState([])
+  const[cevents,setcevents] = useState([]) 
+  const [loading, setLoading] = useState(true); 
 
   useEffect(() => {
     var isLoggedIn = localStorage.getItem('isULoggedIn');
     if (isLoggedIn !== 'true') {
-      alert("Login To Continue")
-      navigate('/user');
+      navigate('/NotUloggedin');
     }
 
-    fetchdata();
+    fetchdata()
+    .then(() => {
+      setLoading(false);
+    })
+    .catch(error => {
+      console.error(error);
+      setLoading(false); 
+    });
   }, [navigate]);
 
   const fetchdata = async()=>{
@@ -75,8 +82,7 @@ const UserDashboard = () => {
     axios.post(' http://localhost:3001/changep', {pass:pas,user : Location.state.uid})
       .then(response => {
        if(response.data.message ==="1"){
-        setpas({ rpass: '', cpass: '' });
-        alert("Password Changed");
+        window.location.reload();
        }
        else{
         alert("Error Changing Password");
@@ -204,7 +210,13 @@ const UserDashboard = () => {
 
    return (
     <Layout style={{ minHeight: '100vh' }}>
-          <Sider collapsible collapsed={collapsed} onCollapse={setCollapsed}>
+      {loading ? (
+        <div>
+         <center><h2>Loading...</h2></center> 
+          </div>
+      ) : (
+        <>
+          <Sider collapsed={collapsed} onCollapse={setCollapsed}>
             <div className="demo-logo-vertical" />
             <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" onClick={handleMenuClick}>
               {getMenuItems(items)}
@@ -306,16 +318,17 @@ const UserDashboard = () => {
 
               <form  onSubmit={handlePSubmit}>
                 <label >New Password </label>
-                <input  type="password" id="cpass" name="cpass" value={pas.cpass} onChange={handlePChange}/>
+                <input  type="password" id="cpass" name="cpass" value={pas.cpass} onChange={handlePChange} required/>
                 <label >Retype </label>
-                <input  type="text" id="rpass" name="rpass" value={pas.rpass} onChange={handlePChange}/>
+                <input  type="text" id="rpass" name="rpass" value={pas.rpass} onChange={handlePChange} required/>
                 
                 <button className="club-create-button" type='submit'>CHANGE</button>
               </form>
             </div>
           )}
-
-        </Layout>
-   )
-  };
+          </>
+        )}
+      </Layout>
+    );
+   };
   export default UserDashboard;

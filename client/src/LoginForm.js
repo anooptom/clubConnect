@@ -33,6 +33,7 @@ const LoginForm = () => {
         }
         else if(response.data.message === '0'){
           alert("Wrong Password");
+          setFormData({password:''})
         }
         else{
           alert("User doesn't exist");
@@ -59,7 +60,7 @@ const LoginForm = () => {
         <form onSubmit={handleSubmit}>
         <div className="input-container">
             <label htmlFor="name">Username </label>
-            <input type="text" id="uid" name="uid" value={formData.uid} onChange={handleChange}/>
+            <input type="text" id="uid" name="uid" value={formData.uid} onChange={handleChange} required/>
         </div>
 
         <div className="input-container">

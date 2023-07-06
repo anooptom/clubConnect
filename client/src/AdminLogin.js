@@ -55,7 +55,7 @@ const AdminLogin =()=>{
         <form onSubmit={handleSubmit}>
         <div className="input-container">
             <label htmlFor="name">Username </label>
-            <input type="text" id="name" name="name" value={formData.name} onChange={handleChange}/>
+            <input type="text" id="name" name="name" value={formData.name} onChange={handleChange} required/>
         </div>
 
         <div className="input-container">

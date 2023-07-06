@@ -27,12 +27,12 @@ const AdminDashboard = () => {
     const [fac,setFac] =useState([]);
     const [usr,setUsr] =useState([]);
     const [clb,setClb] =useState([]);
+    const [loading, setLoading] = useState(true); 
 
   useEffect(() => {
     var isLoggedIn = localStorage.getItem('isALoggedIn');
     if (isLoggedIn !== 'true') {
-      alert("Login To Continue")
-      navigate('/admin');
+      navigate('/NotAloggedin');
     }
   }, [navigate]);
 
@@ -198,7 +198,13 @@ const AdminDashboard = () => {
         })
       };
     
-      fetchData();  
+      fetchData().then(() => {
+        setLoading(false);
+      })
+      .catch(error => {
+        console.error(error);
+        setLoading(false); 
+      });
     },[]);
     
     const fetchfaculty = async()=>{
@@ -285,6 +291,12 @@ const AdminDashboard = () => {
 
     return (
       <Layout style={{ minHeight: '100vh' }}>
+      {loading ? (
+        <div>
+         <center><h2>Loading...</h2></center> 
+          </div>
+      ) : (
+        <>
         <Sider collapsible collapsed={collapsed} onCollapse={setCollapsed}>
           <div className="demo-logo-vertical" />
           <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" onClick={handleMenuClick}>
@@ -328,15 +340,15 @@ const AdminDashboard = () => {
               <form className="form-main1" onSubmit={handleFSubmit}>
                 <label className="form-label">Name: </label>
                 <input type="text"  id="Fname" name="Fname" value={FacultyData.Fname}
-                onChange={handleFChange}/>
+                onChange={handleFChange} required/>
                 
                 <label className="form-label">Email: </label>
                 <input type="text"  id="Email" name="Email" value={FacultyData.Email}
-                onChange={handleFChange} />
+                onChange={handleFChange} required/>
                 
                 <label className="form-label">Initial Password: </label>
                 <input type="password"   id="Pass" name="Pass" value={FacultyData.Pass}
-                onChange={handleFChange}/>
+                onChange={handleFChange} required/>
                 
                 <button className="f-button" type='submit'>CREATE</button>
               </form>
@@ -352,7 +364,7 @@ const AdminDashboard = () => {
               
               <label className='f-del-label'>Email: </label>
               <input type="text"  id="Email" name="Email" value={FacultyDData.Email}
-                onChange={handleFDChange} />             
+                onChange={handleFDChange} required/>             
 
               <button  className='f-del-but' type='submit'>DELETE</button>
             </form>
@@ -364,10 +376,10 @@ const AdminDashboard = () => {
               <center><p className='h-clubcreate'>CLUB CREATION</p></center>
               <form className="club-form" onSubmit={handleCreate}>
                 <label className="label-club" >Club Name: </label>
-                <input className="input-club" type="text" id="nme" name="nme" value={clubData.nme} onChange={handleChange}/>
+                <input className="input-club" type="text" id="nme" name="nme" value={clubData.nme} onChange={handleChange} required/>
                 
                 <label className="label-club">Faculty Head: </label>
-                <input className='input-club' type="text" id="head" name="head" value={clubData.head} onChange={handleChange}/>
+                <input className='input-club' type="text" id="head" name="head" value={clubData.head} onChange={handleChange} required/>
                 
                 <button className="club-create-button" type='submit'>CREATE</button>
               </form>
@@ -380,7 +392,7 @@ const AdminDashboard = () => {
 
               <form className="club-form" onSubmit={handleDelete}>
                 <label className="label-club">Club Name: </label>
-                <input className="input-club" type="text" id="nme" name="nme" value={clubData.nme} onChange={handleChange}/>
+                <input className="input-club" type="text" id="nme" name="nme" value={clubData.nme} onChange={handleChange} required/>
                 <button className="club-create-button" type='submit'>DELETE</button>
               </form>
             </div>
@@ -480,17 +492,18 @@ const AdminDashboard = () => {
 
               <form className="club-form" onSubmit={handlePSubmit}>
                 <label className="label-club">New Password </label>
-                <input className="input-club" type="password" id="cpass" name="cpass" value={pas.cpass} onChange={handlePChange}/>
+                <input className="input-club" type="password" id="cpass" name="cpass" value={pas.cpass} onChange={handlePChange} required/>
                 <label className="label-club">Retype </label>
-                <input className="input-club" type="text" id="rpass" name="rpass" value={pas.rpass} onChange={handlePChange}/>
+                <input className="input-club" type="text" id="rpass" name="rpass" value={pas.rpass} onChange={handlePChange} required/>
                 
                 <button className="club-create-button" type='submit'>CHANGE</button>
               </form>
             </div>
           )}
         </Content>
+        </>
+        )}
       </Layout>
     );
-  
-};
+   };
 export default AdminDashboard;

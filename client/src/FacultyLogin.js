@@ -28,6 +28,7 @@ const FacultyLogin =()=>{
         }
         else if(response.data.message === '0'){
           alert("Wrong Password");
+          setFormData({Pass:''});
         }
         else{
           alert("User doesn't exist");
@@ -54,7 +55,7 @@ const FacultyLogin =()=>{
         <form onSubmit={handleSubmit}>
         <div className="input-container">
             <label >Email </label>
-            <input type="text" id="Email" name="Email" value={formData.Email} onChange={handleChange}/>
+            <input type="text" id="Email" name="Email" value={formData.Email} onChange={handleChange} required/>
         </div>
 
         <div className="input-container">

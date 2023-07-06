@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate,useLocation } from 'react-router';
 import axios from 'axios';
 import './table.css'
-import './FacultyDashboard.css'
+import './FacultyDashboard.css' 
 
 const { Sider } = Layout;
 
