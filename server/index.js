@@ -4,6 +4,8 @@ const app = express();
 const bodyParser = require('body-parser');
 const { MongoClient } = require('mongodb');
 const enc = require('./encrypt');
+const moment = require('moment');
+
 
 
 const url = "mongodb+srv://admi:Password@activity.5hkevpu.mongodb.net/?retryWrites=true&w=majority";
@@ -78,6 +80,21 @@ app.get('/getcevents', async (req, res) => {
     }).toArray();
 
     res.json(events)
+    
+
+  } catch (error) {
+    console.error('Error connecting to MongoDB:', error);
+    res.status(500).json({ message: 'Error connecting to MongoDB' });
+  }
+});
+
+app.get('/getnotice', async (req, res) => {
+  try {
+    await client.connect();
+    const collectione= client.db("dataBase").collection("notice");
+    const notice = await collectione.find({club: req.query.club}).toArray();
+
+    res.json(notice)
     
 
   } catch (error) {
@@ -364,6 +381,20 @@ app.post('/eventcreate', async (req, res) => {
     }
 
 
+  } catch (error) {
+    console.error('Error connecting to MongoDB:', error);
+    res.status(500).json({ message: 'Error connecting to MongoDB' });
+  }
+});
+
+app.post('/pubnotice', async (req, res) => {
+  try {
+    await client.connect();
+    const collection1 = client.db("dataBase").collection("notice");
+    const currentDate = moment().format('YYYY-MM-DD');
+      await collection1.insertOne({title: req.body.data.title ,des:req.body.data.des,club:req.body.club , date:currentDate});
+      res.json({ message: '1' });
+    
   } catch (error) {
     console.error('Error connecting to MongoDB:', error);
     res.status(500).json({ message: 'Error connecting to MongoDB' });

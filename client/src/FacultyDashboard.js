@@ -132,6 +132,7 @@ const FacultyDashboard = () => {
   const items = [
     getItem('Home', '1', <HomeOutlined />),
     getItem('Notifications', '10', <UserOutlined />),
+    getItem('Notice', '7', <UserOutlined />),
     getItem('Students', '2', <UserOutlined />),
     getItem('Events', 'sub1', <UserOutlined />, [getItem('View', '3'), getItem('Create', '4')]),
     getItem('Change Password', '11', <LogoutOutlined />),
@@ -162,9 +163,21 @@ const FacultyDashboard = () => {
     date: new Date()
   });
 
+  const [notice, setnotice] = useState({
+    title: "",
+    des: "",
+  });
+
   const handleChange = (e) => {
     seteventData({
       ...eventData,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const handleNChange = (e) => {
+    setnotice({
+      ...notice,
       [e.target.name]: e.target.value
     });
   };
@@ -203,8 +216,21 @@ const FacultyDashboard = () => {
       .then(response => (
         window.location.reload()
       ));
+  };
 
+  const handleNotice = (e) => {
+    e.preventDefault();
+    
 
+    axios.post(' http://localhost:3001/pubnotice', {data:notice , club: std.c})
+      .then(response => {
+        if (response.data.message === "1") {
+          window.location.reload();
+        }
+      })
+      .catch(error => {
+        console.error(error);
+      });
   };
 
   const getMenuItems = items => {
@@ -414,6 +440,28 @@ const FacultyDashboard = () => {
                 <tr>
                   <td>Date</td>
                   <input type="date" id="date" name="date" value={eventData.date} onChange={handleChange} required/>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td><button type="submit">Create</button></td>
+                </tr>
+              </table>
+            </form>
+          </div>
+         )}
+
+          {selectedKey === '7' && (
+          <div className='create-event'>
+            <h1>Notice</h1>
+            <form onSubmit={handleNotice}>
+              <table>
+                <tr>
+                  <td>Tilte</td>
+                  <td><input type="text" id="title" name="title" value={notice.title} onChange={handleNChange} required/></td>
+                </tr>
+                <tr>
+                  <td>Description</td>
+                  <textarea id="des" name="des" value={notice.des} onChange={handleNChange} required></textarea>
                 </tr>
                 <tr>
                   <td></td>

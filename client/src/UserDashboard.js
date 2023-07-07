@@ -33,6 +33,7 @@ const UserDashboard = () => {
   const[revents,setrevents] = useState([])
   const[cevents,setcevents] = useState([]) 
   const [loading, setLoading] = useState(true); 
+  const[notice,setnotice] = useState([])
 
   useEffect(() => {
     var isLoggedIn = localStorage.getItem('isULoggedIn');
@@ -127,6 +128,16 @@ const UserDashboard = () => {
     setrevents(json);
   };
 
+  const fetchnotice = async()=>{
+    const response = await axios.get('http://localhost:3001/getnotice', {
+      params: {
+        club: c,
+      }
+    });
+    const json = response.data;
+    setnotice(json);
+  };
+
   const fetchcevents = async()=>{
     const response = await axios.get('http://localhost:3001/getcevents', {
       params: {
@@ -141,6 +152,7 @@ const UserDashboard = () => {
 
   const items = [
     getItem('Home', '1', <HomeOutlined />),
+    getItem('Notifications', '2', <HomeOutlined />),
     getItem('Events', 'sub1', <UserOutlined />, [getItem('UpComing', '3'), getItem('Registerd', '4'), getItem('Completed', '5')]),
     getItem('Change Password', '11', <LogoutOutlined />),
     getItem('Log Out', '6', <LogoutOutlined />),
@@ -161,6 +173,10 @@ const UserDashboard = () => {
 
     if(key ==="5"){
       fetchcevents();
+    }
+
+    if(key ==="2"){
+      fetchnotice();
     }
 
     setSelectedKey(key);
@@ -266,6 +282,31 @@ const UserDashboard = () => {
 
           
               
+            </div>
+          )}
+
+          {selectedKey ==='2' &&(
+            <div>
+              <div>
+                <h1>Notifications</h1>  
+
+                <table>
+                <tr className='heading'>
+                  <td>Name</td>
+                  <td>Description</td>
+                  <td>Date</td>
+                </tr>
+                {notice.map((data)=>{
+                  return( 
+                    <tr>
+                      <td>{data.title}</td>
+                      <td>{data.des}</td>
+                      <td>{data.date}</td>                      
+                    </tr>
+                    );
+                  })}
+                </table>  
+              </div>      
             </div>
           )}
 
