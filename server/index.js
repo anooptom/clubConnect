@@ -123,6 +123,19 @@ app.get('/fetchstd', async (req, res) => {
   } 
 });
 
+app.get('/fetchsugg', async (req, res) => {
+  try {
+    await client.connect();
+    const collectionf= client.db("dataBase").collection("feedbacks");
+    const sugg = await collectionf.find({club : req.query.name}).toArray();
+    res.json(sugg);
+
+  } catch (error) {
+    console.error('Error connecting to MongoDB:', error);
+    res.status(500).json({ message: 'Error connecting to MongoDB' });
+  } 
+});
+
 app.get('/fetchnotif', async (req, res) => {
   try {
     await client.connect();
@@ -393,6 +406,19 @@ app.post('/pubnotice', async (req, res) => {
     const collection1 = client.db("dataBase").collection("notice");
     const currentDate = moment().format('YYYY-MM-DD');
       await collection1.insertOne({title: req.body.data.title ,des:req.body.data.des,club:req.body.club , date:currentDate});
+      res.json({ message: '1' });
+    
+  } catch (error) {
+    console.error('Error connecting to MongoDB:', error);
+    res.status(500).json({ message: 'Error connecting to MongoDB' });
+  }
+});
+
+app.post('/pubsugg', async (req, res) => {
+  try {
+    await client.connect();
+    const collection1 = client.db("dataBase").collection("feedbacks");
+      await collection1.insertOne({title: req.body.data.title ,des:req.body.data.des,club:req.body.club});
       res.json({ message: '1' });
     
   } catch (error) {

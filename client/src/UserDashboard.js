@@ -138,6 +138,11 @@ const UserDashboard = () => {
     setnotice(json);
   };
 
+  const [sugg, setsugg] = useState({
+    title:"",
+    des:"",
+  });
+
   const fetchcevents = async()=>{
     const response = await axios.get('http://localhost:3001/getcevents', {
       params: {
@@ -154,6 +159,7 @@ const UserDashboard = () => {
     getItem('Home', '1', <HomeOutlined />),
     getItem('Notifications', '2', <HomeOutlined />),
     getItem('Events', 'sub1', <UserOutlined />, [getItem('UpComing', '3'), getItem('Registerd', '4'), getItem('Completed', '5')]),
+    getItem('Suggestions', '7', <HomeOutlined />),
     getItem('Change Password', '11', <LogoutOutlined />),
     getItem('Log Out', '6', <LogoutOutlined />),
     
@@ -193,7 +199,26 @@ const UserDashboard = () => {
     }
   }
 
+  const handleSugg = (e) => {
+    e.preventDefault();
+   
+    axios.post(' http://localhost:3001/pubsugg', {data:sugg ,club:c})
+      .then(response => {
+        if (response.data.message === "1") {
+          window.location.reload();
+        }
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  };
 
+  const handleSChange = (e) => {
+    setsugg({
+      ...sugg,
+      [e.target.name]: e.target.value
+    });
+  };
 
   const handleReg=(click)=>{
     axios.post(' http://localhost:3001/reg', {data:click,club:c,nme:n,uid:Location.state.uid})
@@ -385,6 +410,28 @@ const UserDashboard = () => {
               </div>
             </div>
           )}
+          {selectedKey === '7' && (
+          <div className='create-event'>
+            <h1>Suggestions And Feedbacks</h1>
+            <form onSubmit={handleSugg}>
+              <table>
+                <tr>
+                  <td>Tilte</td>
+                  <td><input type="text" id="title" name="title" value={sugg.title} onChange={handleSChange} required/></td>
+                </tr>
+                <tr>
+                  <td>Description</td>
+                  <textarea id="des" name="des" value={sugg.des} onChange={handleSChange} required></textarea>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td><button type="submit">Create</button></td>
+                </tr>
+              </table>
+            </form>
+          </div>
+         )}
+
            {selectedKey === '11' && (
             <div className='changepass-user'>
               <h1>Change Password</h1>

@@ -28,6 +28,7 @@ const FacultyDashboard = () => {
   const [events, setevents] = useState([])
   const [cevents, setcevents] = useState([])
   const [notif, setnotif] = useState([]);
+  const [sugg, setsugg] = useState([]);
   const [loading, setLoading] = useState(true); 
 
   useEffect(() => {
@@ -86,6 +87,21 @@ const FacultyDashboard = () => {
 
       })
   };
+
+  const fetchsugg = async () => {
+    await fetch(`http://localhost:3001/fetchsugg?name=${encodeURIComponent(std.c)}`, {
+      method: 'GET',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then(res => (res.json()))
+      .then(json => {
+        setsugg(json);
+      })
+  };
+
   if (std.info)
     len = std.info.length;
 
@@ -134,6 +150,7 @@ const FacultyDashboard = () => {
     getItem('Home', '1', <HomeOutlined />),
     getItem('Notifications', '10', <UserOutlined />),
     getItem('Notice', '7', <UserOutlined />),
+    getItem('Suggestions', '12', <UserOutlined />),
     getItem('Students', '2', <UserOutlined />),
     getItem('Events', 'sub1', <UserOutlined />, [getItem('View', '3'), getItem('Create', '4')]),
     getItem('Change Password', '11', <LogoutOutlined />),
@@ -154,6 +171,10 @@ const FacultyDashboard = () => {
     }
     if (key === '10') {
       fetchnotif();
+    }
+
+    if(key ==="12"){
+      fetchsugg();
     }
     setSelectedKey(key);
   };
@@ -422,6 +443,36 @@ const FacultyDashboard = () => {
           </div>
         )}
 
+          {selectedKey === '12' && (
+          <div>
+            {sugg === null || sugg.length === 0 ? (
+              <div className='no-notif'>
+                <div style={{ textAlign: "center" }}>
+                  <p>Currently No Suggestions And Feedbacks</p>
+                </div>
+
+              </div>
+            ) : (
+              <div>
+                <div>
+                  <h1>Suggestions And Feedbacks</h1>
+                  <table>
+                    <tr className='heading'>
+                      <td>Tilte</td>
+                      <td>Description</td>
+                    </tr>
+                    {sugg.map((data) => (
+                      <tr>
+                        <td>{data.title}</td>
+                        <td>{data.des}</td>
+                      </tr>
+                    ))}
+                  </table>
+                </div>
+              </div>
+            )}
+          </div>
+        )}
 
         {selectedKey === '4' && (
           <div className='create-event'>
