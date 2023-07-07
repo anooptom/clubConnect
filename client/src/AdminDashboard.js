@@ -297,209 +297,262 @@ const AdminDashboard = () => {
           </div>
       ) : (
         <>
-        <Sider collapsible collapsed={collapsed} onCollapse={setCollapsed}>
+        <Sider collapsed={collapsed} onCollapse={setCollapsed}>
           <div className="demo-logo-vertical" />
           <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" onClick={handleMenuClick}>
             {getMenuItems(items)}
           </Menu>
         </Sider>
 
-        <Content>
-          {selectedKey === '1' && (
-            <div className="dash">
-              <h1>ADMIN DASHBOARD</h1>
-              <div className="cards">
-                <div className="content-main">
-                  <div className="content-main1">
-                    <p>Clubs</p>
-                    {noc}
-                  </div>
-                  <div className="content-main1">
-                    <p>Faculties</p>
-                    {nof}
-                  </div>
-                </div>
-                <div className="content-main2">
-                  <div className="content-main1">
-                    <p>Students</p>
-                    {nos}
-                    
-                  </div>
-                  <div className="content-main1">
-                    <p>Upcoming Events</p>
-                    {noe}
-                  </div>
-                </div>
+        <Content className='content2'>         
+          {selectedKey === '1' && (         
+          
+          <div>              
+              <h1>Admin Dashboard</h1>
+
+            <div className='admin-group'>
+             <div className='admin-card'>
+               <div>
+               <h2>Clubs</h2>
+               <p>{noc}</p>
               </div>
             </div>
+
+            <div className='admin-card'>
+              <div>
+              <h2>Faculty</h2>
+              <p>{nof}</p>
+              </div>
+            </div>
+
+            <div className='admin-card'>
+              <div>
+              <h2>Completed Events</h2>
+              <p>{nof}</p>
+              </div>
+            </div>
+
+          </div>
+
+
+          <div className='admin-group'>
+             <div className='admin-card'>
+               <div>
+               <h2>Students</h2>
+               <p>{nos}</p>
+              </div>
+            </div>
+
+            <div className='admin-card'>
+              <div>
+              <h2>Upcoming Events</h2>
+              <p>{noe}</p>
+              </div>
+            </div>
+            
+
+            <div className='admin-card'>
+              <div>
+              <h2>Enthelum</h2>
+              <p>{nof}</p>
+              </div>
+            </div>          
+            
+            </div>
+            </div>
+            
           )}
 
           {selectedKey === '2' && (
-            <div>
-              <center><p className='f-create'>FACULTY CREATION</p></center>
-              <form className="form-main1" onSubmit={handleFSubmit}>
-                <label className="form-label">Name: </label>
-                <input type="text"  id="Fname" name="Fname" value={FacultyData.Fname}
-                onChange={handleFChange} required/>
+            <div className='changepass-admin'>
+              <h1>Create Faculty</h1>
+            <form onSubmit={handleFSubmit}>
+              <table>
+                <tr>
+                  <td>Name</td>
+                  <td><input type="text"  id="Fname" name="Fname" value={FacultyData.Fname} onChange={handleFChange} required/></td>
+                </tr>
+                <tr>
+                  <td>Email</td>
+                  <td><input type="text"  id="Email" name="Email" value={FacultyData.Email} onChange={handleFChange} required/>
+                </td>
+                </tr>
                 
-                <label className="form-label">Email: </label>
-                <input type="text"  id="Email" name="Email" value={FacultyData.Email}
-                onChange={handleFChange} required/>
-                
-                <label className="form-label">Initial Password: </label>
-                <input type="password"   id="Pass" name="Pass" value={FacultyData.Pass}
-                onChange={handleFChange} required/>
-                
-                <button className="f-button" type='submit'>CREATE</button>
-              </form>
+                <tr>
+                  <td>Initial Password</td>
+                  <td> <input type="password"   id="Pass" name="Pass" value={FacultyData.Pass} onChange={handleFChange} required/>
+                </td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td><button className="change-password-button-admin" type='submit'>Create</button></td>
+                </tr>
+              </table>
+            </form>
             </div>
           )}
 
           {selectedKey === '3' && (
             <div>
-              
-              <center><p className='f-create'>FACULTY DELETION</p></center> 
-
-            <form className='f-del-main' onSubmit={handleFDSubmit}>
-              
-              <label className='f-del-label'>Email: </label>
-              <input type="text"  id="Email" name="Email" value={FacultyDData.Email}
-                onChange={handleFDChange} required/>             
-
-              <button  className='f-del-but' type='submit'>DELETE</button>
+              <div className='changepass-admin'>
+              <h1>Delete Faculty</h1>
+            <form onSubmit={handleFDSubmit}>
+              <table>
+                <tr>
+                  <td>Email</td>
+                  <td><input type="text"  id="Email" name="Email" value={FacultyDData.Email}
+                onChange={handleFDChange} required/>
+                </td>
+                </tr>
+                
+                <tr>
+                  <td></td>
+                  <td><button  className='f-del-but' type='submit'>DELETE</button></td>
+                </tr>
+              </table>
             </form>
+            </div>
+              
+             
           </div>
           )}
 
           {selectedKey === '4' && (
-            <div className="club-create">
-              <center><p className='h-clubcreate'>CLUB CREATION</p></center>
-              <form className="club-form" onSubmit={handleCreate}>
-                <label className="label-club" >Club Name: </label>
-                <input className="input-club" type="text" id="nme" name="nme" value={clubData.nme} onChange={handleChange} required/>
+            <div className="changepass-admin">
+              <h1>Club Creation</h1>
+              <form onSubmit={handleCreate}>
+              <table>
+                <tr>
+                  <td>Club Name</td>
+                  <td><input type="text" id="nme" name="nme" value={clubData.nme} onChange={handleChange} required/></td>
+                </tr>
+                <tr>
+                  <td>Faculty Head</td>
+                  <td><input  type="text" id="head" name="head" value={clubData.head} onChange={handleChange} required/>
+                </td>
+                </tr>
                 
-                <label className="label-club">Faculty Head: </label>
-                <input className='input-club' type="text" id="head" name="head" value={clubData.head} onChange={handleChange} required/>
-                
-                <button className="club-create-button" type='submit'>CREATE</button>
-              </form>
+                <tr>
+                  <td></td>
+                  <td><button className="change-password-button-admin" type='submit'>Create</button></td>
+                </tr>
+              </table>
+            </form>              
             </div>
           )}
 
           {selectedKey === '5' && (
-            <div className="club-create">
-              <center><p className='h-clubcreate'>CLUB DELETION</p></center>
-
-              <form className="club-form" onSubmit={handleDelete}>
-                <label className="label-club">Club Name: </label>
-                <input className="input-club" type="text" id="nme" name="nme" value={clubData.nme} onChange={handleChange} required/>
-                <button className="club-create-button" type='submit'>DELETE</button>
-              </form>
+            <div className="changepass-admin">
+               <h1>Club Deletion</h1>
+              <form onSubmit={handleDelete}>
+              <table>
+                <tr>
+                  <td>Club Name</td>
+                  <td><input  type="text" id="nme" name="nme" value={clubData.nme} onChange={handleChange} required/></td>
+                </tr>
+                
+                <tr>
+                  <td></td>
+                  <td><button type='submit'>DELETE</button></td>
+                </tr>
+              </table>
+            </form>
+              
             </div>
           )}
 
           {selectedKey === '7' && (
-            <div>
-            <div className="main-users-faculty">
-              <div className="name-users-faculty">
-                <center>
-                  <h1>Name </h1>
-                  {fac.map((data)=>{
-                  return( <p>{data.name}</p>);
-                  })}
-                </center>
-              </div>
+            <div>              
+              <h1>Faculty Details</h1>
+              <table>
+                <tr className='heading'>
+                  <td>Name</td>
+                  <td>Email</td>
+                  <td>Club</td>
+                </tr>
+                {fac.map((data)=>{
+                  return(     
+                  <tr>
+                    <td>{data.name}</td>
+                    <td>{data.Email}</td>
+                    <td>{data.club}</td>
 
-              <div className="mail-users-faculty">
-                <center>
-                  <h1>Email</h1>
-                  {fac.map((data)=>{
-                  return( <p>{data.Email}</p>);
-                  })}
-                </center>
-              </div>
-
-              
-              <div className="mail-users-faculty">
-                <center>
-                  <h1>Club</h1>
-                  {fac.map((data)=>{
-                  return( <p>{data.club}</p>);
-                  })}
-                </center>
-              </div>
-            </div>
+                  </tr>
+                );
+              })}
+            </table>
             </div>
           )}
 
           {selectedKey === '8' && (
-            <div className="main-users-students">
-              <div className="name-users-students">
-                <center>
-                  <h1>Name</h1>
-                  {usr.map((data)=>{
-                  return( <p>{data.name}</p>);
-                  })}
-                </center>
-              </div>
+            <div>
+                  <h1>Student Deails</h1>
+              <table>
+                <tr className='heading'>
+                  <td>Name</td>
+                  <td>UID</td>
+                  <td>Club</td>
+                </tr>
+                {usr.map((data)=>{
+                  return(   
+                  <tr>
+                    <td>{data.name}</td>
+                    <td>{data.uid}</td>
+                    <td>{data.club}</td>
 
-              <div className="mail-users-students">
-                <center>
-                  <h1>UserId</h1>
-                  {usr.map((data)=>{
-                  return( <p>{data.uid}</p>);
-                  })}
-                </center>
-              </div>
-
-              <div className="mail-users-students">
-                <center>
-                  <h1>Club</h1>
-                  {usr.map((data)=>{
-                  return( <p>{data.club}</p>);
-                  })}
-                </center>
-              </div>
+                  </tr>
+                );
+              })}
+            </table>
+           
             </div>
           )}
           
           {selectedKey === '10' && (
-            <div className="main-users-students">
-              <div className="name-users-students">
-                <center>
-                  <h1>Name</h1>
-                  {clb.map((data)=>{
-                  return( <p>{data.name}</p>);
-                  })}
-                </center>
-              </div>
+            <div >
 
-              <div className="mail-users-students">
-                <center>
-                  <h1>FacultyHead</h1>
-                  {clb.map((data)=>{
-                  return( <p>{data.head}</p>);
-                  })}
-                </center>
-              </div>
+            <h1>Club Details</h1>
+            <table>
+              <tr className='heading'>
+                <td>Name</td>
+                <td>Faculty Head</td>
+              </tr>
+              {clb.map((data)=>{
+                  return(
+                  <tr>
+                    <td>{data.name}</td>
+                    <td>{data.head}</td>
+                  </tr>
+                );
+              })}
+            </table>             
 
             </div>
           )}
 
         {selectedKey === '11' && (
-            <div className="club-create">
-              <center><p className='h-clubcreate'>CHANGE PASSWORD</p></center>
-
-              <form className="club-form" onSubmit={handlePSubmit}>
-                <label className="label-club">New Password </label>
-                <input className="input-club" type="password" id="cpass" name="cpass" value={pas.cpass} onChange={handlePChange} required/>
-                <label className="label-club">Retype </label>
-                <input className="input-club" type="text" id="rpass" name="rpass" value={pas.rpass} onChange={handlePChange} required/>
-                
-                <button className="club-create-button" type='submit'>CHANGE</button>
-              </form>
+            <div className='changepass' >
+               <h1>Change Password</h1>
+            <form onSubmit={handlePSubmit}>
+              <table>
+                <tr>
+                  <td>New Password</td>
+                  <td><input type="password" id="cpass" name="cpass" value={pas.cpass} onChange={handlePChange} required/></td>
+                </tr>
+                <tr>
+                  <td>Confirm Password</td>
+                  <td><input type="text" id="rpass" name="rpass" value={pas.rpass} onChange={handlePChange} required/></td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td><button className="change-password-button" type='submit'>Submit</button></td>
+                </tr>
+              </table>
+            </form>
+           
             </div>
           )}
+          
         </Content>
         </>
         )}

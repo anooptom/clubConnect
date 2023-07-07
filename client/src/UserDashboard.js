@@ -4,6 +4,11 @@ import {  useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { useLocation } from "react-router";
 import axios from 'axios';
+import './table.css';
+import './Userdashboard.css';
+
+
+
 
 const { Sider } = Layout;
 
@@ -222,14 +227,44 @@ const UserDashboard = () => {
               {getMenuItems(items)}
             </Menu>
           </Sider>
-
+        <div className='content1'>
           {selectedKey ==='1' && Location.state && Location.state.uid && (
             <div>
-              <h1>Welcome {n}</h1>
-              <h1>Club : {c}</h1>
-              <h1>Upcomming Events :{events.length}</h1>
-              <h1>Registerd Events :{revents.length}</h1>
-              <h1>Completed Events :{cevents.length}</h1>
+              <h1>Welcome {n},</h1>
+
+              
+            <div className='user-group'>
+            <div className='user-card'>
+              <div>
+              <h2>Club</h2>
+              <p>{c}</p>
+              </div>
+            </div>
+
+            <div className='user-card'>
+              <div>
+              <h2>Upcoming Events</h2>
+              <p>{events.length}</p>
+              </div>
+            </div>
+            </div>
+
+            <div className='user-group'>            
+            <div className='user-card'>
+              <div>
+              <h2>Registered Events</h2>
+              <p>{revents.length}</p>
+              </div>
+            </div>
+             <div className='user-card'>
+              <div>
+                <h2>Completed Events</h2>
+                <p>{cevents.length}</p>
+              </div>
+            </div>
+            </div>
+
+          
               
             </div>
           )}
@@ -237,32 +272,27 @@ const UserDashboard = () => {
           {selectedKey ==='3' &&(
             <div>
               <div>
-                <h1>Events</h1>
-                <br />
-                    <h2>Name</h2>
-                    {events.map((data)=>{
-                    return( <p>{data.name}</p>);
-                    })}
+                <h1>Upcoming Events</h1>  
 
-                    <h2>Description</h2>
-                    {events.map((data)=>{
-                    return( <p>{data.des}</p>);
-                    })}
-                    
-                    <h2>Date</h2>
-                    {events.map((data)=>{
-                    return( <p>{data.date}</p>);
-                    })}  
-
-                    {events.map((data)=>{
-                  return(
-                    <div>
-                    <button onClick={()=>handleReg(data)}>Register</button>
-                    <br />
-                    </div>
-                  );
+                <table>
+                <tr className='heading'>
+                  <td>Name</td>
+                  <td>Description</td>
+                  <td>Date</td>
+                  <td>Register</td>
+                </tr>
+                {events.map((data)=>{
+                  return( 
+                    <tr>
+                      <td>{data.name}</td>
+                      <td>{data.des}</td>
+                      <td>{data.date}</td>
+                      <td><button onClick={()=>handleReg(data)}>Register</button></td>                      
+                    </tr>
+                    );
                   })}
-              </div>
+                </table>  
+              </div>      
             </div>
           )}
 
@@ -270,22 +300,23 @@ const UserDashboard = () => {
             <div>
               <div>
                 <h1>Registerd Events</h1>
-                <br />
-                    <h2>Name</h2>
-                    {revents.map((data)=>{
-                    return( <p>{data.name}</p>);
-                    })}
 
-                    <h2>Description</h2>
-                    {revents.map((data)=>{
-                    return( <p>{data.des}</p>);
-                    })}
-                    
-                    <h2>Date</h2>
-                    {revents.map((data)=>{
-                    return( <p>{data.date}</p>);
-                    })}  
-   
+                <table>
+                <tr className='heading'>
+                  <td>Name</td>
+                  <td>Description</td>
+                  <td>Date</td>
+                </tr> 
+                {revents.map((data) => {
+                  return (
+                    <tr>
+                      <td>{data.name}</td>
+                      <td>{data.des}</td>
+                      <td>{data.date}</td>
+                    </tr>
+                  );
+                    })} 
+              </table>    
               </div>
             </div>
           )}
@@ -293,41 +324,55 @@ const UserDashboard = () => {
             <div>
               <div>
                 <h1>Completed Events</h1>
-                <br />
-                    <h2>Name</h2>
-                    {cevents.map((data)=>{
-                    return( <p>{data.name}</p>);
-                    })}
-
-                    <h2>Description</h2>
-                    {cevents.map((data)=>{
-                    return( <p>{data.des}</p>);
-                    })}
-                    
-                    <h2>Date</h2>
-                    {cevents.map((data)=>{
-                    return( <p>{data.date}</p>);
-                    })}  
+                <table>
+                <table>
+                <tr className='heading'>
+                  <td>Name</td>
+                  <td>Description</td>
+                  <td>Date</td>
+                </tr> 
+                {cevents.map((data) => {
+                  return (
+                    <tr>
+                      <td>{data.name}</td>
+                      <td>{data.des}</td>
+                      <td>{data.date}</td>
+                    </tr>
+                  );
+                    })} 
+              </table> 
+                </table> 
    
               </div>
             </div>
           )}
            {selectedKey === '11' && (
-            <div >
-              <center><p >CHANGE PASSWORD</p></center>
+            <div className='changepass-user'>
+              <h1>Change Password</h1>
 
-              <form  onSubmit={handlePSubmit}>
-                <label >New Password </label>
-                <input  type="password" id="cpass" name="cpass" value={pas.cpass} onChange={handlePChange} required/>
-                <label >Retype </label>
-                <input  type="text" id="rpass" name="rpass" value={pas.rpass} onChange={handlePChange} required/>
-                
-                <button className="club-create-button" type='submit'>CHANGE</button>
-              </form>
+
+              <form onSubmit={handlePSubmit}>
+              <table>
+                <tr>
+                  <td>New Password</td>
+                  <td><input type="password" id="cpass" name="cpass" value={pas.cpass} onChange={handlePChange} required/></td>
+                </tr>
+                <tr>
+                  <td>Retype Password</td>
+                  <td><input type="text" id="rpass" name="rpass" value={pas.rpass} onChange={handlePChange} required/></td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td><button className="change-password-button-user" type='submit'>Submit</button></td>
+                </tr>
+              </table>
+            </form>
             </div>
           )}
+          </div>
           </>
         )}
+        
       </Layout>
     );
    };
