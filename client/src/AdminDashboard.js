@@ -4,6 +4,7 @@ import { Layout, Menu } from 'antd';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router';
+import LoadingScreen from './LoadingScreen';
 
 const { Content, Sider } = Layout;
 var noe, nof,noc,nos;
@@ -292,9 +293,7 @@ const AdminDashboard = () => {
     return (
       <Layout style={{ minHeight: '100vh' }}>
       {loading ? (
-        <div>
-         <center><h2>Loading...</h2></center> 
-          </div>
+        <LoadingScreen />
       ) : (
         <>
         <Sider collapsed={collapsed} onCollapse={setCollapsed}>

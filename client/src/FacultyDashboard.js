@@ -5,6 +5,7 @@ import { useNavigate,useLocation } from 'react-router';
 import axios from 'axios';
 import './table.css'
 import './FacultyDashboard.css' 
+import LoadingScreen from './LoadingScreen';
 
 const { Sider } = Layout;
 
@@ -253,9 +254,7 @@ const FacultyDashboard = () => {
   return (
     <Layout style={{ minHeight: '100vh' }}>
       {loading ? (
-        <div>
-         <center><h2>Loading...</h2></center> 
-          </div>
+       <LoadingScreen />
       ) : (
         <>
           <Sider collapsed={collapsed} onCollapse={setCollapsed}>
