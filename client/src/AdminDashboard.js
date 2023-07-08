@@ -483,29 +483,43 @@ const AdminDashboard = () => {
             </div>
           )}
 
-          {selectedKey === '8' && (
-            <div>
-                  <h1>Student Deails</h1>
-              <table>
-                <tr className='heading'>
-                  <td>Name</td>
-                  <td>UID</td>
-                  <td>Club</td>
-                </tr>
-                {usr.map((data)=>{
-                  return(   
-                  <tr>
-                    <td>{data.name}</td>
-                    <td>{data.uid}</td>
-                    <td>{data.club}</td>
+{selectedKey === '8' && (
+  <div>
+    <h1>Student Details</h1>
+    <table>
+      <tr className='heading'>
+        <td>Profile</td>
+        <td>Name</td>
+        <td>UID</td>
+        <td>Club</td>
+      </tr>
+      {usr
+        .sort((a, b) => a.club.localeCompare(b.club))
+        .map((data) => {
+          return (
+            <tr key={data.uid}>
+              <td>
+                <img
+                  style={{
+                    width: '3vw',
+                    height: '3vw',
+                    borderRadius: '50%',
+                    marginTop: '1vh',
+                  }}
+                  src={`https://www.rajagiritech.ac.in/stud/ktu/stud/Photo/${data.uid}.jpg`}
+                  alt='Profile'
+                />
+              </td>
+              <td>{data.name}</td>
+              <td>{data.uid}</td>
+              <td>{data.club}</td>
+            </tr>
+          );
+        })}
+    </table>
+  </div>
+)}
 
-                  </tr>
-                );
-              })}
-            </table>
-           
-            </div>
-          )}
           
           {selectedKey === '10' && (
             <div >

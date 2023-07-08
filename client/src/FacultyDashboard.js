@@ -324,12 +324,19 @@ const FacultyDashboard = () => {
             <h1>Student Details</h1>
             <table>
               <tr className='heading'>
+                <td>Profile</td>
                 <td>Name</td>
                 <td>UID</td>
               </tr>
               {std.info.map((data) => {
                 return (
                   <tr>
+                    <td><img style={{
+                  width: '4vw',  
+                  height: '4vw', 
+                  borderRadius: '50%', 
+                  marginTop:'1vh',
+                }} src={`https://www.rajagiritech.ac.in/stud/ktu/stud/Photo/${data.uid}.jpg`} alt='Profile' /></td>
                     <td>{data.name}</td>
                     <td>{data.uid}</td>
                   </tr>
@@ -422,12 +429,20 @@ const FacultyDashboard = () => {
                   <h1>New Notifications</h1>
                   <table>
                     <tr className='heading'>
+                      <td>Profile</td>
                       <td>Name</td>
                       <td>UID</td>
                       <td>Action</td>
                     </tr>
                     {notif.map((data) => (
                       <tr>
+                        <td><img style={{
+                  width: '4vw',  
+                  height: '4vw', 
+                  borderRadius: '50%', 
+                  marginTop:'1vh',
+                }} src={`https://www.rajagiritech.ac.in/stud/ktu/stud/Photo/${data.uid}.jpg`} alt='Profile' /></td>
+                    
                         <td key={data.uid}>{data.name}</td>
                         <td key={data.uid}>{data.uid}</td>
                         <td>
