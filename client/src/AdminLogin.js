@@ -34,7 +34,7 @@ const AdminLogin =()=>{
           setFormData({ ...formData, password: '' });
         }
         else {
-          setAlertMessage("Invalid Email!");
+          setAlertMessage("Invalid Username!");
           setFormData({ ...formData,name: '',password:'' });
         }
       })

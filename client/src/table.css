@@ -2,7 +2,7 @@ table{
     padding:0;
     width: 70vw;
     text-align: center;
-    background-color: #00415a;
+    background-color: rgba(128, 128, 128, 0.292);
     border-collapse: collapse;
     border-radius: 10px/10px;
 }
@@ -16,7 +16,7 @@ tr{
     border-bottom: 1px solid #000c17;
 }
 .heading{
-    background-color: #001529;
+    background-color: #0f161d;
 }
 table button{
     background-color: #001529;

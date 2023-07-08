@@ -2,15 +2,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Mukta&family=Poppins:wght@200&display=swap');
 
 .content2 {
-  background-color: #002140;
+  background-color: black;
   width: 90vw;
-  color: #f5faff;
+  color: white;
   font-family: 'Poppins';
   padding: 0 5vw;
 }
 
 .content2 h1 {
-  color: #f1f1e6;
+  color: white;
   font-family: 'Mukta';
   font-size: 2.5rem;
 }
@@ -91,4 +91,24 @@
 .changepass table td {
   height: 10vh;
   padding: 0 3vw;
+}
+
+.menuant{
+  background-color: black !important;
+}
+
+.ant-menu-item-selected{
+  background-color:#272727 !important;
+}
+
+.ant-menu-item:hover{
+  background-color:#272727 !important;
+}
+
+.ant-layout-sider-trigger{
+  background-color: rgb(21, 21, 21)  !important;
+}
+
+.ant-layout-sider-trigger:hover{
+  background-color:  #272727 !important;
 }

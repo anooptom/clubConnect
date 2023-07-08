@@ -278,7 +278,7 @@ const AdminDashboard = () => {
           );
         }
         return (
-          <Menu.Item key={item.key} icon={item.icon}>
+          <Menu.Item className='mitem' key={item.key} icon={item.icon}>
             {item.label}
           </Menu.Item>
         );
@@ -296,9 +296,9 @@ const AdminDashboard = () => {
         <LoadingScreen />
       ) : (
         <>
-        <Sider collapsed={collapsed} onCollapse={setCollapsed}>
+        <Sider className='menuant' collapsible collapsed={collapsed} onCollapse={setCollapsed}>
           <div className="demo-logo-vertical" />
-          <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" onClick={handleMenuClick}>
+          <Menu className='menuant' theme="dark" defaultSelectedKeys={['1']} mode="inline" onClick={handleMenuClick}>
             {getMenuItems(items)}
           </Menu>
         </Sider>
