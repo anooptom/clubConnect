@@ -3,7 +3,7 @@
 
 .content2 {
   background-color: black;
-  width: 90vw;
+  width: 100vw;
   color: white;
   font-family: 'Poppins';
   padding: 0 5vw;
@@ -20,8 +20,8 @@
 }
 
 .admin-card {
-  background-color: #00415a;
-  width: 15vw;
+  background-color: #272727;
+  width: 40vw;
   height: 30vh;
   display: flex;
   align-items: center;
@@ -41,7 +41,6 @@
   font-size: 2rem;
 }
 
-/*faculty creation*/
 .changepass-admin label {
   font-size: 1.5rem;
 }

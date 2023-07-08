@@ -8,9 +8,6 @@ import './table.css';
 import './Userdashboard.css';
 import LoadingScreen from './LoadingScreen';
 
-
-
-
 const { Sider } = Layout;
 
 function getItem(label, key, icon, children) {
@@ -261,9 +258,9 @@ const UserDashboard = () => {
        <LoadingScreen />
       ) : (
         <>
-          <Sider collapsed={collapsed} onCollapse={setCollapsed}>
+          <Sider className='menuant' collapsible collapsed={collapsed} onCollapse={setCollapsed}>
             <div className="demo-logo-vertical" />
-            <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" onClick={handleMenuClick}>
+            <Menu className='menuant' theme="dark" defaultSelectedKeys={['1']} mode="inline" onClick={handleMenuClick}>
               {getMenuItems(items)}
             </Menu>
           </Sider>

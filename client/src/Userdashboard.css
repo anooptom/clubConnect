@@ -2,15 +2,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Mukta&family=Poppins:wght@200&display=swap');
 
 .content1 {
-    background-color: #002140;
-    width: 90vw;
-    color: #f5faff;
+    background-color: black;
+    width: 100vw;
+    color: white;
     font-family: 'Poppins';
     padding: 0 5vw;
 }
 
 .content1 h1 {
-    color: #f1f1e6;
+    color: white;
     font-family: 'Mukta';
     font-size: 2.5rem;
 }
@@ -20,7 +20,7 @@
 }
 
 .user-card {
-    background-color: #00415a;
+    background-color: #272727;
     width: 25vw;
     height: 30vh;
     display: flex;

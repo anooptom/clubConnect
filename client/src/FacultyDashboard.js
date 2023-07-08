@@ -278,9 +278,9 @@ const FacultyDashboard = () => {
        <LoadingScreen />
       ) : (
         <>
-          <Sider collapsed={collapsed} onCollapse={setCollapsed}>
+          <Sider className='menuant' collapsed={collapsed} collapsible onCollapse={setCollapsed}>
             <div className="demo-logo-vertical" />
-            <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" onClick={handleMenuClick}>
+            <Menu className='menuant' theme="dark" defaultSelectedKeys={['1']} mode="inline" onClick={handleMenuClick}>
               {getMenuItems(items)}
             </Menu>
           </Sider>

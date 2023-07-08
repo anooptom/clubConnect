@@ -324,13 +324,6 @@ const AdminDashboard = () => {
               </div>
             </div>
 
-            <div className='admin-card'>
-              <div>
-              <h2>Completed Events</h2>
-              <p>{nof}</p>
-              </div>
-            </div>
-
           </div>
 
 
@@ -347,15 +340,7 @@ const AdminDashboard = () => {
               <h2>Upcoming Events</h2>
               <p>{noe}</p>
               </div>
-            </div>
-            
-
-            <div className='admin-card'>
-              <div>
-              <h2>Enthelum</h2>
-              <p>{nof}</p>
-              </div>
-            </div>          
+            </div>        
             
             </div>
             </div>
