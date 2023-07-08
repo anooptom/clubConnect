@@ -14,10 +14,19 @@ const SignUpForm = () => {
   });
 
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+    const { name, value } = e.target;
+
+    if (name === "uid") {
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        [name]: value.toUpperCase()
+      }));
+    } else {
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        [name]: value
+      }));
+    }
   };
 
   useEffect(() =>{
@@ -63,7 +72,7 @@ const SignUpForm = () => {
         <form className="su-form" onSubmit={handleSubmit}>
           <label className="su-label" >Name : </label>
           <input type="text" id="name" name="name" value={formData.name} onChange={handleChange} required/>
-          <label className="su-label">UID : </label>
+          <label className="su-label">Uid : </label>
           <input type="text" id="uid" name="uid" value={formData.uid} onChange={handleChange} required></input>
           <label className="su-label">Password: </label>
           <input type="password"  id="password" name="password" value={formData.password} onChange={handleChange} required/>

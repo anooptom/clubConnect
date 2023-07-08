@@ -14,10 +14,19 @@ const LoginForm = () => {
   });
 
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
+    const { name, value } = e.target;
+
+    if (name === "uid") {
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        [name]: value.toUpperCase()
+      }));
+    } else {
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        [name]: value
+      }));
+    }
   };
 
   const handleSubmit = (e) => {
