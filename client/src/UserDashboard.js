@@ -10,6 +10,7 @@ import LoadingScreen from './LoadingScreen';
 
 
 
+
 const { Sider } = Layout;
 
 function getItem(label, key, icon, children) {
@@ -267,46 +268,49 @@ const UserDashboard = () => {
             </Menu>
           </Sider>
         <div className='content1'>
-          {selectedKey ==='1' && Location.state && Location.state.uid && (
-            <div>
-              <h1>Welcome {n},</h1>
+        {selectedKey === '1' && Location.state && Location.state.uid && (
+  <div>
+    <div className='welcome-container'>
+      <h1>Welcome {n},</h1>
+      <div className='profile-image'>
+        <img className='circular-image' src={`https://www.rajagiritech.ac.in/stud/ktu/stud/Photo/${Location.state.uid}.jpg`} alt='Profile' />
+      </div>
+    </div>
 
-              
-            <div className='user-group'>
-            <div className='user-card'>
-              <div>
-              <h2>Club</h2>
-              <p>{c}</p>
-              </div>
-            </div>
+    <div className='user-group'>
+      <div className='user-card'>
+        <div>
+          <h2>Club</h2>
+          <p>{c}</p>
+        </div>
+      </div>
+      <div className='user-card'>
+        <div>
+          <h2>Upcoming Events</h2>
+          <p>{events.length}</p>
+        </div>
+      </div>
+    </div>
 
-            <div className='user-card'>
-              <div>
-              <h2>Upcoming Events</h2>
-              <p>{events.length}</p>
-              </div>
-            </div>
-            </div>
+    <div className='user-group'>
+      <div className='user-card'>
+        <div>
+          <h2>Registered Events</h2>
+          <p>{revents.length}</p>
+        </div>
+      </div>
+      <div className='user-card'>
+        <div>
+          <h2>Completed Events</h2>
+          <p>{cevents.length}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+)}
 
-            <div className='user-group'>            
-            <div className='user-card'>
-              <div>
-              <h2>Registered Events</h2>
-              <p>{revents.length}</p>
-              </div>
-            </div>
-             <div className='user-card'>
-              <div>
-                <h2>Completed Events</h2>
-                <p>{cevents.length}</p>
-              </div>
-            </div>
-            </div>
 
-          
-              
-            </div>
-          )}
+
 
           {selectedKey ==='2' &&(
             <div>
