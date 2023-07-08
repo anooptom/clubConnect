@@ -16,6 +16,7 @@ const FacultyLogin =()=>{
       [e.target.name]: e.target.value
     });
   };
+  const [alertMessage, setAlertMessage] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -26,12 +27,13 @@ const FacultyLogin =()=>{
           localStorage.setItem('isFLoggedIn', 'true'); 
           navigate('/FacultyDashboard',{state:{Name: response.data.name}});
         }
-        else if(response.data.message === '0'){
-          alert("Wrong Password");
-          setFormData({Pass:''});
+        else if (response.data.message === '0') {
+          setAlertMessage("Wrong Password!");
+          setFormData({ ...formData, Pass: '' });
         }
-        else{
-          alert("User doesn't exist");
+        else {
+          setAlertMessage("Invalid Email!");
+          setFormData({ ...formData,Email: '',Pass:'' });
         }
       })
       .catch(error => {
@@ -67,11 +69,13 @@ const FacultyLogin =()=>{
           value={formData.Pass}
           onChange={handleChange}
         required/>
+        {alertMessage && <p className="alert-message">{alertMessage}</p>}
         </div>
 
         <div className="button-container">
         <input type="submit" value='LOG IN'/>
         </div>
+        
         </form>
 
     </div>

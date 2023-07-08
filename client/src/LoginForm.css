@@ -79,10 +79,6 @@ h1{
   height: auto;
 }
 
-.psignup{
-  margin-left: 2vh;
-}
-
 .plogin{
   margin-left: 25vh;
 }
@@ -118,4 +114,10 @@ h1{
   100% {
     transform: rotate(360deg);
   }
+}
+
+.alert-message{
+  color: red;
+  margin-top: -1px;
+  margin-bottom: -2px;
 }

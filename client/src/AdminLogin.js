@@ -18,6 +18,8 @@ const AdminLogin =()=>{
     });
   };
 
+  const [alertMessage, setAlertMessage] = useState('');
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -27,11 +29,13 @@ const AdminLogin =()=>{
           localStorage.setItem('isALoggedIn', 'true');
           navigate('/AdminDashboard');
         }
-        else if(response.data.message === '0'){
-          alert("Wrong Password");
+        else if (response.data.message === '0') {
+          setAlertMessage("Wrong Password!");
+          setFormData({ ...formData, password: '' });
         }
-        else{
-          alert("User doesn't exist");
+        else {
+          setAlertMessage("Invalid Email!");
+          setFormData({ ...formData,name: '',password:'' });
         }
       })
       .catch(error => {
@@ -67,6 +71,7 @@ const AdminLogin =()=>{
           value={formData.password}
           onChange={handleChange}
         required/>
+        {alertMessage && <p className="alert-message">{alertMessage}</p>}
         </div>
 
         <div className="button-container">
