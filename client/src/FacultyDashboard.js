@@ -398,11 +398,11 @@ const FacultyDashboard = () => {
               <table>
                 <tr>
                   <td>New Password</td>
-                  <td><input type="password" id="cpass" name="cpass" value={pas.cpass} onChange={handlePChange} required/></td>
+                  <td><input type="password" className='input-sug'  id="cpass" name="cpass" value={pas.cpass} onChange={handlePChange} required/></td>
                 </tr>
                 <tr>
                   <td>Retype Password</td>
-                  <td><input type="text" id="rpass" name="rpass" value={pas.rpass} onChange={handlePChange} required/></td>
+                  <td><input type="text" className='input-sug'  id="rpass" name="rpass" value={pas.rpass} onChange={handlePChange} required/></td>
                 </tr>
                 <tr>
                   <td></td>
@@ -496,7 +496,7 @@ const FacultyDashboard = () => {
               <table>
                 <tr>
                   <td>Name</td>
-                  <td><input type="text" id="name" name="name" value={eventData.name} onChange={handleChange} required/></td>
+                  <td><input type="text" className='input-sug'  id="name" name="name" value={eventData.name} onChange={handleChange} required/></td>
                 </tr>
                 <tr>
                   <td>Description</td>
@@ -522,7 +522,7 @@ const FacultyDashboard = () => {
               <table>
                 <tr>
                   <td>Tilte</td>
-                  <td><input type="text" id="title" name="title" value={notice.title} onChange={handleNChange} required/></td>
+                  <td><input type="text" className='input-sug'  id="title" name="title" value={notice.title} onChange={handleNChange} required/></td>
                 </tr>
                 <tr>
                   <td>Description</td>

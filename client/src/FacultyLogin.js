@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router';
 import "./LoginForm.css"
-import myImage from "./logo.jpg"
 
 const FacultyLogin =()=>{
     const navigate = useNavigate();
@@ -43,26 +42,21 @@ const FacultyLogin =()=>{
 
   return (
 
-    <div className="main">
-      
-      <div className="imghome">
-      <img src={myImage} alt="logo" />
-      </div>
-
-
-    <div className="formlogin">
-        
+    <div className="signup">
+        <div className="main-signup">
+          
         <h1>FACULTY LOG IN</h1>
 
-        <form onSubmit={handleSubmit}>
-        <div className="input-container">
-            <label >Email </label>
-            <input type="text" id="Email" name="Email" value={formData.Email} onChange={handleChange} required/>
+        <form className="su-form" onSubmit={handleSubmit}>
+        
+        <div className="input-group">            
+            <input className='suu-input' placeholder='Email' type="text" id="Email" name="Email" value={formData.Email} onChange={handleChange} required/>
         </div>
 
-        <div className="input-container">
-        <label htmlFor="password">Password</label>
+        <div className="input-group">
         <input
+        className='suu-input'
+        placeholder='Password'
           type="password"
           id="Pass"
           name="Pass"
@@ -72,14 +66,18 @@ const FacultyLogin =()=>{
         {alertMessage && <p className="alert-message">{alertMessage}</p>}
         </div>
 
-        <div className="button-container">
-        <input type="submit" value='LOG IN'/>
+        <button className="su-button" type="submit">
+            Log in
+          </button>
+        </form>
+        
         </div>
         
-        </form>
+        
+        
 
     </div>
-  </div>
+  
 
   );
 };

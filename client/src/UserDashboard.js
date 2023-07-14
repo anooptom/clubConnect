@@ -418,7 +418,7 @@ const UserDashboard = () => {
               <table>
                 <tr>
                   <td>Tilte</td>
-                  <td><input type="text" id="title" name="title" value={sugg.title} onChange={handleSChange} required/></td>
+                  <td><input className='input-sug' type="text" id="title" name="title" value={sugg.title} onChange={handleSChange} required/></td>
                 </tr>
                 <tr>
                   <td>Description</td>
@@ -442,11 +442,11 @@ const UserDashboard = () => {
               <table>
                 <tr>
                   <td>New Password</td>
-                  <td><input type="password" id="cpass" name="cpass" value={pas.cpass} onChange={handlePChange} required/></td>
+                  <td><input className='input-sug' type="password" id="cpass" name="cpass" value={pas.cpass} onChange={handlePChange} required/></td>
                 </tr>
                 <tr>
                   <td>Retype Password</td>
-                  <td><input type="text" id="rpass" name="rpass" value={pas.rpass} onChange={handlePChange} required/></td>
+                  <td><input type="text" className='input-sug'  id="rpass" name="rpass" value={pas.rpass} onChange={handlePChange} required/></td>
                 </tr>
                 <tr>
                   <td></td>
