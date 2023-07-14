@@ -45,26 +45,24 @@ const AdminLogin =()=>{
 
   return (
 
-    <div className="main">
-      
-      <div className="imghome">
-      <img src={myImage} alt="logo" />
-      </div>
+    <div className="signup">
 
 
-    <div className="formlogin">
+    <div className="main-signup">
         
         <h1>ADMIN LOG IN</h1>
 
-        <form onSubmit={handleSubmit}>
-        <div className="input-container">
-            <label htmlFor="name">Username </label>
-            <input type="text" id="name" name="name" value={formData.name} onChange={handleChange} required/>
+        <form onSubmit={handleSubmit} className="su-form">
+        <div className="input-group">
+            
+            <input className='suu-input' placeholder='Username' type="text" id="name" name="name" value={formData.name} onChange={handleChange} required/>
         </div>
 
-        <div className="input-container">
-        <label htmlFor="password">Password</label>
+        <div className="input-group">
+        
         <input
+        className='suu-input'
+        placeholder='Password'
           type="password"
           id="password"
           name="password"
@@ -74,9 +72,9 @@ const AdminLogin =()=>{
         {alertMessage && <p className="alert-message">{alertMessage}</p>}
         </div>
 
-        <div className="button-container">
-        <input type="submit" value='LOG IN'/>
-        </div>
+        <button className="su-button" type="submit">
+            Log in
+          </button>
         </form>
 
     </div>

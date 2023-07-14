@@ -24,7 +24,7 @@
     width: 25vw;
     height: 30vh;
     display: flex;
-    align-items: center;
+    align-items: justify;
     justify-content: center;
     border-radius: 10px;
     padding: 0 5vw;
@@ -131,32 +131,38 @@
     border: 1px solid #8b84a4;
     margin: 2vh 0;
 }
+
 .welcome-container {
     display: flex;
     align-items: center;
-  }
-  
-  .profile-image {
+}
+
+.profile-image {
     width: 80px;
     height: 80px;
     border-radius: 50%;
     overflow: hidden;
     margin-left: 40vw;
-  }
-  
-  .circular-image {
+}
+
+.circular-image {
     width: 100%;
     height: 100%;
     object-fit: cover;
-  }
-  
-  .user-group {
+}
+
+.user-group {
     margin-top: 20px;
-  }
-  
-  .user-card {
+}
+
+.user-card {
     display: flex;
     align-items: center;
     margin-bottom: 10px;
-  }
-  
+}
+
+.input-sug {
+    background-color: #252525;
+    border: 1px solid #8b84a4;
+    padding: 0.35rem;
+}

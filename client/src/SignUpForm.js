@@ -66,28 +66,38 @@ const SignUpForm = () => {
 
   return (
     <div className="signup">
+      
       <div className="main-signup">
-        <h2>Register</h2>
+        <h2>Create an Account</h2>
 
-        <form className="su-form" onSubmit={handleSubmit}>
-          <label className="su-label" >Name : </label>
-          <input type="text" id="name" name="name" value={formData.name} onChange={handleChange} required/>
-          <label className="su-label">Uid : </label>
-          <input type="text" id="uid" name="uid" value={formData.uid} onChange={handleChange} required></input>
-          <label className="su-label">Password: </label>
-          <input type="password"  id="password" name="password" value={formData.password} onChange={handleChange} required/>
-          <label className="su-label">Club: </label>
-         <select id='club' name='club' value={formData.club} onChange={handleChange} required>
+        <form className="su-form" onSubmit={handleSubmit}>  
+
+          <div className="input-group">
+            <input className='suu-input' placeholder='Name' type="text" id="name" name="name" value={formData.name} onChange={handleChange} required/>
+          </div>
+
+          <div className="input-group">
+            <input className='suu-input'type="text" placeholder="UID" id="uid" name="uid" value={formData.uid} onChange={handleChange} required></input>
+          </div>
+
+          <div className="input-group">
+          <input className='suu-input' type="password" placeholder="Password" id="password" name="password" value={formData.password} onChange={handleChange} required/>  
+          </div>
+
+          <div className="input-group">
+          <select id='club'className='suu-input' name='club' value={formData.club} onChange={handleChange} required>
           <option>Select</option>
           {clb.map((data)=>{
                   return( <option >{data.name}</option>);
           })}
           </select>
-          <br></br>
-          <button className="button-signup" type="submit">
+          </div>
+          
+          <button className="su-button" type="submit">
             Register
           </button>
         </form>
+        <a className='link' href='/user'>Back to login</a>
       </div>
     </div>
   );

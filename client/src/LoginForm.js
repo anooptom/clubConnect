@@ -54,35 +54,33 @@ const LoginForm = () => {
   };
 
   return (
-    <div className="main">
-      <div className="imghome">
-        <img src={myImage} alt="logo" />
-      </div>
+    <div  className="signup">
+      <div className="main-signup">
+      <h1>Student Log In</h1>
 
-      <div className="formlogin">
-        <h1>STUDENT LOG IN</h1>
-        <form onSubmit={handleSubmit}>
-          <div className="input-container">
-            <label htmlFor="name">Username</label>
-            <input type="text" id="uid" name="uid" value={formData.uid} onChange={handleChange} required />
-          </div>
+        <form className="su-form"onSubmit={handleSubmit}>
 
-          <div className="input-container">
-            <label htmlFor="password">Password</label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              value={formData.password}
+
+          <div className="input-group">   
+            <input className='suu-input' type="text" placeholder='Enter UID' id="uid" name="uid" value={formData.uid} onChange={handleChange} required />
+          </div>        
+
+
+          <div className="input-group">
+            <input className='suu-input' type="password"  placeholder='Password' id="password" name="password" value={formData.password}
               onChange={handleChange}
               required
             />
-            {alertMessage && <p className="alert-message">{alertMessage}</p>}
-          </div>
+            {alertMessage && <p className="alert-message">{alertMessage}</p>}</div>
+            
+          
 
-          <div className="button-container">
+          <div >
             <p className="psignup">Not a user? <Link to='/signup' className='linkk'>Sign Up</Link></p>
-            <input type="submit" className="plogin" value="LOG IN" />
+
+            <button className="su-button" type="submit">
+            Log in
+          </button>
           </div>
         </form>
       </div>

@@ -1,91 +1,135 @@
-.main{
-    overflow-y: hidden; 
-}
+@import url('https://fonts.googleapis.com/css2?family=Mukta&family=Poppins:wght@200&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Poppins:wght@200&display=swap');
 
-input[type="text"],
-input[type="password"]{
-  height: 25px;
-  border: 1px solid rgba(0, 0, 0, 0.2);
-  background: transparent;
-  border: none;
-  font-size: 17px;
- border-bottom: 1px solid #000000;
- padding: 2px 5px;
-}
 
-input[type="submit"] {
-  margin-top: 10px;
-  cursor: pointer;
-  font-size: 15px;
-  background: #19446e;
-  border: 1px solid #19446e;
-  color: #fff;
-  padding: 10px 20px;
-}
-
-input[type="submit"]:hover {
-  background:white;
-  color: #000000;
-}
-
-.button-container {
+.signup {
+  font-family: 'Poppins';
+  background-color: #272727;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  color: #f1ebebe9;
   display: flex;
+  align-items: center;
   justify-content: center;
 }
 
-.formlogin {
-  width: 35%;
+.su-form {
+  display: table;
+  height: 37vh;
+  padding: 3vh 8vw;
+}
+
+.su-button {
+  margin: 5vh 0 3vh 0;
+  background-color: #272727;
+  color: #f1ebebe9;
+  border: #272727;
+  padding: 0.5rem 1rem;
+  font-family: 'Poppins';
+}
+
+.su-button:hover {
+  cursor: pointer;
+}
+
+.suu-input {
+  display: table-cell;
+  padding: 0.1rem 1rem;
+  color: #f1ebebe9;
+  width: 55vw;
+  height: 4.5vh;
+  background-color: #0f0f0f;
+  margin: 1vh 0;
+  border: 1px solid #f1ebebe9;
+  font-family: 'Poppins';
+  font-size: 0.85rem;
+}
+
+.main-signup {
+  background-color: #0f0f0f;
+  text-align: center;
   height: 60vh;
-  background-color:#F3F4F6 ;
-  padding: 2rem; 
-  flex-direction: column;   
-  margin-top: 100px;
-  box-shadow: 2px 1px 1px 1px;
-
+  width: 80vw;
+  border-radius: 1rem;
 }
 
-
- .input-container {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  margin: 10px;
+.main-signup h2 {
+  font-size: 1.7rem;
+  margin: 3vh 0;
 }
 
-.imghome{
-  background-color:#ebf0f7;
-  background-size: contain;
-  margin-left: 75px;
-  margin-top: 100px;
-  box-shadow: 2px 2px 2px;
-}
-img{
-height: 70vh;
-}
-.main{
-  display: flex;
-  margin-left: 100px;
-  border-radius: 2px;
+.input-group {
+  display: table-row;
 }
 
-h1{ 
-  color: #1F2D5A;
+.su-form {
+  display: block;
 }
 
-.img myImage {
-  max-width: 100%;
-  max-height: 100%;
-  width: auto;
-  height: auto;
+.su-label {
+  width: 10rem;
+  margin: 1rem;
+  border: 10rem;
 }
 
-.plogin{
-  margin-left: 25vh;
+.link {
+  color: #f1ebebe9;
+  font-size: 0.8rem;
 }
 
-.linkk{
-  text-decoration: none;
+.main-signup select {
+  width: 64vw;
+  height: 5vh;
 }
+
+@media (min-width: 900px) {
+  .main-signup h2 {
+    font-size: 3rem;
+    margin: 5vh 0;
+    font-family: 'Montserrat';
+  }
+
+  .main-signup {
+    width: 45vw;
+    height: 70vh;
+  }
+
+  .su-form {
+    padding: 2vh 5vw;
+    width: 35vw;
+    height: 38vh;
+  }
+
+  .suu-input {
+    width: 32vw;
+  }
+
+  .main-signup select {
+    width: 34vw;
+    height: 5vh;
+  }
+
+  .su-button {
+    width: 10vw;
+    height: 5vh;
+  }
+
+  .su-button:hover {
+    transition: 0.5s;
+    background-color: #332c2c;
+  }
+
+  .linkk {
+    color: #f1ebebe9;
+    font-size: 0.9rem;
+  }
+}
+
+::placeholder {
+  color: #f1ebebe9
+}
+
 .loading-screen {
   background-color: #000;
   color: #fff;
@@ -111,13 +155,8 @@ h1{
   0% {
     transform: rotate(0deg);
   }
+
   100% {
     transform: rotate(360deg);
   }
-}
-
-.alert-message{
-  color: red;
-  margin-top: -1px;
-  margin-bottom: -2px;
 }
