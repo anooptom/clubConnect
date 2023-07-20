@@ -92,22 +92,28 @@
   padding: 0 3vw;
 }
 
-.menuant{
+.menuant {
   background-color: black !important;
 }
 
-.ant-menu-item-selected{
-  background-color:#272727 !important;
+.ant-menu-item-selected {
+  background-color: #272727 !important;
 }
 
-.ant-menu-item:hover{
-  background-color:#272727 !important;
+.ant-menu-item:hover {
+  background-color: #272727 !important;
 }
 
-.ant-layout-sider-trigger{
-  background-color: rgb(21, 21, 21)  !important;
+.ant-layout-sider-trigger {
+  background-color: rgb(21, 21, 21) !important;
 }
 
-.ant-layout-sider-trigger:hover{
-  background-color:  #272727 !important;
+.ant-layout-sider-trigger:hover {
+  background-color: #272727 !important;
+}
+
+.input-sug {
+  background-color: #252525;
+  border: 1px solid #8b84a4;
+  padding: 0.35rem;
 }

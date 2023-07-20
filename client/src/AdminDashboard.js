@@ -354,17 +354,17 @@ const AdminDashboard = () => {
               <table>
                 <tr>
                   <td>Name</td>
-                  <td><input type="text"  id="Fname" name="Fname" value={FacultyData.Fname} onChange={handleFChange} required/></td>
+                  <td><input type="text" className='input-sug'   id="Fname" name="Fname" value={FacultyData.Fname} onChange={handleFChange} required/></td>
                 </tr>
                 <tr>
                   <td>Email</td>
-                  <td><input type="text"  id="Email" name="Email" value={FacultyData.Email} onChange={handleFChange} required/>
+                  <td><input type="text"  className='input-sug'  id="Email" name="Email" value={FacultyData.Email} onChange={handleFChange} required/>
                 </td>
                 </tr>
                 
                 <tr>
                   <td>Initial Password</td>
-                  <td> <input type="password"   id="Pass" name="Pass" value={FacultyData.Pass} onChange={handleFChange} required/>
+                  <td> <input type="password"   className='input-sug'   id="Pass" name="Pass" value={FacultyData.Pass} onChange={handleFChange} required/>
                 </td>
                 </tr>
                 <tr>
@@ -384,7 +384,7 @@ const AdminDashboard = () => {
               <table>
                 <tr>
                   <td>Email</td>
-                  <td><input type="text"  id="Email" name="Email" value={FacultyDData.Email}
+                  <td><input type="text" className='input-sug' id="Email" name="Email" value={FacultyDData.Email}
                 onChange={handleFDChange} required/>
                 </td>
                 </tr>
@@ -408,11 +408,11 @@ const AdminDashboard = () => {
               <table>
                 <tr>
                   <td>Club Name</td>
-                  <td><input type="text" id="nme" name="nme" value={clubData.nme} onChange={handleChange} required/></td>
+                  <td><input type="text"  className='input-sug'  id="nme" name="nme" value={clubData.nme} onChange={handleChange} required/></td>
                 </tr>
                 <tr>
                   <td>Faculty Head</td>
-                  <td><input  type="text" id="head" name="head" value={clubData.head} onChange={handleChange} required/>
+                  <td><input  type="text"  className='input-sug'  id="head" name="head" value={clubData.head} onChange={handleChange} required/>
                 </td>
                 </tr>
                 
@@ -432,7 +432,7 @@ const AdminDashboard = () => {
               <table>
                 <tr>
                   <td>Club Name</td>
-                  <td><input  type="text" id="nme" name="nme" value={clubData.nme} onChange={handleChange} required/></td>
+                  <td><input  type="text"  className='input-sug'  id="nme" name="nme" value={clubData.nme} onChange={handleChange} required/></td>
                 </tr>
                 
                 <tr>
@@ -535,11 +535,11 @@ const AdminDashboard = () => {
               <table>
                 <tr>
                   <td>New Password</td>
-                  <td><input type="password" id="cpass" name="cpass" value={pas.cpass} onChange={handlePChange} required/></td>
+                  <td><input type="password"  className='input-sug'  id="cpass" name="cpass" value={pas.cpass} onChange={handlePChange} required/></td>
                 </tr>
                 <tr>
                   <td>Confirm Password</td>
-                  <td><input type="text" id="rpass" name="rpass" value={pas.rpass} onChange={handlePChange} required/></td>
+                  <td><input type="text"  className='input-sug'  id="rpass" name="rpass" value={pas.rpass} onChange={handlePChange} required/></td>
                 </tr>
                 <tr>
                   <td></td>
