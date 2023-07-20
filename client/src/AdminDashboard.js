@@ -1,13 +1,15 @@
 import './AdminDashboard.css';
-import {HomeOutlined, UserOutlined, LogoutOutlined, TeamOutlined, GlobalOutlined } from '@ant-design/icons';
+import { HomeOutlined, UserOutlined, LogoutOutlined, TeamOutlined, GlobalOutlined } from '@ant-design/icons';
 import { Layout, Menu } from 'antd';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router';
 import LoadingScreen from './LoadingScreen';
+import Papa from 'papaparse';
+
 
 const { Content, Sider } = Layout;
-var noe, nof,noc,nos;
+var noe, nof, noc, nos;
 function getItem(label, key, icon, children) {
   return {
     key,
@@ -21,14 +23,14 @@ function getItem(label, key, icon, children) {
 
 const AdminDashboard = () => {
 
-    const navigate = useNavigate();
-    const [collapsed, setCollapsed] = useState(false);
-    const [selectedKey, setSelectedKey] = useState('1');
-    const [data, setData] = useState() ;
-    const [fac,setFac] =useState([]);
-    const [usr,setUsr] =useState([]);
-    const [clb,setClb] =useState([]);
-    const [loading, setLoading] = useState(true); 
+  const navigate = useNavigate();
+  const [collapsed, setCollapsed] = useState(false);
+  const [selectedKey, setSelectedKey] = useState('1');
+  const [data, setData] = useState();
+  const [fac, setFac] = useState([]);
+  const [usr, setUsr] = useState([]);
+  const [clb, setClb] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     var isLoggedIn = localStorage.getItem('isALoggedIn');
@@ -37,524 +39,607 @@ const AdminDashboard = () => {
     }
   }, [navigate]);
 
-    const [clubData, setclubData] = useState({
-      nme: '',
-      head: ''
+  const [clubData, setclubData] = useState({
+    nme: '',
+    head: ''
+  });
+
+  const [pas, setpas] = useState({
+    rpass: '',
+    cpass: ''
+  });
+
+  const [FacultyData, setFacultyData] = useState({
+    Fname: '',
+    Email: '',
+    Pass: '',
+    club: ''
+  });
+
+  const [FacultyDData, setFacultyDData] = useState({
+    Email: ''
+  });
+
+  const handleFChange = (e) => {
+    setFacultyData({
+      ...FacultyData,
+      [e.target.name]: e.target.value
     });
 
-    const [pas, setpas] = useState({
-      rpass: '',
-      cpass: ''
+  };
+
+  const handleFDChange = (e) => {
+    setFacultyDData({
+      ...FacultyDData,
+      [e.target.name]: e.target.value
     });
+  };
 
-    const [FacultyData, setFacultyData] = useState({
-      Fname: '',
-      Email: '',
-      Pass: '',
-      club: ''
+  const handleChange = (e) => {
+    setclubData({
+      ...clubData,
+      [e.target.name]: e.target.value
     });
+  };
 
-    const [FacultyDData, setFacultyDData] = useState({
-      Email: ''
+  const handlePChange = (e) => {
+    setpas({
+      ...pas,
+      [e.target.name]: e.target.value
     });
+  };
 
-    const handleFChange = (e) => {
-      setFacultyData({
-        ...FacultyData,
-        [e.target.name]: e.target.value
-      });
-      
-    };
+  const handleDelete = (e) => {
+    e.preventDefault();
 
-    const handleFDChange = (e) => {
-      setFacultyDData({
-        ...FacultyDData,
-        [e.target.name]: e.target.value
-      });
-    };
-
-    const handleChange = (e) => {
-      setclubData({
-        ...clubData,
-        [e.target.name]: e.target.value
-      });
-    };
-
-    const handlePChange = (e) => {
-      setpas({
-        ...pas,
-        [e.target.name]: e.target.value
-      });
-    };
-
-    const handleDelete = (e) => {
-      e.preventDefault();
-
-      axios.post(' http://localhost:3001/clubDelete', clubData)
-        .then(response => {
-          if(response.data.message === '1'){
-            alert("Club Deleted")
-            setclubData({nme:''})
-          }
-          else if(response.data.message === '0'){
-            alert("Club Doesn't Exist");
-            setclubData({nme:''})
-          }
-        })
-        .catch(error => {
-          console.error(error);
-        });
-    };
-
-    const handleFSubmit = (e) => {
-      e.preventDefault();
-      axios.post(' http://localhost:3001/facultyCreate', FacultyData)
-        .then(response => {
-          if(response.data.message === '0'){
-            alert("Faculty Already Exists")
-            setFacultyData({Fname:'',Email:'',Pass:''});
-          }
-          else if(response.data.message === '1'){
-            alert("Faculty Created");
-            setFacultyData({Fname:'',Email:'',Pass:''});
-          }
-        })
-        .catch(error => {
-          console.error(error);
-        });
-    };
-
-    const handleFDSubmit = (e) => {
-      e.preventDefault();
-      axios.post(' http://localhost:3001/facultyDelete', FacultyDData)
-        .then(response => {
-          if(response.data.message === '0'){
-            alert("Faculty Doesn't Exist")
-            setFacultyDData({Email:''})
-          }
-          else if(response.data.message === '1'){
-            alert("Faculty Deleted");
-            setFacultyDData({Email:''})
-          }
-        })
-        .catch(error => {
-          console.error(error);
-        });
-    };
-
-    const handleCreate = (e) => {
-      e.preventDefault();
-
-      axios.post(' http://localhost:3001/clubCreate', clubData)
-        .then(response => {
-          if(response.data.message === '1'){
-            alert("Success")
-            setclubData({nme:'',head:''})
-          }
-          else if(response.data.message === '0'){
-            alert("Club Already Exist");
-            setclubData({nme:'',head:''})
-          }
-          else{
-            alert("Faculty Not Found");
-            setclubData({head:''})
-          }
-        })
-        .catch(error => {
-          console.error(error);
-        });
-    };
-
-    const handlePSubmit = (e) => {
-      e.preventDefault();
-
-      if(pas.cpass !== pas.rpass){
-        setpas({ rpass: '', cpass: '' });
-        alert("Password Mismatch");
-      }
-      else{
-      axios.post(' http://localhost:3001/changepass', {pass:pas,user : "admin"})
-        .then(response => {
-         if(response.data.message ==="1"){
-          setpas({ rpass: '', cpass: '' });
-          alert("Password Changed");
-         }
-         else{
-          alert("Error Changing Password");
-          setpas({ rpass: '', cpass: '' });
-         }
-        })
-        .catch(error => {
-          console.error(error);
-        });
-      }
-    };
-
-    useEffect(() =>{
-      const fetchData = async () =>{
-        await fetch('http://localhost:3001/data',{method:'get', mode: 'cors'})
-        .then(response=>(response.json()))
-        .then(json=>{        
-          setData(json);
-        })
-      };
-    
-      fetchData().then(() => {
-        setLoading(false);
+    axios.post(' http://localhost:3001/clubDelete', clubData)
+      .then(response => {
+        if (response.data.message === '1') {
+          alert("Club Deleted")
+          setclubData({ nme: '' })
+        }
+        else if (response.data.message === '0') {
+          alert("Club Doesn't Exist");
+          setclubData({ nme: '' })
+        }
       })
       .catch(error => {
         console.error(error);
-        setLoading(false); 
       });
-    },[]);
-    
-    const fetchfaculty = async()=>{
-      await fetch('http://localhost:3001/facultydisplay',{method:'get',mode:'cors'})
-      .then(res=>(res.json()))
-      .then(json=>{
-          setFac(json);
-      })
-    };
+  };
 
-    const fetchclub = async()=>{
-      await fetch('http://localhost:3001/clubdisplay',{method:'get',mode:'cors'})
-      .then(res=>(res.json()))
-      .then(json=>{
-          setClb(json);
-
+  const handleFSubmit = (e) => {
+    e.preventDefault();
+    axios.post(' http://localhost:3001/facultyCreate', FacultyData)
+      .then(response => {
+        if (response.data.message === '0') {
+          alert("Faculty Already Exists")
+          setFacultyData({ Fname: '', Email: '', Pass: '' });
+        }
+        else if (response.data.message === '1') {
+          alert("Faculty Created");
+          setFacultyData({ Fname: '', Email: '', Pass: '' });
+        }
       })
-    };
+      .catch(error => {
+        console.error(error);
+      });
+  };
 
-    const fetchuser = async()=>{
-      await fetch('http://localhost:3001/userdisplay',{method:'get',mode:'cors'})
-      .then(res=>(res.json()))
-      .then(json=>{
-          setUsr(json);
-      })
-    };
-    
-    if(data){
-      noe = data.noe;
-      nof = data.nof;
-      nos = data.nos;
-      noc = data.noc;
+  const handleFFSubmit = (e) => {
+    e.preventDefault();
+
+    const promises = FacultyData.map((data) => {
+      return axios.post('http://localhost:3001/facultyfCreate', data)
+        .then(response => {
+          if (response.data.message === '0') {
+            alert("Faculty Already Exists")
+          }
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    });
+
+    Promise.all(promises)
+      .then(() => {
+
+        window.location.reload();
+      });
+  };
+
+
+  const handleFileLoad = (e) => {
+    const file = e.target.files[0];
+
+    if (!file) {
+      return;
     }
 
-    const items = [
-      getItem('Home', '1', <HomeOutlined />),
-      getItem('Faculty', 'sub1', <UserOutlined />, [getItem('Create', '2'), getItem('Delete', '3')]),
-      getItem('Club', 'sub2', <GlobalOutlined />, [getItem('View','10'),getItem('Create', '4'), getItem('Delete', '5')]),
-      getItem('Users', 'sub3', <TeamOutlined />, [getItem('Faculty', '7'), getItem('Students', '8')]),
-      getItem('Change Password', '11', <LogoutOutlined />),
-      getItem('Log Out', '9', <LogoutOutlined />),
-    ];
-
-    const handleMenuClick = ({ key }) => {
-      if(key==="7"){
-        fetchfaculty();
-      }
-
-      if(key ==='10'){
-        fetchclub();
-      }
-
-      if(key ==='9'){
-        handleLogout();
-      }
-
-      if(key ==='8'){
-        fetchuser();
-      }
-      setSelectedKey(key);
-    };
-
-    const getMenuItems = items => {
-      return items.map(item => {
-        if (item.children) {
-          return (
-            <Menu.SubMenu key={item.key} icon={item.icon} title={item.label}>
-              {getMenuItems(item.children)}
-            </Menu.SubMenu>
-          );
-        }
-        return (
-          <Menu.Item className='mitem' key={item.key} icon={item.icon}>
-            {item.label}
-          </Menu.Item>
-        );
+    const reader = new FileReader();
+    reader.onload = function (event) {
+      const csv = event.target.result;
+      Papa.parse(csv, {
+        header: true,
+        complete: handleParsedData,
+        error: handleError,
       });
     };
 
-    const handleLogout = () => {
-      localStorage.setItem('isALoggedIn', 'false');
-      navigate('/admin');
+
+    reader.readAsText(file);
+  };
+
+  const handleParsedData = (parsedData) => {
+    const { data, errors } = parsedData;
+
+    if (errors.length > 0) {
+      handleError(errors);
+      return;
+    }
+    const formattedData = data.map((row) => ({
+      name: row.name || '',
+      email: row.email || '',
+      password: row.password || '',
+    }));
+
+    setFacultyData(formattedData);
+  };
+
+  const handleError = (errors) => {
+
+    console.error('Error parsing CSV:', errors);
+  };
+
+  const handleFDSubmit = (e) => {
+    e.preventDefault();
+    axios.post(' http://localhost:3001/facultyDelete', FacultyDData)
+      .then(response => {
+        if (response.data.message === '0') {
+          alert("Faculty Doesn't Exist")
+          setFacultyDData({ Email: '' })
+        }
+        else if (response.data.message === '1') {
+          alert("Faculty Deleted");
+          setFacultyDData({ Email: '' })
+        }
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  };
+
+  const handleCreate = (e) => {
+    e.preventDefault();
+
+    axios.post(' http://localhost:3001/clubCreate', clubData)
+      .then(response => {
+        if (response.data.message === '1') {
+          alert("Success")
+          setclubData({ nme: '', head: '' })
+        }
+        else if (response.data.message === '0') {
+          alert("Club Already Exist");
+          setclubData({ nme: '', head: '' })
+        }
+        else {
+          alert("Faculty Not Found");
+          setclubData({ head: '' })
+        }
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  };
+
+  const handlePSubmit = (e) => {
+    e.preventDefault();
+
+    if (pas.cpass !== pas.rpass) {
+      setpas({ rpass: '', cpass: '' });
+      alert("Password Mismatch");
+    }
+    else {
+      axios.post(' http://localhost:3001/changepass', { pass: pas, user: "admin" })
+        .then(response => {
+          if (response.data.message === "1") {
+            setpas({ rpass: '', cpass: '' });
+            alert("Password Changed");
+          }
+          else {
+            alert("Error Changing Password");
+            setpas({ rpass: '', cpass: '' });
+          }
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    }
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      await fetch('http://localhost:3001/data', { method: 'get', mode: 'cors' })
+        .then(response => (response.json()))
+        .then(json => {
+          setData(json);
+        })
     };
 
-    return (
-      <Layout style={{ minHeight: '100vh' }}>
+    fetchData().then(() => {
+      setLoading(false);
+    })
+      .catch(error => {
+        console.error(error);
+        setLoading(false);
+      });
+  }, []);
+
+  const fetchfaculty = async () => {
+    await fetch('http://localhost:3001/facultydisplay', { method: 'get', mode: 'cors' })
+      .then(res => (res.json()))
+      .then(json => {
+        setFac(json);
+      })
+  };
+
+  const fetchclub = async () => {
+    await fetch('http://localhost:3001/clubdisplay', { method: 'get', mode: 'cors' })
+      .then(res => (res.json()))
+      .then(json => {
+        setClb(json);
+
+      })
+  };
+
+  const fetchuser = async () => {
+    await fetch('http://localhost:3001/userdisplay', { method: 'get', mode: 'cors' })
+      .then(res => (res.json()))
+      .then(json => {
+        setUsr(json);
+      })
+  };
+
+  if (data) {
+    noe = data.noe;
+    nof = data.nof;
+    nos = data.nos;
+    noc = data.noc;
+  }
+
+  const items = [
+    getItem('Home', '1', <HomeOutlined />),
+    getItem('Faculty', 'sub1', <UserOutlined />, [getItem('Create', '2'), getItem('Delete', '3')]),
+    getItem('Club', 'sub2', <GlobalOutlined />, [getItem('View', '10'), getItem('Create', '4'), getItem('Delete', '5')]),
+    getItem('Users', 'sub3', <TeamOutlined />, [getItem('Faculty', '7'), getItem('Students', '8')]),
+    getItem('Change Password', '11', <LogoutOutlined />),
+    getItem('Log Out', '9', <LogoutOutlined />),
+  ];
+
+  const handleMenuClick = ({ key }) => {
+    if (key === "7") {
+      fetchfaculty();
+    }
+
+    if (key === '10') {
+      fetchclub();
+    }
+
+    if (key === '9') {
+      handleLogout();
+    }
+
+    if (key === '8') {
+      fetchuser();
+    }
+    setSelectedKey(key);
+  };
+
+  const getMenuItems = items => {
+    return items.map(item => {
+      if (item.children) {
+        return (
+          <Menu.SubMenu key={item.key} icon={item.icon} title={item.label}>
+            {getMenuItems(item.children)}
+          </Menu.SubMenu>
+        );
+      }
+      return (
+        <Menu.Item className='mitem' key={item.key} icon={item.icon}>
+          {item.label}
+        </Menu.Item>
+      );
+    });
+  };
+
+  const handleLogout = () => {
+    localStorage.setItem('isALoggedIn', 'false');
+    navigate('/admin');
+  };
+
+  return (
+    <Layout style={{ minHeight: '100vh' }}>
       {loading ? (
         <LoadingScreen />
       ) : (
         <>
-        <Sider className='menuant' collapsible collapsed={collapsed} onCollapse={setCollapsed}>
-          <div className="demo-logo-vertical" />
-          <Menu className='menuant' theme="dark" defaultSelectedKeys={['1']} mode="inline" onClick={handleMenuClick}>
-            {getMenuItems(items)}
-          </Menu>
-        </Sider>
+          <Sider className='menuant' collapsible collapsed={collapsed} onCollapse={setCollapsed}>
+            <div className="demo-logo-vertical" />
+            <Menu className='menuant' theme="dark" defaultSelectedKeys={['1']} mode="inline" onClick={handleMenuClick}>
+              {getMenuItems(items)}
+            </Menu>
+          </Sider>
 
-        <Content className='content2'>         
-          {selectedKey === '1' && (         
-          
-          <div>              
-              <h1>Admin Dashboard</h1>
+          <Content className='content2'>
+            {selectedKey === '1' && (
 
-            <div className='admin-group'>
-             <div className='admin-card'>
-               <div>
-               <h2>Clubs</h2>
-               <p>{noc}</p>
-              </div>
-            </div>
-
-            <div className='admin-card'>
               <div>
-              <h2>Faculty</h2>
-              <p>{nof}</p>
+                <h1>Admin Dashboard</h1>
+
+                <div className='admin-group'>
+                  <div className='admin-card'>
+                    <div>
+                      <h2>Clubs</h2>
+                      <p>{noc}</p>
+                    </div>
+                  </div>
+
+                  <div className='admin-card'>
+                    <div>
+                      <h2>Faculty</h2>
+                      <p>{nof}</p>
+                    </div>
+                  </div>
+
+                </div>
+
+
+                <div className='admin-group'>
+                  <div className='admin-card'>
+                    <div>
+                      <h2>Students</h2>
+                      <p>{nos}</p>
+                    </div>
+                  </div>
+
+                  <div className='admin-card'>
+                    <div>
+                      <h2>Upcoming Events</h2>
+                      <p>{noe}</p>
+                    </div>
+                  </div>
+
+                </div>
               </div>
-            </div>
 
-          </div>
+            )}
 
-
-          <div className='admin-group'>
-             <div className='admin-card'>
-               <div>
-               <h2>Students</h2>
-               <p>{nos}</p>
-              </div>
-            </div>
-
-            <div className='admin-card'>
-              <div>
-              <h2>Upcoming Events</h2>
-              <p>{noe}</p>
-              </div>
-            </div>        
-            
-            </div>
-            </div>
-            
-          )}
-
-          {selectedKey === '2' && (
-            <div className='changepass-admin'>
-              <h1>Create Faculty</h1>
-            <form onSubmit={handleFSubmit}>
-              <table>
-                <tr>
-                  <td>Name</td>
-                  <td><input type="text" className='input-sug'   id="Fname" name="Fname" value={FacultyData.Fname} onChange={handleFChange} required/></td>
-                </tr>
-                <tr>
-                  <td>Email</td>
-                  <td><input type="text"  className='input-sug'  id="Email" name="Email" value={FacultyData.Email} onChange={handleFChange} required/>
-                </td>
-                </tr>
-                
-                <tr>
-                  <td>Initial Password</td>
-                  <td> <input type="password"   className='input-sug'   id="Pass" name="Pass" value={FacultyData.Pass} onChange={handleFChange} required/>
-                </td>
-                </tr>
-                <tr>
-                  <td></td>
-                  <td><button className="change-password-button-admin" type='submit'>Create</button></td>
-                </tr>
-              </table>
-            </form>
-            </div>
-          )}
-
-          {selectedKey === '3' && (
-            <div>
+            {selectedKey === '2' && (
               <div className='changepass-admin'>
-              <h1>Delete Faculty</h1>
-            <form onSubmit={handleFDSubmit}>
-              <table>
-                <tr>
-                  <td>Email</td>
-                  <td><input type="text" className='input-sug' id="Email" name="Email" value={FacultyDData.Email}
-                onChange={handleFDChange} required/>
-                </td>
-                </tr>
-                
-                <tr>
-                  <td></td>
-                  <td><button  className='f-del-but' type='submit'>DELETE</button></td>
-                </tr>
-              </table>
-            </form>
-            </div>
-              
-             
-          </div>
-          )}
+                <h1>Create Faculty</h1>
+                <form onSubmit={handleFSubmit}>
+                  <table>
+                    <tr>
+                      <td>Name</td>
+                      <td><input type="text" className='input-sug' id="Fname" name="Fname" value={FacultyData.Fname} onChange={handleFChange} required /></td>
+                    </tr>
+                    <tr>
+                      <td>Email</td>
+                      <td><input type="text" className='input-sug' id="Email" name="Email" value={FacultyData.Email} onChange={handleFChange} required />
+                      </td>
+                    </tr>
 
-          {selectedKey === '4' && (
-            <div className="changepass-admin">
-              <h1>Club Creation</h1>
-              <form onSubmit={handleCreate}>
-              <table>
-                <tr>
-                  <td>Club Name</td>
-                  <td><input type="text"  className='input-sug'  id="nme" name="nme" value={clubData.nme} onChange={handleChange} required/></td>
-                </tr>
-                <tr>
-                  <td>Faculty Head</td>
-                  <td><input  type="text"  className='input-sug'  id="head" name="head" value={clubData.head} onChange={handleChange} required/>
-                </td>
-                </tr>
-                
-                <tr>
-                  <td></td>
-                  <td><button className="change-password-button-admin" type='submit'>Create</button></td>
-                </tr>
-              </table>
-            </form>              
-            </div>
-          )}
+                    <tr>
+                      <td>Initial Password</td>
+                      <td> <input type="password" className='input-sug' id="Pass" name="Pass" value={FacultyData.Pass} onChange={handleFChange} required />
+                      </td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                      <td><button className="change-password-button-admin" type='submit'>Create</button></td>
+                    </tr>
+                  </table>
+                </form>
+                <form onSubmit={handleFFSubmit}>
+                  <div className='extra'>
+                    <table>
+                      <tr>
+                        <td>Uplaod CSV</td>
+                        <td>
+                          <input type="file" accept=".csv" onChange={handleFileLoad} />
+                        </td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td><button className="change-password-button-admin" type='submit'>Create</button></td>
+                      </tr>
+                    </table>
+                  </div>
 
-          {selectedKey === '5' && (
-            <div className="changepass-admin">
-               <h1>Club Deletion</h1>
-              <form onSubmit={handleDelete}>
-              <table>
-                <tr>
-                  <td>Club Name</td>
-                  <td><input  type="text"  className='input-sug'  id="nme" name="nme" value={clubData.nme} onChange={handleChange} required/></td>
-                </tr>
-                
-                <tr>
-                  <td></td>
-                  <td><button type='submit'>DELETE</button></td>
-                </tr>
-              </table>
-            </form>
-              
-            </div>
-          )}
+                </form>
+              </div>
+            )}
 
-          {selectedKey === '7' && (
-            <div>              
-              <h1>Faculty Details</h1>
-              <table>
-                <tr className='heading'>
-                  <td>Name</td>
-                  <td>Email</td>
-                  <td>Club</td>
-                </tr>
-                {fac.map((data)=>{
-                  return(     
-                  <tr>
-                    <td>{data.name}</td>
-                    <td>{data.Email}</td>
-                    <td>{data.club}</td>
+            {selectedKey === '3' && (
+              <div>
+                <div className='changepass-admin'>
+                  <h1>Delete Faculty</h1>
+                  <form onSubmit={handleFDSubmit}>
+                    <table>
+                      <tr>
+                        <td>Email</td>
+                        <td><input type="text" className='input-sug' id="Email" name="Email" value={FacultyDData.Email}
+                          onChange={handleFDChange} required />
+                        </td>
+                      </tr>
 
+                      <tr>
+                        <td></td>
+                        <td><button className='f-del-but' type='submit'>DELETE</button></td>
+                      </tr>
+                    </table>
+                  </form>
+                </div>
+
+
+              </div>
+            )}
+
+            {selectedKey === '4' && (
+              <div className="changepass-admin">
+                <h1>Club Creation</h1>
+                <form onSubmit={handleCreate}>
+                  <table>
+                    <tr>
+                      <td>Club Name</td>
+                      <td><input type="text" className='input-sug' id="nme" name="nme" value={clubData.nme} onChange={handleChange} required /></td>
+                    </tr>
+                    <tr>
+                      <td>Faculty Head</td>
+                      <td><input type="text" className='input-sug' id="head" name="head" value={clubData.head} onChange={handleChange} required />
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td></td>
+                      <td><button className="change-password-button-admin" type='submit'>Create</button></td>
+                    </tr>
+                  </table>
+                </form>
+              </div>
+            )}
+
+            {selectedKey === '5' && (
+              <div className="changepass-admin">
+                <h1>Club Deletion</h1>
+                <form onSubmit={handleDelete}>
+                  <table>
+                    <tr>
+                      <td>Club Name</td>
+                      <td><input type="text" className='input-sug' id="nme" name="nme" value={clubData.nme} onChange={handleChange} required /></td>
+                    </tr>
+
+                    <tr>
+                      <td></td>
+                      <td><button type='submit'>DELETE</button></td>
+                    </tr>
+                  </table>
+                </form>
+
+              </div>
+            )}
+
+            {selectedKey === '7' && (
+              <div>
+                <h1>Faculty Details</h1>
+                <table>
+                  <tr className='heading'>
+                    <td>Name</td>
+                    <td>Email</td>
+                    <td>Club</td>
                   </tr>
-                );
-              })}
-            </table>
-            </div>
-          )}
+                  {fac.map((data) => {
+                    return (
+                      <tr>
+                        <td>{data.name}</td>
+                        <td>{data.Email}</td>
+                        <td>{data.club}</td>
 
-{selectedKey === '8' && (
-  <div>
-    <h1>Student Details</h1>
-    <table>
-      <tr className='heading'>
-        <td>Profile</td>
-        <td>Name</td>
-        <td>UID</td>
-        <td>Club</td>
-      </tr>
-      {usr
-        .sort((a, b) => a.club.localeCompare(b.club))
-        .map((data) => {
-          return (
-            <tr key={data.uid}>
-              <td>
-                <img
-                  style={{
-                    width: '3vw',
-                    height: '3vw',
-                    borderRadius: '50%',
-                    marginTop: '1vh',
-                  }}
-                  src={`https://www.rajagiritech.ac.in/stud/ktu/stud/Photo/${data.uid}.jpg`}
-                  alt='Profile'
-                />
-              </td>
-              <td>{data.name}</td>
-              <td>{data.uid}</td>
-              <td>{data.club}</td>
-            </tr>
-          );
-        })}
-    </table>
-  </div>
-)}
+                      </tr>
+                    );
+                  })}
+                </table>
+              </div>
+            )}
 
-          
-          {selectedKey === '10' && (
-            <div >
-
-            <h1>Club Details</h1>
-            <table>
-              <tr className='heading'>
-                <td>Name</td>
-                <td>Faculty Head</td>
-              </tr>
-              {clb.map((data)=>{
-                  return(
-                  <tr>
-                    <td>{data.name}</td>
-                    <td>{data.head}</td>
+            {selectedKey === '8' && (
+              <div>
+                <h1>Student Details</h1>
+                <table>
+                  <tr className='heading'>
+                    <td>Profile</td>
+                    <td>Name</td>
+                    <td>UID</td>
+                    <td>Club</td>
                   </tr>
-                );
-              })}
-            </table>             
+                  {usr
+                    .sort((a, b) => a.club.localeCompare(b.club))
+                    .map((data) => {
+                      return (
+                        <tr key={data.uid}>
+                          <td>
+                            <img
+                              style={{
+                                width: '3vw',
+                                height: '3vw',
+                                borderRadius: '50%',
+                                marginTop: '1vh',
+                              }}
+                              src={`https://www.rajagiritech.ac.in/stud/ktu/stud/Photo/${data.uid}.jpg`}
+                              alt='Profile'
+                            />
+                          </td>
+                          <td>{data.name}</td>
+                          <td>{data.uid}</td>
+                          <td>{data.club}</td>
+                        </tr>
+                      );
+                    })}
+                </table>
+              </div>
+            )}
 
-            </div>
-          )}
 
-        {selectedKey === '11' && (
-            <div className='changepass' >
-               <h1>Change Password</h1>
-            <form onSubmit={handlePSubmit}>
-              <table>
-                <tr>
-                  <td>New Password</td>
-                  <td><input type="password"  className='input-sug'  id="cpass" name="cpass" value={pas.cpass} onChange={handlePChange} required/></td>
-                </tr>
-                <tr>
-                  <td>Confirm Password</td>
-                  <td><input type="text"  className='input-sug'  id="rpass" name="rpass" value={pas.rpass} onChange={handlePChange} required/></td>
-                </tr>
-                <tr>
-                  <td></td>
-                  <td><button className="change-password-button" type='submit'>Submit</button></td>
-                </tr>
-              </table>
-            </form>
-           
-            </div>
-          )}
-          
-        </Content>
+            {selectedKey === '10' && (
+              <div >
+
+                <h1>Club Details</h1>
+                <table>
+                  <tr className='heading'>
+                    <td>Name</td>
+                    <td>Faculty Head</td>
+                  </tr>
+                  {clb.map((data) => {
+                    return (
+                      <tr>
+                        <td>{data.name}</td>
+                        <td>{data.head}</td>
+                      </tr>
+                    );
+                  })}
+                </table>
+
+              </div>
+            )}
+
+            {selectedKey === '11' && (
+              <div className='changepass' >
+                <h1>Change Password</h1>
+                <form onSubmit={handlePSubmit}>
+                  <table>
+                    <tr>
+                      <td>New Password</td>
+                      <td><input type="password" className='input-sug' id="cpass" name="cpass" value={pas.cpass} onChange={handlePChange} required /></td>
+                    </tr>
+                    <tr>
+                      <td>Confirm Password</td>
+                      <td><input type="text" className='input-sug' id="rpass" name="rpass" value={pas.rpass} onChange={handlePChange} required /></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                      <td><button className="change-password-button" type='submit'>Submit</button></td>
+                    </tr>
+                  </table>
+                </form>
+
+              </div>
+            )}
+
+          </Content>
         </>
-        )}
-      </Layout>
-    );
-   };
+      )
+      }
+    </Layout >
+  );
+};
 export default AdminDashboard;
